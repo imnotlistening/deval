@@ -23,7 +23,7 @@ all: libdeval $(TESTS)
 # Special targets.
 #
 libdeval: $(OBJECTS)
-	$(LD) $(LDFLAGS) -o libdeval.so.$(VERSION) $(OBJECTS) $(LIBS)
+	$(LD) $(LDFLAGS) -o libdeval.so.$(REVISION) $(OBJECTS) $(LIBS)
 	ldconfig -v -n
 
 #
@@ -32,7 +32,7 @@ libdeval: $(OBJECTS)
 .c.o: $(HEADERS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-.c: libdeval.so.$(VERSION)
+.c: libdeval.so.$(REVISION)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LIBS) -L. -ldeval
 
 #
