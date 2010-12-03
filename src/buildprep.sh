@@ -4,6 +4,6 @@
 # Extract the SVN version from this directory and use that as the version.
 #
 
-REVISION=`svnversion`
+REVISION=`svnversion .`
 
 echo "REVISION = $REVISION" > config.mak
