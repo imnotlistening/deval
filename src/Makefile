@@ -3,7 +3,7 @@
 #
 
 # Get the $VERSION
-sinclude config.mak
+sinclude ../config.mak
 
 CC       = gcc
 LD       = ld
