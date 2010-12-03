@@ -24,7 +24,7 @@ all: libdeval $(TESTS)
 #
 libdeval: $(OBJECTS)
 	$(LD) $(LDFLAGS) -o libdeval.so.$(REVISION) $(OBJECTS) $(LIBS)
-	ldconfig -v -n
+	ldconfig -v -n .
 
 #
 # This is used for the rest of the C code.
