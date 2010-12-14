@@ -18,37 +18,32 @@
  * Author: Alex Waterman - imNotListening@gmail.com
  */
 
+#include <client.h>
 
-#include <stdint.h>
-
+#include <pthread.h>
 #include <netinet/in.h>
 
-#ifndef _CLIENT
-#define _CLIENT
+#ifndef _SERV_H
+#define _SERV_H
 
-/* 
- * Typedefs and structures for representing a client connection and it's
- * type. Clients can be either SMP or single. Clients also need an IP address,
- * port, etc.
- */
+/* The server's data. List of clients, etc. */
+struct serv {
 
-struct deval_client {
+  /* Some administrative stuff for setting up the server. */
+  int                  serv_fd;
+  struct sockaddr      server_addr;
 
-  /* Access. */
-  int             fd;
+  /* The client list and associated data. */
+  struct deval_client *clientp;
+  unsigned int         clients;
 
-  /* Addressing. */
-  struct sockaddr addr;
+  /* The admin list. */
+  struct deval_client *adminp;
+  unsigned int         admins;
 
-  /* And other stuff can go here. */
-  unsigned int    flags;
+  /* The big bad server pthread lock. */
   
 
 };
-
-/* Flag definitions for the deval_client 'flags' field. */
-#define CLIENT_CONNECTED (1 << 0) /* Client connected or no?    */
-#define CLIENT_SMP       (1 << 1) /* Client has multiple CPUs.  */
-#define CLIENT_ADMIN     (1 << 2) /* Client is an admin client. */
 
 #endif

@@ -18,37 +18,22 @@
  * Author: Alex Waterman - imNotListening@gmail.com
  */
 
+#include <serv.h>
 
-#include <stdint.h>
-
-#include <netinet/in.h>
-
-#ifndef _CLIENT
-#define _CLIENT
+#include <sys/types.h>
+#include <sys/socket.h>
 
 /* 
- * Typedefs and structures for representing a client connection and it's
- * type. Clients can be either SMP or single. Clients also need an IP address,
- * port, etc.
+ * The server. This will keep track of all related server data.
  */
+struct serv server;
 
-struct deval_client {
 
-  /* Access. */
-  int             fd;
+/*
+ * Initialize the server. 
+ */
+int server_init(){
 
-  /* Addressing. */
-  struct sockaddr addr;
-
-  /* And other stuff can go here. */
-  unsigned int    flags;
   
 
-};
-
-/* Flag definitions for the deval_client 'flags' field. */
-#define CLIENT_CONNECTED (1 << 0) /* Client connected or no?    */
-#define CLIENT_SMP       (1 << 1) /* Client has multiple CPUs.  */
-#define CLIENT_ADMIN     (1 << 2) /* Client is an admin client. */
-
-#endif
+}
