@@ -12,7 +12,7 @@ CPPFLAGS = -I../include
 LDFLAGS  = -shared -soname libdeval.so
 LIBS     = -lm
 
-OBJECTS  =
+OBJECTS  = devol.c
 TESTS    =
 INCLUDE  = ../include
 HEADERS  = $(INCLUDE)/client.h
