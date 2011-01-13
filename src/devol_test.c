@@ -14,7 +14,7 @@
 
 /* Prototypes for the call backs. */
 int    mutate(struct solution *par1, struct solution *par2, 
-	      struct solution *dest);
+	      struct solution *dest, struct devol_controller *cont);
 double fitness(struct solution *solution);
 int    init(struct solution *solution);
 int    destroy(struct solution *solution);
@@ -43,7 +43,7 @@ int main(){
 
   int i;
   int iter = 0;
-  int max_iter = 200;
+  int max_iter = 100;
 
   time_t t_start;
   time_t t_stop;
@@ -54,13 +54,13 @@ int main(){
 
   /* Make ourselves a gene pool. */
   struct gene_pool pool;
-  gene_pool_create(&pool, 800000, 2, params);
+  gene_pool_create(&pool, 5000000, 2, params);
 
   /* And run some iterations... */
   while ( iter++ < max_iter ){
-    gene_pool_iterate(&pool);  
-    printf("%d\t%lf\n", 
-	   iter, gene_pool_avg_fitness(&pool));
+    gene_pool_iterate(&pool);
+    printf("Iteration %d done.\n", iter);
+    //printf("%d\t%lf\n", iter, gene_pool_avg_fitness(&pool));
   }
 
   ftime(&tmp_time);
@@ -83,11 +83,14 @@ int main(){
 /*
  * This function *must* be reentrant. This function must initialize the 
  * destination solution on its own. This allows optimizations to take place if
- * necessary.
+ * necessary. Use the controller's random number state and data. Its 
+ * deliberatly passed so that each thread can use a renentrant the renentrant
+ * erand4_r() function without storing state for each solution.
  */
 int mutate(struct solution *par1, struct solution *par2, 
-	   struct solution *dest){
+	   struct solution *dest, struct devol_controller *cont){
 
+  double tmp;
   double base;
   double variation;
   double *solution_val;
@@ -98,7 +101,8 @@ int mutate(struct solution *par1, struct solution *par2,
     base = par2->fitness_val;
 
   /* And vary it by a little bit. */
-  variation = (erand48(erand48_state) * variance) - (variance/2);
+  erand48_r(cont->rstate, &(cont->rdata), &tmp);
+  variation = (tmp * variance) - (variance/2);
 
   /* Initialize and set the destination solution. */
   dest->private = malloc(sizeof(double));

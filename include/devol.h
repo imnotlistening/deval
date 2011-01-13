@@ -32,7 +32,7 @@ struct solution {
 
   /* These are the functions that will modify the solution. */
   int    (*mutate)(struct solution *par1, struct solution *par2, 
-		   struct solution *dest);
+		   struct solution *dest, struct devol_controller *cont);
   double (*fitness)(struct solution *solution);
   int    (*init)(struct solution *solution);
   int    (*destroy)(struct solution *solution);
@@ -55,7 +55,8 @@ struct devol_params {
 
   /* Pass in the call back functions that will be propagated to each individual
    * solution. */
-  int    (*mutate)(solution_t *par1, solution_t *par2, solution_t *dest);
+  int    (*mutate)(solution_t *par1, solution_t *par2, 
+		   solution_t *dest, struct devol_controller *cont);
   double (*fitness)(solution_t *solution);
   int    (*init)(solution_t *solution);
   int    (*destroy)(solution_t *solution);

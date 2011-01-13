@@ -6,6 +6,7 @@
 #ifndef _DEVOL_THREADS_H
 #define _DEVOL_THREADS_H
 
+#include <stdlib.h>
 #include <pthread.h>
 
 struct thread_pool;
@@ -25,8 +26,9 @@ struct devol_controller {
   /* Set this flag to have the thread terminate conpletely (pthread_exit). */
   int die;
 
-  /* State information for the erand48 function. */
+  /* State information for the erand48_r function. */
   unsigned short rstate[3];
+  struct drand48_data rdata;
 
   /* A pointer back to the thread_pool struct so we can lock against the
    * sync_lock. */
@@ -41,7 +43,7 @@ struct thread_pool {
 
   /* The threads. */
   pthread_t *threads;
-  int        thread_count;
+  int        thread_count;x
 
   /* A controller for each thread. */
   struct devol_controller *controllers;
