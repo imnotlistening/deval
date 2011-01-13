@@ -25,9 +25,15 @@ struct devol_controller {
   /* Set this flag to have the thread terminate conpletely (pthread_exit). */
   int die;
 
+  /* State information for the erand48 function. */
+  unsigned short rstate[3];
+
   /* A pointer back to the thread_pool struct so we can lock against the
    * sync_lock. */
   struct thread_pool *pool;
+
+  /* And also a pointer back to the gene pool for obvious reasons. */
+  struct gene_pool *gene_pool;
 
 };
 
@@ -40,7 +46,7 @@ struct thread_pool {
   /* A controller for each thread. */
   struct devol_controller *controllers;
 
-  /* A lock to synchronize the threads work. */
+  /* A lock to synchronize the thread's work. */
   pthread_mutex_t sync_lock;
   
   /* A flag to mark whether the thread_pool has finished processing the release
@@ -53,7 +59,8 @@ struct thread_pool {
 #define DEVOL_TSTATE_FINISHED 1   /* The thread is done its iteration. */
 
 /* Thread related functions. */
-int thread_pool_init(struct thread_pool *pool, int threads);
+int thread_pool_init(struct thread_pool *pool, 
+		     struct gene_pool *gene_pool, int threads);
 int thread_pool_destroy(struct thread_pool *pool);
 
 #endif

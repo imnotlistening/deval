@@ -20,12 +20,14 @@ int  gene_pool_create(struct gene_pool *pool, int solutions, int threads,
 
   int i;
   int err;
+  int block_size;
+  int start, stop;
 
   /* I lied in the above comment, actually copy in our params first. */
   pool->params = params;
 
   /* Init the thread pool. */
-  err = thread_pool_init(&(pool->workers), threads);
+  err = thread_pool_init(&(pool->workers), pool, threads);
   if ( err )
     return DEVOL_ERR;
 
@@ -50,6 +52,36 @@ int  gene_pool_create(struct gene_pool *pool, int solutions, int threads,
   }
   INFO("Done\n");
 
+  /* 
+   * We have to allocate out blocks of the gene pool to each thread. Thus we
+   * must figure out exactly where each block starts and ends. This is more of
+   * a pain that I thought it would be. Oh, then make sure the thread 
+   * controllers are updated with these values.
+   */
+  block_size = solutions / threads;
+  start = 0;
+  stop = block_size;
+
+  for ( i = 0; i < threads; i++){
+    pool->workers.controllers[i].start = start;
+    pool->workers.controllers[i].stop = stop;
+    start = stop;
+    stop += block_size;
+  }
+
+  /* 
+   * Give any extras solutions to the final thread. Unless there are a 
+   * staggering number of threads this really shouldnt be a problem. 
+   */
+  pool->workers.controllers[threads-1].stop = solutions;  
+
+  printf("Block allocations:\n");
+  for ( i = 0; i < threads; i++){
+    printf(" block %d: %d -> %d\n", i, pool->workers.controllers[i].start,
+	   pool->workers.controllers[i].stop);
+  }
+
   return DEVOL_OK;
 
 }
+

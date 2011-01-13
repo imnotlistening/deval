@@ -10,12 +10,13 @@
 
 /* Some function prototypes. */
 void *_devol_thread_main(void *data);
-
+int   _compare_solutions(const void *a, const void *b);
 
 /*
  * Initialize the the thread pool. Nothing particularly interesting here.
  */
-int thread_pool_init(struct thread_pool *pool, int threads){
+int thread_pool_init(struct thread_pool *pool, 
+		     struct gene_pool *gene_pool, int threads){
 
   int i;
   int err;
@@ -48,6 +49,10 @@ int thread_pool_init(struct thread_pool *pool, int threads){
     pool->controllers[i].die = 0;
     pool->controllers[i].state = DEVOL_TSTATE_FINISHED;
     pool->controllers[i].pool = pool;
+    pool->controllers[i].gene_pool = gene_pool;
+    pool->controllers[i].rstate[0] = i;
+    pool->controllers[i].rstate[1] = i+1;
+    pool->controllers[i].rstate[2] = i+2;
     err = pthread_create( &(pool->threads[i]), NULL, _devol_thread_main, 
 			  &(pool->controllers[i]));
   }
@@ -96,6 +101,15 @@ int thread_pool_destroy(struct thread_pool *pool){
  */
 void *_devol_thread_main(void *data){
 
+  double rrate;
+  double bfitness;
+  int breeder_window;
+  solution_t *new_solutions;
+  int solution_count, i;
+  solution_t *s1, *s2, *die;
+  int s1_ind, s2_ind;
+  int die_index;
+
   struct devol_controller *controller = (struct devol_controller *)data;
 
   INFO("Thread (ID=%d) starting up.\n", controller->tid);
@@ -112,7 +126,90 @@ void *_devol_thread_main(void *data){
   INFO("Thread (ID=%d) starting work block.\n", controller->tid);
   controller->state = DEVOL_TSTATE_WORKING;
 
-  usleep(50000); /* Sleep for half a second, just for testing... */
+  /*
+   * Here is where we start doing the work. The algorithm is as follows:
+   *
+   *  1) Calculate each solutions fitness.
+   *  2) Sort our block by fitness. The closer to 0 the fitness value, the
+   *       better the solution.
+   *  3) Create new solutions by breeding good solutions randomly.
+   *  4) Replace the worst solutions with the newly created solutions.
+   */
+  _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
+				   controller->start, controller->stop);
+
+  qsort(&(controller->gene_pool->solutions[controller->start]), 
+	controller->stop - controller->start,
+	sizeof(solution_t), _compare_solutions);
+
+  /* For debug purposes. */
+  gene_pool_display_fitnesses(controller->gene_pool);
+
+  /* This is kinda complex... basically we have to randomly choose some of the
+   * the better solutions to breed. This is affected by the param 
+   * reproduction_rate. The higher the reproduction rate, the more solutions
+   * we make per generation. Here we get our two important params: how fit a
+   * solution must be in order to be considered for breeding and how many new
+   * solutions we are going to make. */
+  rrate = controller->gene_pool->params.reproduction_rate;
+  bfitness = controller->gene_pool->params.breed_fitness;
+  breeder_window = (int)(bfitness * (controller->stop - controller->start));
+  solution_count = (int)(rrate * (controller->stop - controller->start));
+  
+  /* Allocate out the new solutions. */
+  new_solutions = (solution_t *)malloc(sizeof(solution_t) * solution_count);
+  
+  for ( i = 0; i < solution_count; i++){
+
+    /* Generate a new solution from the two randomly selected in the
+     * breeder_window. */
+    s1_ind = (int)(erand48(controller->rstate) * breeder_window);
+    do {
+      s2_ind = (int)(erand48(controller->rstate) * breeder_window);
+    } while (s1_ind == s2_ind);
+    DEBUG("(ID=%d) Selecting parents: %d & %d\n", 
+	  controller->tid, s1_ind, s2_ind);
+
+    /* Get the addresses of the solution data in the solution pool of the
+     * gene pool. The sort will put the better solutions in the lower indexes
+     * of our block, thus we need only use the start of our block and add the
+     * random component of our index in order to get the random solution in the
+     * breeder window. */
+    s1 = (solution_t *) 
+      &(controller->gene_pool->solutions[controller->start + s1_ind]);
+    s2 = (solution_t *) 
+      &(controller->gene_pool->solutions[controller->start + s2_ind]);
+
+    /* And make the new solution. */
+    s1->mutate(s1, s2, &(new_solutions[i]));
+    new_solutions[i].mutate = s1->mutate;
+    new_solutions[i].fitness = s1->fitness;
+    new_solutions[i].init = s1->init;
+    new_solutions[i].destroy = s1->destroy;
+    DEBUG("(ID=%d) New solution made.\n", controller->tid);
+
+    /* Now choose a solution to die and be replaced. We will use solution_count
+     * to get a bottom window of solutions to be replaced. */
+    die_index = (int)(erand48(controller->rstate) * solution_count);
+    die_index++; /* Add 1 to make sure this isn't 0. */
+    die_index = controller->stop - die_index;
+    if ( die_index < 1 )
+      die_index = 1;
+    die = (solution_t *) &(controller->gene_pool->solutions[die_index]);
+    DEBUG("(ID=%d) Killing solution: %d\n", controller->tid, die_index);
+    DEBUG("(ID=%d)   Solution address: 0x%lx\n", 
+	  controller->tid, (unsigned long int) die);
+    DEBUG("(ID=%d)   Destroy address: 0x%lx\n", 
+	  controller->tid, (unsigned long int) die->destroy);
+
+    die->destroy(die);
+
+    /* And finally do the replacement. */
+    *die = new_solutions[i];
+    DEBUG("(ID=%d) Solution replaced.\n", controller->tid);
+
+  }
+
 
   /* Make sure the thread_pool is ready to start the thread return... */
   while ( ! controller->pool->term_ready );
@@ -136,5 +233,69 @@ void *_devol_thread_main(void *data){
 
   /* Unreachable, but to make the compiler happy... */
   return NULL;
+
+}
+
+/*
+ * Here we do an iteration of the algorithm. Call this function over and over
+ * to solve an evolutionary problem.
+ */
+int gene_pool_iterate(struct gene_pool *gene_pool){
+
+  int i;
+  int done;
+  int waiting;
+
+  INFO("Starting iteration.\n");
+
+  /* Make sure threads don't finish before we are ready for them to finish
+   * i.e reaquired the sync_lock. */
+  gene_pool->workers.term_ready = 0;
+  
+  /* Release the HOUNDS!!! */
+  pthread_mutex_unlock(&(gene_pool->workers.sync_lock));
+
+  /* Wait until all of the threads have started. */
+  waiting = 1;
+  while ( waiting ){
+     
+    done = 0;
+    usleep(500); /* Wait half a millisecond... */
+      
+    for ( i = 0; i < gene_pool->workers.thread_count; i++){
+      if ( gene_pool->workers.controllers[i].state != DEVOL_TSTATE_WORKING ){
+	done = 1;
+	break;
+      }
+    }
+
+    waiting = done;
+
+  } 
+
+/* Here each thread has started, so now we should be able to relock the
+ * sync_lock and tell the threads that they can finish. */
+  pthread_mutex_lock(&(gene_pool->workers.sync_lock));
+  gene_pool->workers.term_ready = 1;
+
+  /* Now we wait until each thread has terminated. */
+  waiting = 1;
+  while ( waiting ){
+
+    done = 0;
+    usleep(1000); /* Check if the threads are done once a millisecond. */
+      
+    for ( i = 0; i < gene_pool->workers.thread_count; i++){
+      if ( gene_pool->workers.controllers[i].state != DEVOL_TSTATE_FINISHED ){
+	done = 1;
+	break;
+      }
+    }
+
+    waiting = done;
+
+  }
+
+  return DEVOL_OK;
 
 }

@@ -13,8 +13,8 @@ CPPFLAGS += -I../include
 LDFLAGS   = -shared -soname libdeval.so
 LIBS      = -lm -lpthread
 
-OBJECTS   = devol.o devol_threads.o
-TESTS     = thread_test
+OBJECTS   = devol.o devol_threads.o util.o
+TESTS     = thread_test devol_test
 INCLUDE   = ../include
 HEADERS   = $(INCLUDE)/client.h
 
