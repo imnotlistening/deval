@@ -16,10 +16,12 @@ int   _compare_solutions(const void *a, const void *b);
  * Initialize the the thread pool. Nothing particularly interesting here.
  */
 int thread_pool_init(struct thread_pool *pool, 
-		     struct gene_pool *gene_pool, int threads){
+		     struct gene_pool *gene_pool, int threads, int solutions){
 
   int i;
   int err;
+  int block_size;
+  int start, stop;
 
   pool->thread_count = threads;
   pool->term_ready = 0;
@@ -42,6 +44,29 @@ int thread_pool_init(struct thread_pool *pool,
     free(pool->threads); /* Clean up... Boring. */
     return DEVOL_ERR;
   }
+
+  /* 
+   * We have to allocate out blocks of the gene pool to each thread. Thus we
+   * must figure out exactly where each block starts and ends. This is more of
+   * a pain that I thought it would be. Oh, then make sure the thread 
+   * controllers are updated with these values.
+   */
+  block_size = solutions / threads;
+  start = 0;
+  stop = block_size;
+
+  for ( i = 0; i < threads; i++){
+    pool->controllers[i].start = start;
+    pool->controllers[i].stop = stop;
+    start = stop;
+    stop += block_size;
+  }
+
+  /* 
+   * Give any extras solutions to the final thread. Unless there are a 
+   * staggering number of threads this really shouldnt be a problem. 
+   */
+  pool->controllers[threads-1].stop = solutions;  
 
   /* Finally, start them threads up. */
   for ( i = 0; i < threads; i++){
@@ -113,7 +138,21 @@ void *_devol_thread_main(void *data){
   struct devol_controller *controller = (struct devol_controller *)data;
 
   INFO("Thread (ID=%d) starting up.\n", controller->tid);
+  INFO(" (ID=%d) Block allocation: %d -> %d\n", controller->tid,
+       controller->start, controller->stop);
 
+  /* Set up our params. */
+  rrate = controller->gene_pool->params.reproduction_rate;
+  bfitness = controller->gene_pool->params.breed_fitness;
+
+  breeder_window = (int)(bfitness * (controller->stop - controller->start));
+  solution_count = (int)(rrate * (controller->stop - controller->start));
+  INFO(" (ID=%d) breeder_window=%d solution_count=%d\n", controller->tid,
+       breeder_window, solution_count);
+
+  /* Allocate out space for new solutions. */
+  new_solutions = (solution_t *)malloc(sizeof(solution_t) * solution_count);
+  
   /* This lock forces the thread to wait until the calling algorithm is ready
    * for the thread to start up. */
   pthread_mutex_lock(&(controller->pool->sync_lock));
@@ -142,23 +181,11 @@ void *_devol_thread_main(void *data){
 	controller->stop - controller->start,
 	sizeof(solution_t), _compare_solutions);
 
-  /* For debug purposes. */
-  gene_pool_display_fitnesses(controller->gene_pool);
-
   /* This is kinda complex... basically we have to randomly choose some of the
    * the better solutions to breed. This is affected by the param 
    * reproduction_rate. The higher the reproduction rate, the more solutions
-   * we make per generation. Here we get our two important params: how fit a
-   * solution must be in order to be considered for breeding and how many new
-   * solutions we are going to make. */
-  rrate = controller->gene_pool->params.reproduction_rate;
-  bfitness = controller->gene_pool->params.breed_fitness;
-  breeder_window = (int)(bfitness * (controller->stop - controller->start));
-  solution_count = (int)(rrate * (controller->stop - controller->start));
-  
-  /* Allocate out the new solutions. */
-  new_solutions = (solution_t *)malloc(sizeof(solution_t) * solution_count);
-  
+   * we make per generation. 
+   */
   for ( i = 0; i < solution_count; i++){
 
     /* Generate a new solution from the two randomly selected in the
@@ -167,8 +194,6 @@ void *_devol_thread_main(void *data){
     do {
       s2_ind = (int)(erand48(controller->rstate) * breeder_window);
     } while (s1_ind == s2_ind);
-    DEBUG("(ID=%d) Selecting parents: %d & %d\n", 
-	  controller->tid, s1_ind, s2_ind);
 
     /* Get the addresses of the solution data in the solution pool of the
      * gene pool. The sort will put the better solutions in the lower indexes
@@ -186,7 +211,6 @@ void *_devol_thread_main(void *data){
     new_solutions[i].fitness = s1->fitness;
     new_solutions[i].init = s1->init;
     new_solutions[i].destroy = s1->destroy;
-    DEBUG("(ID=%d) New solution made.\n", controller->tid);
 
     /* Now choose a solution to die and be replaced. We will use solution_count
      * to get a bottom window of solutions to be replaced. */
@@ -196,20 +220,12 @@ void *_devol_thread_main(void *data){
     if ( die_index < 1 )
       die_index = 1;
     die = (solution_t *) &(controller->gene_pool->solutions[die_index]);
-    DEBUG("(ID=%d) Killing solution: %d\n", controller->tid, die_index);
-    DEBUG("(ID=%d)   Solution address: 0x%lx\n", 
-	  controller->tid, (unsigned long int) die);
-    DEBUG("(ID=%d)   Destroy address: 0x%lx\n", 
-	  controller->tid, (unsigned long int) die->destroy);
-
     die->destroy(die);
 
     /* And finally do the replacement. */
     *die = new_solutions[i];
-    DEBUG("(ID=%d) Solution replaced.\n", controller->tid);
 
   }
-
 
   /* Make sure the thread_pool is ready to start the thread return... */
   while ( ! controller->pool->term_ready );

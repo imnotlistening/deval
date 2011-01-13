@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <sys/timeb.h>
+
 /* Prototypes for the call backs. */
 int    mutate(struct solution *par1, struct solution *par2, 
 	      struct solution *dest);
@@ -26,8 +28,8 @@ struct devol_params params = {
   .destroy = destroy,
 
   .gene_dispersal_factor = 0.0,
-  .reproduction_rate = .01,
-  .breed_fitness = .01,
+  .reproduction_rate = .30,
+  .breed_fitness = .30,
 
 };
 
@@ -41,27 +43,39 @@ int main(){
 
   int i;
   int iter = 0;
-  int max_iter = 500;
+  int max_iter = 200;
+
+  time_t t_start;
+  time_t t_stop;
+  struct timeb tmp_time;
+
+  ftime(&tmp_time);
+  t_start = (tmp_time.time * 1000) + tmp_time.millitm;
 
   /* Make ourselves a gene pool. */
   struct gene_pool pool;
-  gene_pool_create(&pool, 200, 1, params);
-
-  printf("Initial average fitness: %lf\n", gene_pool_avg_fitness(&pool));
+  gene_pool_create(&pool, 800000, 2, params);
 
   /* And run some iterations... */
   while ( iter++ < max_iter ){
     gene_pool_iterate(&pool);  
-    printf("Iteration %d: avg fitness: %lf\n", 
+    printf("%d\t%lf\n", 
 	   iter, gene_pool_avg_fitness(&pool));
   }
 
+  ftime(&tmp_time);
+  t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
+
+  printf("run time: %ld ms\n", t_stop - t_start);
+
   /* Print the solutions. */
-  for ( i = 0; i < 100; i++){
+  i = 0;
+  /*
+  for ( ; i < 100; i++){
     printf("solution %d: %lf ", i, *((double *)pool.solutions[i].private));
     printf("fitness: %lf\n", pool.solutions[i].fitness_val);
   }
-
+  */
   return 0;
 
 }
@@ -89,7 +103,7 @@ int mutate(struct solution *par1, struct solution *par2,
   /* Initialize and set the destination solution. */
   dest->private = malloc(sizeof(double));
   solution_val = (double *)dest->private;
-  *solution_val = base + variation;
+  *solution_val = *((double *)par1->private) + variation;
 
   return 0;
 

@@ -21,7 +21,7 @@ int main(){
 
   struct thread_pool pool;
 
-  err = thread_pool_init(&pool, NULL, threads); /* n threads. */
+  err = thread_pool_init(&pool, NULL, threads, 1000); /* n threads. */
   if ( err ){
     printf("Unable to init the thread pool. :(\n");
     return 1;

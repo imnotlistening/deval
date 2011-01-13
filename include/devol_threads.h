@@ -60,7 +60,7 @@ struct thread_pool {
 
 /* Thread related functions. */
 int thread_pool_init(struct thread_pool *pool, 
-		     struct gene_pool *gene_pool, int threads);
+		     struct gene_pool *gene_pool, int threads, int solutions);
 int thread_pool_destroy(struct thread_pool *pool);
 
 #endif
