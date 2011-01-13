@@ -1,21 +1,22 @@
 #
-# Build my RIT Shell (RSH).
+# Build libdevol.so. Simple Makefile, everything is pretty self explanitory.
 #
 
 # Get the $VERSION
 sinclude ../config.mak
 
-CC       = gcc
-LD       = ld
-CFLAGS   = -Wall -ggdb 
-CPPFLAGS = -I../include
-LDFLAGS  = -shared -soname libdeval.so
-LIBS     = -lm
+CC        = gcc
+LD        = ld
+CFLAGS    = -Wall -ggdb 
+CPPFLAGS  = -D_INFO -D_DEBUG # Uncomment for internal debug statements.
+CPPFLAGS += -I../include
+LDFLAGS   = -shared -soname libdeval.so
+LIBS      = -lm -lpthread
 
-OBJECTS  = devol.c
-TESTS    =
-INCLUDE  = ../include
-HEADERS  = $(INCLUDE)/client.h
+OBJECTS   = devol.o devol_threads.o
+TESTS     = thread_test
+INCLUDE   = ../include
+HEADERS   = $(INCLUDE)/client.h
 
 all: libdeval $(TESTS)
 
@@ -30,7 +31,7 @@ libdeval: $(OBJECTS)
 # This is used for the rest of the C code.
 #
 .c.o: $(HEADERS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 .c: libdeval.so.$(REVISION)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LIBS) -L. -ldeval

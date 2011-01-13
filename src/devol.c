@@ -1,20 +1,21 @@
 /*
- * deval: distributed evolutionary algorithm framework.
- *   Copyright (C) 2010  Alex Waterman
- *
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.          
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  * Author: Alex Waterman - imNotListening@gmail.com
+ *
+ * Handle the general frame work of the algorithm.
  */
 
+#include <devol.h>
+
+/*
+ * This function is important. It initializes everything. First it initializes
+ * the thread pool, this is pretty simple, just a call the the thread_pool
+ * initialization function is made.
+ */
+int  gene_pool_create(struct gene_pool *pool, int solutions, int threads, 
+		      struct devol_params params){
+
+  
+  
+  return DEVOL_OK;
+
+}
