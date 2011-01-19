@@ -28,40 +28,50 @@ struct devol_params params = {
   .destroy = destroy,
 
   .gene_dispersal_factor = 0.0,
-  .reproduction_rate = .30,
-  .breed_fitness = .30,
+  .reproduction_rate = .6,
+  .breed_fitness = .6,
+  .rstate = { 2837, 345, 99 },
 
 };
 
 /* Some made up numbers. */
-unsigned short erand48_state[3] = {2674, 1507, 5555};
+unsigned short erand48_state[3] = {2674, 14907, 5555};
 
 /* Maximum amount to vary each solution. */
-double variance = .0005;
+double variance = .005;
 
-int main(){
+int main(int argc, char **argv){
 
   int i;
   int iter = 0;
-  int max_iter = 100;
+  int max_iter = 10000;
+  int solutions = 100;
 
   time_t t_start;
   time_t t_stop;
   struct timeb tmp_time;
+
+  printf("variance=%lf solutions=%d rr=%lf bf=%lf\n",
+	 variance, solutions, params.reproduction_rate, params.breed_fitness);
 
   ftime(&tmp_time);
   t_start = (tmp_time.time * 1000) + tmp_time.millitm;
 
   /* Make ourselves a gene pool. */
   struct gene_pool pool;
-  gene_pool_create(&pool, 5000000, 2, params);
+  gene_pool_create(&pool, solutions, 1, params);
 
   /* And run some iterations... */
   while ( iter++ < max_iter ){
     gene_pool_iterate(&pool);
-    printf("Iteration %d done.\n", iter);
-    //printf("%d\t%lf\n", iter, gene_pool_avg_fitness(&pool));
+    printf("%d\t%lf\n", iter, gene_pool_avg_fitness(&pool));
+    if ( gene_pool_avg_fitness(&pool) < variance ){
+      printf("Convergence in %d generations.\n", iter);
+      break;
+    }
   }
+  if ( iter == max_iter )
+    printf("No convergence in %d generations.\n", max_iter);
 
   ftime(&tmp_time);
   t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
@@ -69,10 +79,11 @@ int main(){
   printf("run time: %ld ms\n", t_stop - t_start);
 
   /* Print the solutions. */
+  _gene_pool_calculate_fitnesses_p(&pool, 0, solutions);
   i = 0;
   /*
-  for ( ; i < 100; i++){
-    printf("solution %d: %lf ", i, *((double *)pool.solutions[i].private));
+  for ( ; i < solutions; i++){
+    printf("solution %d: %lf ", i, pool.solutions[i].private.dp_fp);
     printf("fitness: %lf\n", pool.solutions[i].fitness_val);
   }
   */
@@ -93,21 +104,19 @@ int mutate(struct solution *par1, struct solution *par2,
   double tmp;
   double base;
   double variation;
-  double *solution_val;
 
   /* Pick the better solution of the two and then vary it by a little bit. */
-  base = par1->fitness_val;
-  if ( par2->fitness_val < base )
-    base = par2->fitness_val;
+  if ( par1->fitness_val >+ par2->fitness_val )
+    base = par1->private.dp_fp;
+  else 
+    base = par2->private.dp_fp;
 
   /* And vary it by a little bit. */
   erand48_r(cont->rstate, &(cont->rdata), &tmp);
   variation = (tmp * variance) - (variance/2);
 
   /* Initialize and set the destination solution. */
-  dest->private = malloc(sizeof(double));
-  solution_val = (double *)dest->private;
-  *solution_val = *((double *)par1->private) + variation;
+  dest->private.dp_fp = base + variation;
 
   return 0;
 
@@ -115,7 +124,7 @@ int mutate(struct solution *par1, struct solution *par2,
 
 double fitness(struct solution *solution){
 
-  double solution_val = (double)*((double *)solution->private);
+  double solution_val = solution->private.dp_fp;
 
   /* The farther the square is from 5, the worse the solution. */
   return fabs((solution_val * solution_val) - 5);
@@ -124,24 +133,13 @@ double fitness(struct solution *solution){
 
 int init(struct solution *solution){
 
-  double *data;
-
-  /* Allocate memory for a double precision floating point value. */
-  solution->private = malloc(sizeof(double));
-  data = (double *)solution->private;
-
-  *data = erand48(erand48_state) * 10.0;
+  solution->private.dp_fp = erand48(erand48_state) * 10.0;
 
   return 0;
 
 }
 
 int destroy(struct solution *solution){
-
-  if ( solution->private )
-    free(solution->private);
-  else
-    printf("Ignoring empty solution...\n");
 
   return 0;
 

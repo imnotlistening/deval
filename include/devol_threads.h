@@ -11,6 +11,12 @@
 
 struct thread_pool;
 
+/*
+ * Since this struct will be getting a *lot* of concurrent access (possibly),
+ * it must be aligned and/or padded out to a multiple of cacheline sizes. For
+ * now I will assume the largest cache lines in existence are 256 bytes and
+ * that smaller cache lines will be factors of 256 (128, 64, etc).
+ */
 struct devol_controller {
 
   /* Thread ID. */
@@ -37,13 +43,21 @@ struct devol_controller {
   /* And also a pointer back to the gene pool for obvious reasons. */
   struct gene_pool *gene_pool;
 
+
+  /* Pad this struct out so that it is exactly 256 bytes achine. */
+#ifdef __x86_64__
+  char __padding[180]; /* I can't imagine cache lines > 256 bytes. */
+#else
+  char __padding[196];
+#endif
+
 };
 
 struct thread_pool {
 
   /* The threads. */
   pthread_t *threads;
-  int        thread_count;x
+  int        thread_count;
 
   /* A controller for each thread. */
   struct devol_controller *controllers;

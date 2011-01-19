@@ -40,8 +40,12 @@ struct solution {
   /* The calculated fitness value. */
   double fitness_val;
 
-  /* The solution's private data. */
-  void *private;
+  /* The solution's private data. Use what ever you want... */
+  union {
+    long unsigned int  uint_64; /* 64 Bit integer. */
+    void              *ptr;     /* A pointer to something else  */
+    double             dp_fp;   /* A double precision floating point. */
+  } private;
 
 };
 
@@ -75,6 +79,11 @@ struct devol_params {
    * enough to breed. */
   double breed_fitness;
 
+  /*
+   * This allows the calling program to specify the random state.
+   */
+  unsigned short rstate[3];
+
 };
 
 /*
@@ -87,6 +96,9 @@ struct gene_pool {
   solution_t *solutions;
   size_t      solution_count;
 
+  /* Some flags. */
+  unsigned int flags;
+  
   /* A pool of threads to use for distributing the work. */
   struct thread_pool workers;
 
@@ -94,17 +106,36 @@ struct gene_pool {
    * algorithm */
   struct devol_params params;
 
+  /*
+   * Data for the *sequential* algorithm only. This data is held in the 
+   * thread's entrance function's stack frame for the multithreaded version.
+   */
+  solution_t *new_solutions;
+  int         new_count;
+  int         breeder_window;
+
+  /* The gene_pool controller. Only needed and initialized if the gene_pool is
+   * going to be sequential. */
+  struct devol_controller controller;
+
 };
+
+/* Flag definitions for the gene_pool struct. */
+#define GPOOL_SEQ   0
+#define GPOOL_SMP   1
 
 /* High level entrances to the API. */
 int  gene_pool_create(struct gene_pool *pool, int solutions, int threads, 
 		      struct devol_params params);
 void gene_pool_set_params(struct gene_pool *pool, struct devol_params params);
 int  gene_pool_iterate(struct gene_pool *pool);
+int  gene_pool_iterate_seq(struct gene_pool *pool);
 
 /* Utility functions for dealing with gene pools. */
 double gene_pool_avg_fitness(struct gene_pool *pool);
 void   gene_pool_display_fitnesses(struct gene_pool *pool);
+void   gene_pool_disperse(struct gene_pool *pool);
+int    _compare_solutions(const void *a, const void *b);
 
 /* Functions to be used by the parallel sections of the code. */
 void   _gene_pool_calculate_fitnesses_p(struct gene_pool *pool, 

@@ -9,9 +9,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <sys/timeb.h>
+
 /* Some function prototypes. */
 void *_devol_thread_main(void *data);
-int   _compare_solutions(const void *a, const void *b);
 
 /*
  * Initialize the the thread pool. Nothing particularly interesting here.
@@ -76,9 +77,9 @@ int thread_pool_init(struct thread_pool *pool,
     pool->controllers[i].state = DEVOL_TSTATE_FINISHED;
     pool->controllers[i].pool = pool;
     pool->controllers[i].gene_pool = gene_pool;
-    pool->controllers[i].rstate[0] = i;
-    pool->controllers[i].rstate[1] = i+1;
-    pool->controllers[i].rstate[2] = i+2;
+    pool->controllers[i].rstate[0] = gene_pool->params.rstate[0] + i;
+    pool->controllers[i].rstate[1] = gene_pool->params.rstate[1] + i+1;
+    pool->controllers[i].rstate[2] = gene_pool->params.rstate[2] + i+2;
     memset(&(pool->controllers[i].rdata), 0, sizeof(struct drand48_data));
     err = pthread_create( &(pool->threads[i]), NULL, _devol_thread_main, 
 			  &(pool->controllers[i]));
@@ -137,7 +138,10 @@ void *_devol_thread_main(void *data){
   solution_t *s1, *s2, *die;
   int s1_ind, s2_ind;
   int die_index;
-
+  time_t t_start;
+  time_t t_stop;
+  struct timeb tmp_time;
+  
   struct devol_controller *controller = (struct devol_controller *)data;
 
   INFO("Thread (ID=%d) starting up.\n", controller->tid);
@@ -163,6 +167,9 @@ void *_devol_thread_main(void *data){
    */
  run_iteration:
   
+  ftime(&tmp_time);
+  t_start = (tmp_time.time * 1000) + tmp_time.millitm;
+
   controller->state = DEVOL_TSTATE_WORKING;
 
   /*
@@ -177,6 +184,12 @@ void *_devol_thread_main(void *data){
   _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
 				   controller->start, controller->stop);
   
+  /*
+   * This could potentially give rise to superlinear speedups. This is because
+   * sort algorithms scale super-linearly with problem size. I.e the run time
+   * for qsort is O(N * log(N)). Thus as N gets larger, the sequential program
+   * starts to hurt more than k subsections of an N sized problem.
+   */
   qsort(&(controller->gene_pool->solutions[controller->start]), 
 	controller->stop - controller->start,
 	sizeof(solution_t), _compare_solutions);
@@ -206,6 +219,9 @@ void *_devol_thread_main(void *data){
       &(controller->gene_pool->solutions[controller->start + s1_ind]);
     s2 = (solution_t *) 
       &(controller->gene_pool->solutions[controller->start + s2_ind]);
+    DEBUG("Mutating solutions: %d(%lf) and %d(%lf).\n", 
+	  s1_ind, s1->fitness_val, 
+	  s2_ind, s2->fitness_val);
 
     /* And make the new solution. */
     s1->mutate(s1, s2, &(new_solutions[i]), controller);
@@ -222,6 +238,7 @@ void *_devol_thread_main(void *data){
     die_index = controller->stop - die_index;
     if ( die_index < 1 )
       die_index = 1;
+    DEBUG("  Killing %d\n", die_index);
     die = (solution_t *) &(controller->gene_pool->solutions[die_index]);
     die->destroy(die);
 
@@ -232,6 +249,11 @@ void *_devol_thread_main(void *data){
 
   /* Make sure the thread_pool is ready to start the thread return... */
   while ( ! controller->pool->term_ready );
+
+  ftime(&tmp_time);
+  t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
+  DEBUG("(ID=%d) Chunk execution time: %ld ms\n", 
+       controller->tid, t_stop - t_start);
 
   /* Annouce that we are done, and wait until we are released to start again.
    * When we get the sync_lock we assume we are ready to go again. */
@@ -274,7 +296,7 @@ int gene_pool_iterate(struct gene_pool *gene_pool){
   while ( waiting ){
      
     done = 0;
-    //usleep(500); /* Wait half a millisecond... */
+    usleep(50); /* Wait half a millisecond... */
       
     for ( i = 0; i < gene_pool->workers.thread_count; i++){
       if ( gene_pool->workers.controllers[i].state != DEVOL_TSTATE_WORKING ){
@@ -287,8 +309,8 @@ int gene_pool_iterate(struct gene_pool *gene_pool){
 
   } 
 
-/* Here each thread has started, so now we should be able to relock the
- * sync_lock and tell the threads that they can finish. */
+  /* Here each thread has started, so now we should be able to relock the
+   * sync_lock and tell the threads that they can finish. */
   pthread_mutex_lock(&(gene_pool->workers.sync_lock));
   gene_pool->workers.term_ready = 1;
 
@@ -297,7 +319,7 @@ int gene_pool_iterate(struct gene_pool *gene_pool){
   while ( waiting ){
 
     done = 0;
-    usleep(50); /* Check if the threads are done once a millisecond. */
+    usleep(50); /* Check if the threads are done sometimes. */
       
     for ( i = 0; i < gene_pool->workers.thread_count; i++){
       if ( gene_pool->workers.controllers[i].state != DEVOL_TSTATE_FINISHED ){
@@ -309,6 +331,12 @@ int gene_pool_iterate(struct gene_pool *gene_pool){
     waiting = done;
 
   }
+
+  /* Finally, we should do some gene dispersal. Each population of solutions
+   * are isolated duing the normal operation of the algorithm. This is like
+   * birds on islands. Here we try and get some birds to travel to other 
+   * islands, so to speak. */
+  gene_pool_disperse(gene_pool);
 
   return DEVOL_OK;
 

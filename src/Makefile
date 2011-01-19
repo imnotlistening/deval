@@ -7,14 +7,14 @@ sinclude ../config.mak
 
 CC        = gcc
 LD        = ld
-CFLAGS    = -Wall -ggdb 
+CFLAGS    = -Wall -ggdb # -m32
 CPPFLAGS  = -D_INFO #-D_DEBUG # Uncomment for internal debug statements.
 CPPFLAGS += -I../include
-LDFLAGS   = -shared -soname libdeval.so
+LDFLAGS   = -shared -soname libdeval.so # -melf_i386 
 LIBS      = -lm -lpthread
 
 OBJECTS   = devol.o devol_threads.o util.o
-TESTS     = thread_test devol_test
+TESTS     = thread_test devol_test data_sizes
 INCLUDE   = ../include
 HEADERS   = $(INCLUDE)/client.h
 
