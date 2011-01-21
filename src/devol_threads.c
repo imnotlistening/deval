@@ -231,7 +231,7 @@ void *_devol_thread_main(void *data){
     new_solutions[i].destroy = s1->destroy;
 
     /* Now choose a solution to die and be replaced. We will use solution_count
-     * to get a bottom window of solutions to be replaced. */
+     * to get a window of solutions to be replaced. */
     erand48_r(controller->rstate, &(controller->rdata), &tmp);
     die_index = (int)(tmp * solution_count);
     die_index++; /* Add 1 to make sure this isn't 0. */

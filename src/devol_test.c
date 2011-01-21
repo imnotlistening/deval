@@ -106,7 +106,7 @@ int mutate(struct solution *par1, struct solution *par2,
   double variation;
 
   /* Pick the better solution of the two and then vary it by a little bit. */
-  if ( par1->fitness_val >+ par2->fitness_val )
+  if ( par1->fitness_val >= par2->fitness_val )
     base = par1->private.dp_fp;
   else 
     base = par2->private.dp_fp;

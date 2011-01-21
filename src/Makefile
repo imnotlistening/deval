@@ -18,7 +18,7 @@ TESTS     = thread_test devol_test data_sizes
 INCLUDE   = ../include
 HEADERS   = $(INCLUDE)/client.h
 
-all: libdeval $(TESTS)
+all: libdeval $(TESTS) examples
 
 #
 # Special targets.
@@ -37,10 +37,19 @@ libdeval: $(OBJECTS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LIBS) -L. -ldeval
 
 #
+# This is used to build the algorithm implementations.
+#
+.PHONY: examples
+examples: libdeval.so.$(REVISION)
+	cd algos && make
+
+#
 # Cleaning targets.
 #
+.PHONY: clean dist-clean
 clean:
 	rm -f libdeval.so* $(OBJECTS) $(TESTS)
+	cd algos && make clean
 
 dist-clean: clean
 	rm -f config.mak

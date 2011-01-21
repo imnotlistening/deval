@@ -127,6 +127,8 @@ struct gene_pool {
 /* High level entrances to the API. */
 int  gene_pool_create(struct gene_pool *pool, int solutions, int threads, 
 		      struct devol_params params);
+int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
+			  struct devol_params params);
 void gene_pool_set_params(struct gene_pool *pool, struct devol_params params);
 int  gene_pool_iterate(struct gene_pool *pool);
 int  gene_pool_iterate_seq(struct gene_pool *pool);

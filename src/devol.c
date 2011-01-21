@@ -156,9 +156,9 @@ int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
 int gene_pool_iterate_seq(struct gene_pool *pool){
 
   int i;
-  int s1_ind, s2_ind;
+  int s1_ind, s2_ind, die_ind;
   double tmp;
-  solution_t *s1, *s2;
+  solution_t *s1, *s2, *die;
 
   /*
    * Here is where we start doing the work. The algorithm is as follows:
@@ -169,13 +169,16 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
    *  3) Create new solutions by breeding good solutions randomly.
    *  4) Replace the worst solutions with the newly created solutions.
    */
+  printf("_seq_ Calculating fitnesses.\n");
   _gene_pool_calculate_fitnesses_p(pool, 0, pool->solution_count);
 
   /* Sort the solutions. */
-  qsort(pool->solutions, pool->new_count, 
+  printf("_seq_ Sorting solutions.\n");
+  qsort(pool->solutions, pool->solution_count, 
 	sizeof(solution_t), _compare_solutions);
 
   /* Make some new solutions. */
+  printf("_seq_ Making new solutions.\n");
   for ( i = 0; i < pool->new_count; i++){
 
     /* Generate the two parent solution indexes. */
@@ -186,12 +189,29 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
       s2_ind = (int)(tmp * pool->breeder_window);
     } while (s1_ind == s2_ind);
 
+    printf("_seq_   p1=%d p2=%d\n", s1_ind, s2_ind);
+
     /* Get the parent solution addresses. */
     s1 = (solution_t *)&(pool->solutions[s1_ind]);
     s2 = (solution_t *)&(pool->solutions[s2_ind]);
 
     /* And make a new solution. */
+    s1->mutate(s1, s2, &(pool->new_solutions[i]), &(pool->controller));
+    pool->new_solutions[i].mutate = s1->mutate;
+    pool->new_solutions[i].fitness = s1->fitness;
+    pool->new_solutions[i].init = s1->init;
+    pool->new_solutions[i].destroy = s1->destroy;
 
+    /* Now that we have a solution, find another solution to kill and 
+       replace. */
+    tmp = erand48(pool->controller.rstate);
+    die_ind = 1 + ((int)(tmp * pool->new_count));
+    die_ind = pool->solution_count - die_ind;
+    die = (solution_t *)&(pool->solutions[die_ind]);
+    printf("_seq_ Killing: %d (fitness=%lf)\n", die_ind, die->fitness_val);
+    die->destroy(die);
+
+    *die = pool->new_solutions[i];
 
   }
 

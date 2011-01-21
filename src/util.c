@@ -36,7 +36,7 @@ void gene_pool_display_fitnesses(struct gene_pool *pool){
   for ( i = 0; i < pool->solution_count; i++){
     pool->solutions[i].fitness_val = 
       pool->solutions[i].fitness(&(pool->solutions[i]));
-    printf("Solution %5d: %lf\n", i, pool->solutions[i].fitness_val);
+    printf("Solution %5d: fitness=%lf\n", i, pool->solutions[i].fitness_val);
   }
 
 }

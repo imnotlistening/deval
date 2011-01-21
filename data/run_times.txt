@@ -1,0 +1,32 @@
+
+Processors     Runtime
+1	       183514 ms
+2	       99677 ms
+4	       66322 ms
+
+No memory allocations and a *massive* population size.
+Processors     Runtime
+1	       155801 ms
+2	       82983 ms
+3	       65742 ms
+
+Chuck size execution times:
+
+50000000 Solutions: 
+
+For K=1 thread
+  TID=0
+  72288 ms
+  37683 ms
+  37754 ms
+  37491 ms
+  37715 ms
+
+For K=3 threads
+  TID=0     TID=1     TID=2           Combined CPU time   Seq CPU time
+  23703 ms  24864 ms  23625 ms     => 72192               72288
+  13575 ms  13981 ms  13687 ms     => 41243               37683
+  14217 ms  13448 ms  13883 ms     => 41548               37754
+  14111 ms  14026 ms  13989 ms     => 42126               37491
+  14427 ms  13778 ms  13378 ms     => 41583               37715
+
