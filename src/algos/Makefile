@@ -12,7 +12,7 @@ CPPFLAGS += -I$(INCLUDE)
 LIBS      = -lm -lpthread -L.. -ldeval
 
 OBJECTS   = 
-PROGS     = root_finder
+PROGS     = root_finder mixture
 
 all: $(OBJECTS) $(PROGS)
 

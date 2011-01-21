@@ -49,7 +49,7 @@
  * Prototypes for functions we need.
  */
 int     mutate(solution_t *par1, solution_t *par2, 
-	      solution_t *dest, struct devol_controller *cont);
+	       solution_t *dest, struct devol_controller *cont);
 double  fitness(solution_t *solution);
 int     init(solution_t *solution);
 int     destroy(solution_t *solution);
