@@ -5,13 +5,11 @@
 #
 
 svnversion -c . >.tmp.txt
-awk 'BEGIN { FS = ":" } { 
+REVISION=`awk 'BEGIN { FS = ":" } { 
 if ( $2 ) 
   print $2;
 else
   print $1
-}' .tmp.txt
-
-REVISION=`svnversion .`
+}' .tmp.txt`
 
 echo "REVISION = $REVISION" > config.mak

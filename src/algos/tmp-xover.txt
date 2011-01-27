@@ -1,0 +1,3413 @@
+# Algorithm parameters:
+#   Population size:      300
+#   Thread count:         1
+#   Maximum iterations:   1600
+#   Reproduction rate:    0.250000
+#   Breed fitness:        0.250000
+#   Check for converge:   no
+#   Data file:            mix.txt
+#   Normal distributions: norms.txt
+# Read 2 normal distributions.
+#   norm1: mean=[-10.0000,10.0000] stddev=[0.5000,5.0000] var=[ 0.0100 0.0050 ]
+#   norm2: mean=[-10.0000,10.0000] stddev=[0.5000,5.0000] var=[ 0.0100 0.0050 ]
+# Read 2000 data samples.
+# Solution: (fitness = 0.000000)
+#  mu = 4.8950 sigma = 2.7719 prob = 0.5000
+#  mu = 0.8309 sigma = 3.5405 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.8532 sigma = 3.2037 prob = 0.5000
+#  mu = 2.5169 sigma = 4.7446 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.8054 sigma = 4.0841 prob = 0.5000
+#  mu = 9.1317 sigma = 3.3869 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.1616 sigma = 3.2585 prob = 0.5000
+#  mu = -4.6646 sigma = 3.9832 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.3254 sigma = 1.1353 prob = 0.5000
+#  mu = 9.1791 sigma = 2.4684 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.3907 sigma = 3.5558 prob = 0.5000
+#  mu = -3.0215 sigma = 2.3467 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.9472 sigma = 3.0813 prob = 0.5000
+#  mu = 5.4730 sigma = 2.3311 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.4004 sigma = 4.5508 prob = 0.5000
+#  mu = 7.3241 sigma = 4.2089 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.5666 sigma = 2.9301 prob = 0.5000
+#  mu = 6.6448 sigma = 3.4290 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.4793 sigma = 2.3952 prob = 0.5000
+#  mu = 8.8212 sigma = 4.2156 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.2086 sigma = 2.7899 prob = 0.5000
+#  mu = 7.8814 sigma = 3.3214 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.4420 sigma = 0.7228 prob = 0.5000
+#  mu = 6.0958 sigma = 1.7299 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.5724 sigma = 2.5204 prob = 0.5000
+#  mu = -3.0244 sigma = 2.6454 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.2306 sigma = 2.8284 prob = 0.5000
+#  mu = -6.4783 sigma = 1.1455 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.9534 sigma = 0.6466 prob = 0.5000
+#  mu = 9.1877 sigma = 1.3647 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.0025 sigma = 1.4227 prob = 0.5000
+#  mu = 6.8480 sigma = 3.9643 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.0781 sigma = 3.2056 prob = 0.5000
+#  mu = -0.0503 sigma = 1.4034 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.9562 sigma = 4.8466 prob = 0.5000
+#  mu = -4.6159 sigma = 1.8442 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.6780 sigma = 3.4021 prob = 0.5000
+#  mu = 6.4149 sigma = 1.4082 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.7677 sigma = 2.9596 prob = 0.5000
+#  mu = -0.2180 sigma = 2.3975 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.8995 sigma = 4.0427 prob = 0.5000
+#  mu = 8.9559 sigma = 1.0227 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.8444 sigma = 4.8980 prob = 0.5000
+#  mu = -2.8895 sigma = 3.8602 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.1280 sigma = 0.7013 prob = 0.5000
+#  mu = 1.9352 sigma = 4.2230 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.9690 sigma = 1.5141 prob = 0.5000
+#  mu = -0.2942 sigma = 3.8588 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.7170 sigma = 2.4479 prob = 0.5000
+#  mu = -0.5811 sigma = 4.9346 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.1068 sigma = 2.0671 prob = 0.5000
+#  mu = 7.1905 sigma = 0.8729 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.1690 sigma = 4.2335 prob = 0.5000
+#  mu = -4.0191 sigma = 2.8482 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.0794 sigma = 2.1349 prob = 0.5000
+#  mu = -7.9114 sigma = 1.6286 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 6.2561 sigma = 2.1875 prob = 0.5000
+#  mu = -4.6635 sigma = 3.5550 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.4958 sigma = 0.7543 prob = 0.5000
+#  mu = 8.6252 sigma = 4.5620 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.7253 sigma = 3.1237 prob = 0.5000
+#  mu = -9.7260 sigma = 1.8472 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.7791 sigma = 4.9802 prob = 0.5000
+#  mu = -8.4171 sigma = 4.6578 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.6034 sigma = 3.9959 prob = 0.5000
+#  mu = 6.1937 sigma = 4.2683 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.8447 sigma = 0.8727 prob = 0.5000
+#  mu = -2.4997 sigma = 1.9053 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.4535 sigma = 2.3673 prob = 0.5000
+#  mu = 7.5416 sigma = 0.7524 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.7402 sigma = 0.8818 prob = 0.5000
+#  mu = -5.9717 sigma = 1.3109 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.7313 sigma = 2.1814 prob = 0.5000
+#  mu = -8.4798 sigma = 3.4596 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.9104 sigma = 3.7059 prob = 0.5000
+#  mu = 4.9256 sigma = 3.8739 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.9858 sigma = 1.7286 prob = 0.5000
+#  mu = -3.3187 sigma = 1.2028 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.0312 sigma = 4.9368 prob = 0.5000
+#  mu = 7.9546 sigma = 0.6622 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.0708 sigma = 2.7055 prob = 0.5000
+#  mu = -4.6444 sigma = 1.1623 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.3499 sigma = 4.1926 prob = 0.5000
+#  mu = 0.8546 sigma = 0.6202 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.3454 sigma = 3.1541 prob = 0.5000
+#  mu = -1.6568 sigma = 3.8982 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.6027 sigma = 4.9596 prob = 0.5000
+#  mu = -3.4020 sigma = 3.0064 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.4657 sigma = 2.8487 prob = 0.5000
+#  mu = -2.1104 sigma = 2.5085 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.5009 sigma = 4.5326 prob = 0.5000
+#  mu = 3.3019 sigma = 3.8812 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.4742 sigma = 0.8742 prob = 0.5000
+#  mu = -9.3063 sigma = 3.1239 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.2468 sigma = 4.2452 prob = 0.5000
+#  mu = 6.4473 sigma = 4.3651 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.8664 sigma = 4.1973 prob = 0.5000
+#  mu = -3.4594 sigma = 0.7973 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.2866 sigma = 4.1292 prob = 0.5000
+#  mu = 1.4720 sigma = 2.9403 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.1272 sigma = 3.9912 prob = 0.5000
+#  mu = 0.1268 sigma = 1.2233 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.6612 sigma = 1.7276 prob = 0.5000
+#  mu = 3.3354 sigma = 1.3980 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.6227 sigma = 1.3137 prob = 0.5000
+#  mu = -6.2590 sigma = 1.1206 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.3059 sigma = 3.0139 prob = 0.5000
+#  mu = 6.3169 sigma = 3.6212 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.1137 sigma = 2.9778 prob = 0.5000
+#  mu = 6.6885 sigma = 3.5179 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.1537 sigma = 1.2366 prob = 0.5000
+#  mu = 2.0909 sigma = 4.7515 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.1375 sigma = 2.0759 prob = 0.5000
+#  mu = -6.3076 sigma = 0.6114 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.4818 sigma = 3.0179 prob = 0.5000
+#  mu = 7.0363 sigma = 1.4064 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.7853 sigma = 4.1362 prob = 0.5000
+#  mu = -1.0200 sigma = 4.8052 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.8968 sigma = 3.1826 prob = 0.5000
+#  mu = 0.7669 sigma = 2.5040 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.0095 sigma = 1.7983 prob = 0.5000
+#  mu = -4.6419 sigma = 4.5018 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.6222 sigma = 1.0846 prob = 0.5000
+#  mu = -2.9618 sigma = 1.9040 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.7787 sigma = 0.6890 prob = 0.5000
+#  mu = -1.6944 sigma = 2.1826 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.8529 sigma = 0.6264 prob = 0.5000
+#  mu = -4.5387 sigma = 0.9898 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.3875 sigma = 0.8692 prob = 0.5000
+#  mu = -6.0425 sigma = 0.8090 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.6238 sigma = 1.7408 prob = 0.5000
+#  mu = -2.1263 sigma = 0.5063 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.8052 sigma = 2.3034 prob = 0.5000
+#  mu = -3.1704 sigma = 2.5776 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.1021 sigma = 2.8118 prob = 0.5000
+#  mu = -3.2549 sigma = 1.4103 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.4718 sigma = 3.7666 prob = 0.5000
+#  mu = 8.2278 sigma = 2.0842 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.2329 sigma = 4.8676 prob = 0.5000
+#  mu = -5.3381 sigma = 0.7125 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.3145 sigma = 2.9711 prob = 0.5000
+#  mu = -0.4896 sigma = 3.4841 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.5632 sigma = 2.3676 prob = 0.5000
+#  mu = -6.2862 sigma = 1.2665 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.1699 sigma = 1.4392 prob = 0.5000
+#  mu = -4.2797 sigma = 2.7930 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.5893 sigma = 2.5411 prob = 0.5000
+#  mu = 1.5219 sigma = 3.2095 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.7846 sigma = 2.2929 prob = 0.5000
+#  mu = 4.5741 sigma = 3.0326 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.8856 sigma = 1.5091 prob = 0.5000
+#  mu = -3.3224 sigma = 2.7694 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.9395 sigma = 3.1632 prob = 0.5000
+#  mu = 3.3948 sigma = 3.5140 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.0629 sigma = 1.8331 prob = 0.5000
+#  mu = 0.5257 sigma = 2.4333 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.0234 sigma = 2.8417 prob = 0.5000
+#  mu = 2.2967 sigma = 2.1461 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.6964 sigma = 2.1931 prob = 0.5000
+#  mu = -5.4931 sigma = 2.5131 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.0332 sigma = 0.6122 prob = 0.5000
+#  mu = 5.7792 sigma = 2.2711 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.7743 sigma = 1.5903 prob = 0.5000
+#  mu = 2.6889 sigma = 1.4557 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.2900 sigma = 1.9037 prob = 0.5000
+#  mu = -3.1425 sigma = 3.1592 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.7891 sigma = 1.3072 prob = 0.5000
+#  mu = 7.6465 sigma = 0.8178 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.7452 sigma = 4.4993 prob = 0.5000
+#  mu = 7.9589 sigma = 2.9389 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.8649 sigma = 0.8355 prob = 0.5000
+#  mu = 4.5140 sigma = 3.1669 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.5788 sigma = 1.5201 prob = 0.5000
+#  mu = 1.0311 sigma = 1.4006 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.7555 sigma = 1.5988 prob = 0.5000
+#  mu = 2.8172 sigma = 2.7760 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.8047 sigma = 2.7812 prob = 0.5000
+#  mu = -4.3371 sigma = 1.7857 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.8994 sigma = 0.5564 prob = 0.5000
+#  mu = -1.3972 sigma = 4.3501 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.5791 sigma = 3.3795 prob = 0.5000
+#  mu = -1.5165 sigma = 3.3687 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.1219 sigma = 0.6728 prob = 0.5000
+#  mu = 0.4179 sigma = 2.1608 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.1400 sigma = 1.0326 prob = 0.5000
+#  mu = -0.2892 sigma = 4.3433 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.3531 sigma = 2.2767 prob = 0.5000
+#  mu = 1.8526 sigma = 2.3687 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.5896 sigma = 1.2340 prob = 0.5000
+#  mu = -6.5632 sigma = 2.7497 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.7591 sigma = 2.5147 prob = 0.5000
+#  mu = -9.3555 sigma = 3.4786 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.0598 sigma = 0.7282 prob = 0.5000
+#  mu = 7.0876 sigma = 4.4180 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.1911 sigma = 3.4250 prob = 0.5000
+#  mu = 9.7522 sigma = 2.8119 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.8108 sigma = 2.6379 prob = 0.5000
+#  mu = -7.5300 sigma = 4.1563 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.9136 sigma = 2.6170 prob = 0.5000
+#  mu = -0.6575 sigma = 3.5746 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.9509 sigma = 1.7945 prob = 0.5000
+#  mu = -4.0894 sigma = 2.1830 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.7666 sigma = 4.1464 prob = 0.5000
+#  mu = -9.7059 sigma = 4.0691 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.5919 sigma = 4.9337 prob = 0.5000
+#  mu = 8.2193 sigma = 1.0892 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.1054 sigma = 2.4165 prob = 0.5000
+#  mu = 9.6071 sigma = 3.8257 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.5669 sigma = 4.4168 prob = 0.5000
+#  mu = -3.4449 sigma = 4.4155 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.0644 sigma = 0.8218 prob = 0.5000
+#  mu = -3.9831 sigma = 3.4293 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.4540 sigma = 4.5326 prob = 0.5000
+#  mu = -0.2548 sigma = 4.7481 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.6226 sigma = 1.8702 prob = 0.5000
+#  mu = -9.8528 sigma = 3.5762 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.8426 sigma = 4.2122 prob = 0.5000
+#  mu = 6.2049 sigma = 0.5688 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.4502 sigma = 1.1897 prob = 0.5000
+#  mu = -2.3050 sigma = 2.9253 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.9532 sigma = 2.6651 prob = 0.5000
+#  mu = 9.3317 sigma = 0.9431 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.0832 sigma = 1.1263 prob = 0.5000
+#  mu = 6.4292 sigma = 3.1019 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.1960 sigma = 3.0066 prob = 0.5000
+#  mu = 9.0907 sigma = 3.9936 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.5327 sigma = 2.5871 prob = 0.5000
+#  mu = 8.1901 sigma = 3.2693 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.1602 sigma = 3.3991 prob = 0.5000
+#  mu = 0.4828 sigma = 1.4858 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.6891 sigma = 2.8708 prob = 0.5000
+#  mu = -4.3839 sigma = 0.5105 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.1107 sigma = 4.5760 prob = 0.5000
+#  mu = -0.3139 sigma = 1.2481 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.3362 sigma = 1.9514 prob = 0.5000
+#  mu = 9.9816 sigma = 2.3510 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.5497 sigma = 0.8504 prob = 0.5000
+#  mu = 6.8816 sigma = 2.0593 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.4468 sigma = 3.5524 prob = 0.5000
+#  mu = -8.6829 sigma = 4.1103 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.0997 sigma = 1.8375 prob = 0.5000
+#  mu = -8.8775 sigma = 4.5609 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.5529 sigma = 3.8527 prob = 0.5000
+#  mu = 4.8899 sigma = 2.3917 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.6402 sigma = 3.1335 prob = 0.5000
+#  mu = 7.0793 sigma = 1.6967 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.7679 sigma = 3.3193 prob = 0.5000
+#  mu = 9.1635 sigma = 1.9060 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.3462 sigma = 3.6038 prob = 0.5000
+#  mu = -3.9082 sigma = 3.1367 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.5062 sigma = 2.9471 prob = 0.5000
+#  mu = 9.5086 sigma = 3.9782 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.2177 sigma = 2.2273 prob = 0.5000
+#  mu = 4.6776 sigma = 1.6175 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.6893 sigma = 2.6193 prob = 0.5000
+#  mu = 9.2274 sigma = 2.0059 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.3969 sigma = 1.6347 prob = 0.5000
+#  mu = -7.4991 sigma = 1.6187 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.2156 sigma = 3.8701 prob = 0.5000
+#  mu = 4.8627 sigma = 2.3194 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.2945 sigma = 2.5542 prob = 0.5000
+#  mu = -1.2287 sigma = 1.3008 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.7509 sigma = 4.0462 prob = 0.5000
+#  mu = -3.7033 sigma = 2.3467 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.2330 sigma = 4.8497 prob = 0.5000
+#  mu = -8.8557 sigma = 2.1480 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.5278 sigma = 3.2116 prob = 0.5000
+#  mu = -6.1938 sigma = 2.1982 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.6333 sigma = 1.6962 prob = 0.5000
+#  mu = -5.5829 sigma = 1.7970 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.9662 sigma = 3.1362 prob = 0.5000
+#  mu = 4.0252 sigma = 1.2706 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.6527 sigma = 3.1851 prob = 0.5000
+#  mu = 7.6594 sigma = 3.5835 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.5941 sigma = 3.3409 prob = 0.5000
+#  mu = 4.6765 sigma = 1.7131 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.6857 sigma = 2.2972 prob = 0.5000
+#  mu = 7.8930 sigma = 4.9034 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.6647 sigma = 2.4443 prob = 0.5000
+#  mu = -6.0304 sigma = 4.1125 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.4179 sigma = 3.7096 prob = 0.5000
+#  mu = 6.0317 sigma = 2.5720 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.9035 sigma = 2.9738 prob = 0.5000
+#  mu = 4.7199 sigma = 4.0320 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.0347 sigma = 4.8257 prob = 0.5000
+#  mu = 6.5147 sigma = 2.4576 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.8806 sigma = 3.3562 prob = 0.5000
+#  mu = 5.5330 sigma = 4.5805 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.2030 sigma = 3.7333 prob = 0.5000
+#  mu = 5.9146 sigma = 4.7841 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.0352 sigma = 4.9995 prob = 0.5000
+#  mu = -8.1949 sigma = 0.5010 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.0300 sigma = 3.9947 prob = 0.5000
+#  mu = 7.7750 sigma = 0.6246 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.6853 sigma = 3.2159 prob = 0.5000
+#  mu = -2.1731 sigma = 1.8372 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.2144 sigma = 0.7713 prob = 0.5000
+#  mu = -8.9712 sigma = 1.7528 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.8131 sigma = 2.2095 prob = 0.5000
+#  mu = -2.0609 sigma = 4.5822 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.5639 sigma = 3.7665 prob = 0.5000
+#  mu = 7.5708 sigma = 3.6799 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.4073 sigma = 3.9736 prob = 0.5000
+#  mu = 9.4703 sigma = 2.8165 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.8802 sigma = 0.8494 prob = 0.5000
+#  mu = 0.9085 sigma = 4.8824 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.5798 sigma = 1.6973 prob = 0.5000
+#  mu = 3.1024 sigma = 1.2139 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.4585 sigma = 3.9863 prob = 0.5000
+#  mu = -7.7162 sigma = 4.4151 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.6419 sigma = 3.6841 prob = 0.5000
+#  mu = 7.3392 sigma = 0.9331 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.9345 sigma = 1.2616 prob = 0.5000
+#  mu = -6.7411 sigma = 4.3147 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 6.8795 sigma = 1.3197 prob = 0.5000
+#  mu = 2.9177 sigma = 1.3142 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.0557 sigma = 2.8231 prob = 0.5000
+#  mu = -5.5187 sigma = 2.4187 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.8104 sigma = 1.8115 prob = 0.5000
+#  mu = 0.2839 sigma = 4.4672 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.5055 sigma = 1.5171 prob = 0.5000
+#  mu = 9.1905 sigma = 4.9678 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.2729 sigma = 3.7390 prob = 0.5000
+#  mu = -1.3314 sigma = 0.7754 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.5115 sigma = 1.8137 prob = 0.5000
+#  mu = -2.9989 sigma = 0.6083 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.5024 sigma = 0.9187 prob = 0.5000
+#  mu = -1.1716 sigma = 4.5347 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.8321 sigma = 2.8378 prob = 0.5000
+#  mu = -1.4033 sigma = 0.6876 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.1579 sigma = 1.6871 prob = 0.5000
+#  mu = 3.1843 sigma = 4.4171 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.8539 sigma = 1.4342 prob = 0.5000
+#  mu = -4.8123 sigma = 3.5166 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.5361 sigma = 1.9489 prob = 0.5000
+#  mu = 6.8685 sigma = 3.1740 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.5622 sigma = 2.6919 prob = 0.5000
+#  mu = 7.9397 sigma = 0.5754 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.8260 sigma = 4.2209 prob = 0.5000
+#  mu = 1.1052 sigma = 1.9967 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.2705 sigma = 3.2491 prob = 0.5000
+#  mu = -7.9555 sigma = 1.4582 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.7086 sigma = 4.9267 prob = 0.5000
+#  mu = -3.6163 sigma = 2.7087 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.0012 sigma = 0.9760 prob = 0.5000
+#  mu = -2.2893 sigma = 2.1811 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.0074 sigma = 3.8591 prob = 0.5000
+#  mu = 7.0442 sigma = 4.9955 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.6758 sigma = 4.3105 prob = 0.5000
+#  mu = 6.0678 sigma = 2.3289 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.2815 sigma = 1.0366 prob = 0.5000
+#  mu = 1.1784 sigma = 2.6694 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.4059 sigma = 4.0811 prob = 0.5000
+#  mu = 1.8290 sigma = 0.8781 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.5090 sigma = 1.6212 prob = 0.5000
+#  mu = -9.8377 sigma = 2.0273 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.8408 sigma = 2.1063 prob = 0.5000
+#  mu = -3.4715 sigma = 2.9145 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.6952 sigma = 1.6565 prob = 0.5000
+#  mu = -9.3313 sigma = 2.1821 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.1842 sigma = 0.7044 prob = 0.5000
+#  mu = 6.2475 sigma = 4.3569 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.1131 sigma = 1.1076 prob = 0.5000
+#  mu = -1.3295 sigma = 2.3408 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.2937 sigma = 2.4819 prob = 0.5000
+#  mu = -4.0331 sigma = 4.2110 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.9126 sigma = 2.5532 prob = 0.5000
+#  mu = 9.7294 sigma = 2.3574 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.1719 sigma = 1.3935 prob = 0.5000
+#  mu = 9.0286 sigma = 4.3032 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.2447 sigma = 0.8920 prob = 0.5000
+#  mu = 2.7758 sigma = 0.5098 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.4849 sigma = 1.5845 prob = 0.5000
+#  mu = 4.6661 sigma = 0.8836 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.4221 sigma = 3.0681 prob = 0.5000
+#  mu = -4.3816 sigma = 4.3378 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.2394 sigma = 0.9327 prob = 0.5000
+#  mu = 9.1561 sigma = 2.4507 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.7234 sigma = 2.1158 prob = 0.5000
+#  mu = -0.4130 sigma = 2.5331 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 6.3082 sigma = 4.0017 prob = 0.5000
+#  mu = 6.8701 sigma = 2.1157 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.5218 sigma = 3.2503 prob = 0.5000
+#  mu = 7.9916 sigma = 4.2869 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.5102 sigma = 2.8104 prob = 0.5000
+#  mu = -3.6492 sigma = 4.8212 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.7704 sigma = 4.3036 prob = 0.5000
+#  mu = 8.4947 sigma = 2.6903 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.4172 sigma = 0.8966 prob = 0.5000
+#  mu = -6.4886 sigma = 2.7257 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.8025 sigma = 2.0156 prob = 0.5000
+#  mu = -6.9726 sigma = 1.2281 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.5158 sigma = 3.1266 prob = 0.5000
+#  mu = -0.8476 sigma = 2.5928 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.0458 sigma = 4.0424 prob = 0.5000
+#  mu = -9.4583 sigma = 4.1224 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.3173 sigma = 4.0597 prob = 0.5000
+#  mu = 1.2149 sigma = 4.5526 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.4336 sigma = 2.5370 prob = 0.5000
+#  mu = 7.6727 sigma = 3.2670 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 7.0385 sigma = 3.4275 prob = 0.5000
+#  mu = -6.4644 sigma = 4.1602 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.0157 sigma = 3.2907 prob = 0.5000
+#  mu = -9.6998 sigma = 1.7345 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.6437 sigma = 3.4296 prob = 0.5000
+#  mu = 2.3423 sigma = 4.7384 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.7204 sigma = 0.6965 prob = 0.5000
+#  mu = -4.9712 sigma = 0.8548 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.7585 sigma = 1.5792 prob = 0.5000
+#  mu = -0.6747 sigma = 4.0771 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.1156 sigma = 3.7122 prob = 0.5000
+#  mu = 3.7700 sigma = 4.6407 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.0464 sigma = 4.7534 prob = 0.5000
+#  mu = 5.8442 sigma = 3.6586 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.2712 sigma = 1.0542 prob = 0.5000
+#  mu = 6.8918 sigma = 2.8759 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.9423 sigma = 0.9164 prob = 0.5000
+#  mu = -3.3239 sigma = 0.6934 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.4160 sigma = 0.5499 prob = 0.5000
+#  mu = 0.8145 sigma = 0.9971 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.5998 sigma = 3.6886 prob = 0.5000
+#  mu = -6.3160 sigma = 0.8772 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.7538 sigma = 2.4134 prob = 0.5000
+#  mu = -5.5371 sigma = 2.9685 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.8061 sigma = 2.5267 prob = 0.5000
+#  mu = -0.1174 sigma = 4.4295 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.4365 sigma = 4.1839 prob = 0.5000
+#  mu = -4.3505 sigma = 3.1935 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.7210 sigma = 1.2673 prob = 0.5000
+#  mu = 2.6003 sigma = 2.6300 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.7019 sigma = 4.1880 prob = 0.5000
+#  mu = -6.7556 sigma = 1.1113 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.3711 sigma = 0.6583 prob = 0.5000
+#  mu = -9.2148 sigma = 2.2496 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.9934 sigma = 1.6404 prob = 0.5000
+#  mu = 3.9006 sigma = 1.9987 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.6036 sigma = 4.7741 prob = 0.5000
+#  mu = 5.9732 sigma = 2.4611 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.9543 sigma = 4.9014 prob = 0.5000
+#  mu = -6.8625 sigma = 4.1337 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.1297 sigma = 2.3608 prob = 0.5000
+#  mu = -0.9621 sigma = 2.5247 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.4964 sigma = 0.9448 prob = 0.5000
+#  mu = 9.7449 sigma = 1.3820 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 6.7624 sigma = 4.2103 prob = 0.5000
+#  mu = -4.4404 sigma = 1.2657 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.3194 sigma = 1.2728 prob = 0.5000
+#  mu = 9.7569 sigma = 1.9340 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.2843 sigma = 3.5972 prob = 0.5000
+#  mu = 1.5030 sigma = 2.0994 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.3281 sigma = 0.8354 prob = 0.5000
+#  mu = -8.3474 sigma = 0.8552 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.8179 sigma = 1.1425 prob = 0.5000
+#  mu = 7.8634 sigma = 3.6158 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.6845 sigma = 1.9698 prob = 0.5000
+#  mu = -2.0218 sigma = 2.8127 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.9278 sigma = 3.6863 prob = 0.5000
+#  mu = -1.9616 sigma = 2.0021 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.6526 sigma = 3.9823 prob = 0.5000
+#  mu = 0.2438 sigma = 4.8051 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.9813 sigma = 1.3617 prob = 0.5000
+#  mu = 4.9072 sigma = 4.8714 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.9758 sigma = 3.7340 prob = 0.5000
+#  mu = -6.2667 sigma = 0.9542 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.1307 sigma = 1.5643 prob = 0.5000
+#  mu = 5.9442 sigma = 1.3633 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.3680 sigma = 3.9764 prob = 0.5000
+#  mu = 6.7768 sigma = 4.4146 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.3908 sigma = 0.8993 prob = 0.5000
+#  mu = 4.1694 sigma = 2.7024 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.0356 sigma = 4.7077 prob = 0.5000
+#  mu = -4.9301 sigma = 2.2166 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.6425 sigma = 3.9745 prob = 0.5000
+#  mu = 0.3324 sigma = 3.7303 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.7506 sigma = 3.4831 prob = 0.5000
+#  mu = 5.7828 sigma = 4.8908 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.2035 sigma = 0.5751 prob = 0.5000
+#  mu = -2.5467 sigma = 4.7759 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.9724 sigma = 4.9193 prob = 0.5000
+#  mu = -1.5092 sigma = 1.5099 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.4895 sigma = 4.8232 prob = 0.5000
+#  mu = -7.3131 sigma = 3.5948 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.5060 sigma = 0.5785 prob = 0.5000
+#  mu = 0.3632 sigma = 0.8471 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.8570 sigma = 4.3762 prob = 0.5000
+#  mu = 3.4542 sigma = 0.9829 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.0221 sigma = 3.5044 prob = 0.5000
+#  mu = -8.4120 sigma = 4.1741 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.2997 sigma = 4.0625 prob = 0.5000
+#  mu = 4.8785 sigma = 3.0705 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.8855 sigma = 2.9080 prob = 0.5000
+#  mu = 3.6647 sigma = 1.8093 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.9851 sigma = 3.0901 prob = 0.5000
+#  mu = 3.7891 sigma = 4.7084 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.0621 sigma = 3.3707 prob = 0.5000
+#  mu = 7.9875 sigma = 4.8879 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.9483 sigma = 0.5857 prob = 0.5000
+#  mu = 0.9012 sigma = 1.7871 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.1726 sigma = 4.4388 prob = 0.5000
+#  mu = -4.9522 sigma = 3.9417 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.6434 sigma = 4.2411 prob = 0.5000
+#  mu = -2.7446 sigma = 3.2714 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.2473 sigma = 3.6345 prob = 0.5000
+#  mu = -4.3788 sigma = 0.7675 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.1466 sigma = 2.7482 prob = 0.5000
+#  mu = 3.5947 sigma = 3.1890 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.9474 sigma = 4.6951 prob = 0.5000
+#  mu = -5.5345 sigma = 3.2144 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.0907 sigma = 4.0034 prob = 0.5000
+#  mu = -7.9160 sigma = 0.7863 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.8996 sigma = 1.7852 prob = 0.5000
+#  mu = -5.6602 sigma = 3.9381 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.4508 sigma = 2.2481 prob = 0.5000
+#  mu = 8.6193 sigma = 0.5535 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 6.3959 sigma = 2.9961 prob = 0.5000
+#  mu = 3.5654 sigma = 2.3564 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.3170 sigma = 4.8912 prob = 0.5000
+#  mu = 0.9523 sigma = 4.8227 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.0355 sigma = 1.6572 prob = 0.5000
+#  mu = 3.8845 sigma = 1.9868 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.2069 sigma = 2.2304 prob = 0.5000
+#  mu = -7.0515 sigma = 1.6681 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.1041 sigma = 4.8387 prob = 0.5000
+#  mu = 7.0334 sigma = 1.0661 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.4269 sigma = 4.1468 prob = 0.5000
+#  mu = 8.5231 sigma = 2.8661 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.3312 sigma = 1.9147 prob = 0.5000
+#  mu = 8.2308 sigma = 4.8295 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.0585 sigma = 2.5983 prob = 0.5000
+#  mu = 0.1453 sigma = 3.7313 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.2173 sigma = 2.1919 prob = 0.5000
+#  mu = -7.3070 sigma = 0.5749 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -0.9451 sigma = 4.8794 prob = 0.5000
+#  mu = 6.2741 sigma = 2.7061 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.0102 sigma = 3.8796 prob = 0.5000
+#  mu = 7.3225 sigma = 2.6508 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.4076 sigma = 4.1456 prob = 0.5000
+#  mu = 9.6872 sigma = 2.1661 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.4303 sigma = 3.0962 prob = 0.5000
+#  mu = -6.1232 sigma = 0.7832 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.7842 sigma = 4.1241 prob = 0.5000
+#  mu = -5.6145 sigma = 0.5037 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.5900 sigma = 2.1564 prob = 0.5000
+#  mu = -7.7908 sigma = 2.6992 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.8823 sigma = 4.2440 prob = 0.5000
+#  mu = 2.6064 sigma = 1.1606 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 3.1132 sigma = 2.5850 prob = 0.5000
+#  mu = 2.5843 sigma = 0.8175 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.2599 sigma = 3.1240 prob = 0.5000
+#  mu = -4.5515 sigma = 2.4159 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.9882 sigma = 3.6357 prob = 0.5000
+#  mu = 4.6042 sigma = 3.3465 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.7097 sigma = 2.9495 prob = 0.5000
+#  mu = 0.7097 sigma = 3.8761 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.8006 sigma = 4.0714 prob = 0.5000
+#  mu = 6.9441 sigma = 1.4752 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 9.1459 sigma = 0.7561 prob = 0.5000
+#  mu = 9.7634 sigma = 1.7775 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.4430 sigma = 4.5811 prob = 0.5000
+#  mu = 6.8789 sigma = 3.4441 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.8853 sigma = 3.5110 prob = 0.5000
+#  mu = 1.6447 sigma = 1.8855 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -6.0827 sigma = 3.4666 prob = 0.5000
+#  mu = -8.5062 sigma = 4.6573 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.0905 sigma = 4.1516 prob = 0.5000
+#  mu = 6.9906 sigma = 3.9690 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 1.6296 sigma = 0.6283 prob = 0.5000
+#  mu = -6.4926 sigma = 2.1351 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -5.8376 sigma = 1.3953 prob = 0.5000
+#  mu = -2.9223 sigma = 2.5334 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 0.7540 sigma = 2.4245 prob = 0.5000
+#  mu = 3.7939 sigma = 1.5053 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -8.4603 sigma = 1.6838 prob = 0.5000
+#  mu = -6.0788 sigma = 3.2219 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.7016 sigma = 2.1529 prob = 0.5000
+#  mu = -0.0208 sigma = 3.9045 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -3.1494 sigma = 2.0626 prob = 0.5000
+#  mu = 6.2486 sigma = 3.5303 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 8.5096 sigma = 1.2279 prob = 0.5000
+#  mu = -4.1073 sigma = 0.5917 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -1.2025 sigma = 2.1228 prob = 0.5000
+#  mu = 3.1328 sigma = 1.2375 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 4.3856 sigma = 1.5866 prob = 0.5000
+#  mu = -9.8057 sigma = 4.2766 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -9.0801 sigma = 0.8561 prob = 0.5000
+#  mu = 2.1685 sigma = 0.7222 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 5.3151 sigma = 3.9601 prob = 0.5000
+#  mu = -5.8447 sigma = 4.6325 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -4.4639 sigma = 1.8798 prob = 0.5000
+#  mu = -7.7042 sigma = 1.1228 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.7562 sigma = 2.3864 prob = 0.5000
+#  mu = 8.3559 sigma = 4.6916 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -7.6263 sigma = 3.4894 prob = 0.5000
+#  mu = -7.2738 sigma = 3.5988 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.7294 sigma = 2.2297 prob = 0.5000
+#  mu = -4.0253 sigma = 2.8184 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = 2.9662 sigma = 4.3916 prob = 0.5000
+#  mu = 8.8956 sigma = 1.2686 prob = 0.5000
+# Solution: (fitness = 0.000000)
+#  mu = -2.7934 sigma = 4.4876 prob = 0.5000
+#  mu = 6.3780 sigma = 2.7213 prob = 0.5000
+     1	1000000007417.782715
+     2	1000000006777.825684
+     3	1000000006193.130371
+     4	1000000006026.548340
+     5	1000000005851.374756
+     6	1000000005745.364624
+     7	1000000005729.077881
+     8	1000000005717.346680
+     9	1000000005573.527100
+    10	1000000005628.194214
+    11	1000000005594.243164
+    12	1000000005438.180054
+    13	1000000005387.565796
+    14	1000000005341.521484
+    15	1000000005316.310425
+    16	1000000005286.068726
+    17	1000000005265.489746
+    18	1000000005261.771484
+    19	1000000005259.380859
+    20	1000000005258.358154
+    21	1000000005257.030884
+    22	1000000005255.920654
+    23	1000000005254.846069
+    24	1000000005253.952026
+    25	1000000005253.120850
+    26	1000000005252.213501
+    27	1000000005251.485474
+    28	1000000005250.702026
+    29	1000000005249.948486
+    30	1000000005249.294189
+    31	1000000005248.494019
+    32	1000000005247.690430
+    33	1000000005246.936279
+    34	1000000005246.156250
+    35	1000000005245.396484
+    36	1000000005244.780884
+    37	1000000005244.067139
+    38	1000000005243.398071
+    39	1000000005242.754150
+    40	1000000005242.215210
+    41	1000000005241.654419
+    42	1000000005241.062134
+    43	1000000005240.487305
+    44	1000000005239.917969
+    45	1000000005239.428589
+    46	1000000005238.979004
+    47	1000000005238.477661
+    48	1000000005237.982300
+    49	1000000005237.441895
+    50	1000000005236.893555
+    51	1000000005236.360596
+    52	1000000005235.841309
+    53	1000000005235.349121
+    54	1000000005234.888916
+    55	1000000005234.455444
+    56	1000000005234.098511
+    57	1000000005233.708374
+    58	1000000005233.333374
+    59	1000000005232.943970
+    60	1000000005232.622314
+    61	1000000005232.289429
+    62	1000000005231.994019
+    63	1000000005231.738159
+    64	1000000005231.544189
+    65	1000000005231.290649
+    66	1000000005231.056030
+    67	1000000005230.858765
+    68	1000000005230.647949
+    69	1000000005230.449829
+    70	1000000005230.254150
+    71	1000000005230.068970
+    72	1000000005229.904541
+    73	1000000005229.731445
+    74	1000000005229.550415
+    75	1000000005229.364014
+    76	1000000005229.193115
+    77	1000000005229.023926
+    78	1000000005228.855469
+    79	1000000005228.695801
+    80	1000000005228.531006
+    81	1000000005228.364014
+    82	1000000005228.189941
+    83	1000000005228.006836
+    84	1000000005227.838989
+    85	1000000005227.647461
+    86	1000000005227.471680
+    87	1000000005227.301514
+    88	1000000005227.123169
+    89	1000000005226.979736
+    90	1000000005226.836914
+    91	1000000005226.675049
+    92	1000000005226.520996
+    93	1000000005226.401611
+    94	1000000005226.244629
+    95	1000000005226.092041
+    96	1000000005225.928589
+    97	1000000005225.783569
+    98	1000000005225.617676
+    99	1000000005225.453491
+   100	1000000005225.265869
+   101	1000000005225.135376
+   102	1000000005224.987549
+   103	1000000005224.837891
+   104	1000000005224.705566
+   105	1000000005224.558105
+   106	1000000005224.409790
+   107	1000000005224.251465
+   108	1000000005224.114990
+   109	1000000005223.967041
+   110	1000000005223.785400
+   111	1000000005223.635986
+   112	1000000005223.479126
+   113	1000000005223.290649
+   114	1000000005223.137085
+   115	1000000005222.958130
+   116	1000000005222.773560
+   117	1000000005222.620605
+   118	1000000005222.441650
+   119	1000000005222.267090
+   120	1000000005222.105225
+   121	1000000005221.929810
+   122	1000000005221.770264
+   123	1000000005221.611694
+   124	1000000005221.459106
+   125	1000000005221.273804
+   126	1000000005221.118286
+   127	1000000005220.974976
+   128	1000000005220.828979
+   129	1000000005220.698486
+   130	1000000005220.564941
+   131	1000000005220.418091
+   132	1000000005220.275391
+   133	1000000005220.125244
+   134	1000000005219.974365
+   135	1000000005219.852905
+   136	1000000005219.704224
+   137	1000000005219.549561
+   138	1000000005219.411499
+   139	1000000005219.251221
+   140	1000000005219.107056
+   141	1000000005218.956299
+   142	1000000005218.795654
+   143	1000000005218.667114
+   144	1000000005218.522339
+   145	1000000005218.353394
+   146	1000000005218.210205
+   147	1000000005218.048706
+   148	1000000005217.895020
+   149	1000000005217.749390
+   150	1000000005217.629761
+   151	1000000005217.481934
+   152	1000000005217.342285
+   153	1000000005217.189819
+   154	1000000005217.049194
+   155	1000000005216.887451
+   156	1000000005216.741211
+   157	1000000005216.576660
+   158	1000000005216.449341
+   159	1000000005216.324829
+   160	1000000005216.223389
+   161	1000000005216.113525
+   162	1000000005216.008789
+   163	1000000005215.909424
+   164	1000000005215.817139
+   165	1000000005215.711304
+   166	1000000005215.616821
+   167	1000000005215.525635
+   168	1000000005215.420654
+   169	1000000005215.327026
+   170	1000000005215.215576
+   171	1000000005215.116455
+   172	1000000005215.013794
+   173	1000000005214.896484
+   174	1000000005214.780884
+   175	1000000005214.642700
+   176	1000000005214.528564
+   177	1000000005214.397339
+   178	1000000005214.271851
+   179	1000000005214.154419
+   180	1000000005214.018311
+   181	1000000005213.919189
+   182	1000000005213.802246
+   183	1000000005213.690430
+   184	1000000005213.589966
+   185	1000000005213.470825
+   186	1000000005213.352051
+   187	1000000005213.259155
+   188	1000000005213.154419
+   189	1000000005213.042969
+   190	1000000005212.946045
+   191	1000000005212.858765
+   192	1000000005212.769165
+   193	1000000005212.681885
+   194	1000000005212.588989
+   195	1000000005212.498779
+   196	1000000005212.417480
+   197	1000000005212.331055
+   198	1000000005212.244751
+   199	1000000005212.155884
+   200	1000000005212.064819
+   201	1000000005211.968994
+   202	1000000005211.855469
+   203	1000000005211.759399
+   204	1000000005211.665894
+   205	1000000005211.568115
+   206	1000000005211.456299
+   207	1000000005211.352661
+   208	1000000005211.246216
+   209	1000000005211.145264
+   210	1000000005211.044434
+   211	1000000005210.944214
+   212	1000000005210.848511
+   213	1000000005210.740356
+   214	1000000005210.642944
+   215	1000000005210.546509
+   216	1000000005210.443481
+   217	1000000005210.347534
+   218	1000000005210.247070
+   219	1000000005210.144531
+   220	1000000005210.035400
+   221	1000000005209.947510
+   222	1000000005209.859009
+   223	1000000005209.776245
+   224	1000000005209.687256
+   225	1000000005209.592041
+   226	1000000005209.498779
+   227	1000000005209.408569
+   228	1000000005209.317749
+   229	1000000005209.223755
+   230	1000000005209.117676
+   231	1000000005209.022339
+   232	1000000005208.921875
+   233	1000000005208.811401
+   234	1000000005208.711914
+   235	1000000005208.594116
+   236	1000000005208.497559
+   237	1000000005208.399170
+   238	1000000005208.301880
+   239	1000000005208.206421
+   240	1000000005208.108765
+   241	1000000005208.014404
+   242	1000000005207.929565
+   243	1000000005207.843140
+   244	1000000005207.757690
+   245	1000000005207.664185
+   246	1000000005207.569336
+   247	1000000005207.497925
+   248	1000000005207.408081
+   249	1000000005207.333496
+   250	1000000005207.246704
+   251	1000000005207.154785
+   252	1000000005207.059326
+   253	1000000005206.967651
+   254	1000000005206.864990
+   255	1000000005206.784180
+   256	1000000005206.684204
+   257	1000000005206.597900
+   258	1000000005206.502686
+   259	1000000005206.403931
+   260	1000000005206.312500
+   261	1000000005206.200439
+   262	1000000005206.077515
+   263	1000000005205.972046
+   264	1000000005205.856079
+   265	1000000005205.735229
+   266	1000000005205.605225
+   267	1000000005205.474976
+   268	1000000005205.350220
+   269	1000000005205.223755
+   270	1000000005205.100464
+   271	1000000005204.986450
+   272	1000000005204.878540
+   273	1000000005204.759766
+   274	1000000005204.656006
+   275	1000000005204.537231
+   276	1000000005204.431274
+   277	1000000005204.319946
+   278	1000000005204.239990
+   279	1000000005204.156616
+   280	1000000005204.067871
+   281	1000000005203.978760
+   282	1000000005203.887695
+   283	1000000005203.790649
+   284	1000000005203.698730
+   285	1000000005203.602295
+   286	1000000005203.523804
+   287	1000000005203.441284
+   288	1000000005203.349976
+   289	1000000005203.264160
+   290	1000000005203.192505
+   291	1000000005203.110229
+   292	1000000005203.027344
+   293	1000000005202.943481
+   294	1000000005202.872314
+   295	1000000005202.796509
+   296	1000000005202.732544
+   297	1000000005202.664429
+   298	1000000005202.592651
+   299	1000000005202.509399
+   300	1000000005202.426514
+   301	1000000005202.346436
+   302	1000000005202.264526
+   303	1000000005202.174805
+   304	1000000005202.088745
+   305	1000000005202.013550
+   306	1000000005201.939941
+   307	1000000005201.858521
+   308	1000000005201.780640
+   309	1000000005201.702881
+   310	1000000005201.626221
+   311	1000000005201.537964
+   312	1000000005201.454590
+   313	1000000005201.363770
+   314	1000000005201.272095
+   315	1000000005201.182251
+   316	1000000005201.076294
+   317	1000000005200.966675
+   318	1000000005200.869141
+   319	1000000005200.754639
+   320	1000000005200.652954
+   321	1000000005200.563721
+   322	1000000005200.479736
+   323	1000000005200.393921
+   324	1000000005200.314575
+   325	1000000005200.220459
+   326	1000000005200.134644
+   327	1000000005200.042725
+   328	1000000005199.966675
+   329	1000000005199.890869
+   330	1000000005199.809326
+   331	1000000005199.739136
+   332	1000000005199.678711
+   333	1000000005199.605469
+   334	1000000005199.535645
+   335	1000000005199.469116
+   336	1000000005199.402954
+   337	1000000005199.327759
+   338	1000000005199.257446
+   339	1000000005199.188110
+   340	1000000005199.113525
+   341	1000000005199.032104
+   342	1000000005198.955444
+   343	1000000005198.887695
+   344	1000000005198.820679
+   345	1000000005198.745605
+   346	1000000005198.683594
+   347	1000000005198.621216
+   348	1000000005198.558960
+   349	1000000005198.500366
+   350	1000000005198.451660
+   351	1000000005198.398315
+   352	1000000005198.340576
+   353	1000000005198.277344
+   354	1000000005198.216919
+   355	1000000005198.140259
+   356	1000000005198.064819
+   357	1000000005197.990601
+   358	1000000005197.913086
+   359	1000000005197.832520
+   360	1000000005197.749390
+   361	1000000005197.672729
+   362	1000000005197.588745
+   363	1000000005197.508911
+   364	1000000005197.415649
+   365	1000000005197.348755
+   366	1000000005197.270020
+   367	1000000005197.211670
+   368	1000000005197.142456
+   369	1000000005197.084595
+   370	1000000005197.011475
+   371	1000000005196.952759
+   372	1000000005196.882446
+   373	1000000005196.827759
+   374	1000000005196.759766
+   375	1000000005196.693970
+   376	1000000005196.622681
+   377	1000000005196.546265
+   378	1000000005196.471680
+   379	1000000005196.402954
+   380	1000000005196.311401
+   381	1000000005196.220581
+   382	1000000005196.130371
+   383	1000000005196.048950
+   384	1000000005195.974365
+   385	1000000005195.885864
+   386	1000000005195.797974
+   387	1000000005195.726685
+   388	1000000005195.653564
+   389	1000000005195.596436
+   390	1000000005195.525024
+   391	1000000005195.461914
+   392	1000000005195.409424
+   393	1000000005195.364014
+   394	1000000005195.298950
+   395	1000000005195.245239
+   396	1000000005195.193726
+   397	1000000005195.137329
+   398	1000000005195.085571
+   399	1000000005195.021240
+   400	1000000005194.964844
+   401	1000000005194.905151
+   402	1000000005194.841675
+   403	1000000005194.773071
+   404	1000000005194.713989
+   405	1000000005194.651489
+   406	1000000005194.590820
+   407	1000000005194.540894
+   408	1000000005194.484375
+   409	1000000005194.436035
+   410	1000000005194.384644
+   411	1000000005194.325806
+   412	1000000005194.269531
+   413	1000000005194.215210
+   414	1000000005194.147461
+   415	1000000005194.083130
+   416	1000000005194.019775
+   417	1000000005193.954346
+   418	1000000005193.886230
+   419	1000000005193.822266
+   420	1000000005193.763184
+   421	1000000005193.715820
+   422	1000000005193.662476
+   423	1000000005193.609619
+   424	1000000005193.555054
+   425	1000000005193.509644
+   426	1000000005193.450195
+   427	1000000005193.397949
+   428	1000000005193.340820
+   429	1000000005193.288086
+   430	1000000005193.248901
+   431	1000000005193.194824
+   432	1000000005193.138550
+   433	1000000005193.079834
+   434	1000000005193.025024
+   435	1000000005192.974609
+   436	1000000005192.906860
+   437	1000000005192.850464
+   438	1000000005192.792236
+   439	1000000005192.736816
+   440	1000000005192.685181
+   441	1000000005192.635010
+   442	1000000005192.578369
+   443	1000000005192.517700
+   444	1000000005192.464966
+   445	1000000005192.406006
+   446	1000000005192.350464
+   447	1000000005192.291016
+   448	1000000005192.224976
+   449	1000000005192.160034
+   450	1000000005192.095215
+   451	1000000005192.027710
+   452	1000000005191.953369
+   453	1000000005191.881470
+   454	1000000005191.817139
+   455	1000000005191.761719
+   456	1000000005191.697266
+   457	1000000005191.641846
+   458	1000000005191.583496
+   459	1000000005191.523804
+   460	1000000005191.465454
+   461	1000000005191.416626
+   462	1000000005191.367554
+   463	1000000005191.310791
+   464	1000000005191.255981
+   465	1000000005191.197144
+   466	1000000005191.147339
+   467	1000000005191.094360
+   468	1000000005191.042969
+   469	1000000005190.983276
+   470	1000000005190.925049
+   471	1000000005190.880981
+   472	1000000005190.824585
+   473	1000000005190.775024
+   474	1000000005190.723999
+   475	1000000005190.675415
+   476	1000000005190.621094
+   477	1000000005190.567261
+   478	1000000005190.507935
+   479	1000000005190.447266
+   480	1000000005190.389526
+   481	1000000005190.332764
+   482	1000000005190.268799
+   483	1000000005190.222656
+   484	1000000005190.162964
+   485	1000000005190.106689
+   486	1000000005190.048096
+   487	1000000005189.992065
+   488	1000000005189.935425
+   489	1000000005189.876709
+   490	1000000005189.801514
+   491	1000000005189.745239
+   492	1000000005189.676514
+   493	1000000005189.592896
+   494	1000000005189.496094
+   495	1000000005189.377319
+   496	1000000005189.266235
+   497	1000000005189.140991
+   498	1000000005189.028931
+   499	1000000005188.916016
+   500	1000000005188.824829
+   501	1000000005188.723145
+   502	1000000005188.660034
+   503	1000000005188.589600
+   504	1000000005188.530396
+   505	1000000005188.462524
+   506	1000000005188.400024
+   507	1000000005188.341309
+   508	1000000005188.284424
+   509	1000000005188.230225
+   510	1000000005188.174561
+   511	1000000005188.110474
+   512	1000000005188.051636
+   513	1000000005187.998535
+   514	1000000005187.937134
+   515	1000000005187.887939
+   516	1000000005187.838745
+   517	1000000005187.779541
+   518	1000000005187.715576
+   519	1000000005187.662720
+   520	1000000005187.605591
+   521	1000000005187.548096
+   522	1000000005187.489746
+   523	1000000005187.432129
+   524	1000000005187.375366
+   525	1000000005187.305664
+   526	1000000005187.234009
+   527	1000000005187.169189
+   528	1000000005187.097656
+   529	1000000005187.022949
+   530	1000000005186.950806
+   531	1000000005186.871094
+   532	1000000005186.797729
+   533	1000000005186.721436
+   534	1000000005186.657104
+   535	1000000005186.584106
+   536	1000000005186.545410
+   537	1000000005186.494019
+   538	1000000005186.448364
+   539	1000000005186.394409
+   540	1000000005186.347900
+   541	1000000005186.299194
+   542	1000000005186.238159
+   543	1000000005186.175781
+   544	1000000005186.127930
+   545	1000000005186.075684
+   546	1000000005186.022949
+   547	1000000005185.965210
+   548	1000000005185.907715
+   549	1000000005185.845581
+   550	1000000005185.780151
+   551	1000000005185.716919
+   552	1000000005185.658936
+   553	1000000005185.611694
+   554	1000000005185.555054
+   555	1000000005185.503174
+   556	1000000005185.434326
+   557	1000000005185.380859
+   558	1000000005185.319214
+   559	1000000005185.255005
+   560	1000000005185.195679
+   561	1000000005185.126465
+   562	1000000005185.050659
+   563	1000000005184.967041
+   564	1000000005184.874390
+   565	1000000005184.788940
+   566	1000000005184.702026
+   567	1000000005184.635376
+   568	1000000005184.563965
+   569	1000000005184.515381
+   570	1000000005184.466919
+   571	1000000005184.411499
+   572	1000000005184.360474
+   573	1000000005184.301880
+   574	1000000005184.241699
+   575	1000000005184.178955
+   576	1000000005184.122925
+   577	1000000005184.062744
+   578	1000000005184.013794
+   579	1000000005183.962769
+   580	1000000005183.899414
+   581	1000000005183.829346
+   582	1000000005183.775024
+   583	1000000005183.706421
+   584	1000000005183.653076
+   585	1000000005183.586426
+   586	1000000005183.529419
+   587	1000000005183.467285
+   588	1000000005183.401611
+   589	1000000005183.337769
+   590	1000000005183.281250
+   591	1000000005183.228760
+   592	1000000005183.175781
+   593	1000000005183.112061
+   594	1000000005183.057129
+   595	1000000005183.004639
+   596	1000000005182.943970
+   597	1000000005182.883301
+   598	1000000005182.820190
+   599	1000000005182.755981
+   600	1000000005182.681885
+   601	1000000005182.610840
+   602	1000000005182.542969
+   603	1000000005182.479980
+   604	1000000005182.418701
+   605	1000000005182.344116
+   606	1000000005182.283325
+   607	1000000005182.218384
+   608	1000000005182.145264
+   609	1000000005182.091919
+   610	1000000005182.029541
+   611	1000000005181.982056
+   612	1000000005181.924194
+   613	1000000005181.872681
+   614	1000000005181.827759
+   615	1000000005181.776245
+   616	1000000005181.719971
+   617	1000000005181.670166
+   618	1000000005181.624756
+   619	1000000005181.567505
+   620	1000000005181.511719
+   621	1000000005181.468994
+   622	1000000005181.417480
+   623	1000000005181.369141
+   624	1000000005181.322754
+   625	1000000005181.277100
+   626	1000000005181.227539
+   627	1000000005181.180420
+   628	1000000005181.134644
+   629	1000000005181.079346
+   630	1000000005181.031616
+   631	1000000005180.987671
+   632	1000000005180.933716
+   633	1000000005180.885010
+   634	1000000005180.832031
+   635	1000000005180.783569
+   636	1000000005180.738159
+   637	1000000005180.683594
+   638	1000000005180.633789
+   639	1000000005180.584961
+   640	1000000005180.531616
+   641	1000000005180.468994
+   642	1000000005180.408936
+   643	1000000005180.341064
+   644	1000000005180.280396
+   645	1000000005180.218140
+   646	1000000005180.154541
+   647	1000000005180.092529
+   648	1000000005180.031616
+   649	1000000005179.984985
+   650	1000000005179.921509
+   651	1000000005179.860596
+   652	1000000005179.795166
+   653	1000000005179.738770
+   654	1000000005179.676025
+   655	1000000005179.622559
+   656	1000000005179.562866
+   657	1000000005179.508179
+   658	1000000005179.457275
+   659	1000000005179.408081
+   660	1000000005179.353394
+   661	1000000005179.305054
+   662	1000000005179.252930
+   663	1000000005179.201050
+   664	1000000005179.148071
+   665	1000000005179.093140
+   666	1000000005179.039185
+   667	1000000005178.977539
+   668	1000000005178.921875
+   669	1000000005178.860840
+   670	1000000005178.800171
+   671	1000000005178.740845
+   672	1000000005178.676514
+   673	1000000005178.618164
+   674	1000000005178.560669
+   675	1000000005178.512939
+   676	1000000005178.463989
+   677	1000000005178.402466
+   678	1000000005178.334106
+   679	1000000005178.256714
+   680	1000000005178.183594
+   681	1000000005178.094971
+   682	1000000005178.009644
+   683	1000000005177.922729
+   684	1000000005177.837036
+   685	1000000005177.757935
+   686	1000000005177.677856
+   687	1000000005177.619141
+   688	1000000005177.556030
+   689	1000000005177.502441
+   690	1000000005177.456421
+   691	1000000005177.409790
+   692	1000000005177.362915
+   693	1000000005177.315674
+   694	1000000005177.270020
+   695	1000000005177.211060
+   696	1000000005177.159546
+   697	1000000005177.104004
+   698	1000000005177.046021
+   699	1000000005176.992920
+   700	1000000005176.936279
+   701	1000000005176.873535
+   702	1000000005176.808105
+   703	1000000005176.744995
+   704	1000000005176.681030
+   705	1000000005176.606689
+   706	1000000005176.524536
+   707	1000000005176.453979
+   708	1000000005176.382935
+   709	1000000005176.305176
+   710	1000000005176.235596
+   711	1000000005176.176514
+   712	1000000005176.104004
+   713	1000000005176.055786
+   714	1000000005175.992920
+   715	1000000005175.933960
+   716	1000000005175.880859
+   717	1000000005175.833496
+   718	1000000005175.781250
+   719	1000000005175.729736
+   720	1000000005175.677856
+   721	1000000005175.628906
+   722	1000000005175.571655
+   723	1000000005175.519531
+   724	1000000005175.467529
+   725	1000000005175.408325
+   726	1000000005175.356689
+   727	1000000005175.301025
+   728	1000000005175.243164
+   729	1000000005175.189209
+   730	1000000005175.127930
+   731	1000000005175.066650
+   732	1000000005175.007935
+   733	1000000005174.946899
+   734	1000000005174.881470
+   735	1000000005174.826416
+   736	1000000005174.769165
+   737	1000000005174.712036
+   738	1000000005174.657104
+   739	1000000005174.602539
+   740	1000000005174.548096
+   741	1000000005174.495361
+   742	1000000005174.449585
+   743	1000000005174.401001
+   744	1000000005174.362549
+   745	1000000005174.314941
+   746	1000000005174.268555
+   747	1000000005174.228760
+   748	1000000005174.179321
+   749	1000000005174.129639
+   750	1000000005174.082031
+   751	1000000005174.036255
+   752	1000000005173.989746
+   753	1000000005173.938354
+   754	1000000005173.895996
+   755	1000000005173.854370
+   756	1000000005173.805420
+   757	1000000005173.757080
+   758	1000000005173.711426
+   759	1000000005173.666870
+   760	1000000005173.618530
+   761	1000000005173.563110
+   762	1000000005173.505981
+   763	1000000005173.455444
+   764	1000000005173.410034
+   765	1000000005173.352905
+   766	1000000005173.301636
+   767	1000000005173.249756
+   768	1000000005173.195801
+   769	1000000005173.146606
+   770	1000000005173.104614
+   771	1000000005173.053711
+   772	1000000005173.003906
+   773	1000000005172.952759
+   774	1000000005172.905884
+   775	1000000005172.851196
+   776	1000000005172.799316
+   777	1000000005172.746094
+   778	1000000005172.693970
+   779	1000000005172.634399
+   780	1000000005172.579224
+   781	1000000005172.526489
+   782	1000000005172.477661
+   783	1000000005172.431519
+   784	1000000005172.385864
+   785	1000000005172.328979
+   786	1000000005172.281494
+   787	1000000005172.232910
+   788	1000000005172.188599
+   789	1000000005172.146606
+   790	1000000005172.103516
+   791	1000000005172.061035
+   792	1000000005172.010864
+   793	1000000005171.955444
+   794	1000000005171.908936
+   795	1000000005171.861816
+   796	1000000005171.820435
+   797	1000000005171.763306
+   798	1000000005171.714600
+   799	1000000005171.671631
+   800	1000000005171.624146
+   801	1000000005171.572144
+   802	1000000005171.522461
+   803	1000000005171.475220
+   804	1000000005171.420776
+   805	1000000005171.360474
+   806	1000000005171.308350
+   807	1000000005171.244019
+   808	1000000005171.196411
+   809	1000000005171.145630
+   810	1000000005171.102295
+   811	1000000005171.055786
+   812	1000000005171.011475
+   813	1000000005170.962769
+   814	1000000005170.910889
+   815	1000000005170.866699
+   816	1000000005170.811035
+   817	1000000005170.758789
+   818	1000000005170.707520
+   819	1000000005170.655151
+   820	1000000005170.598511
+   821	1000000005170.546021
+   822	1000000005170.486816
+   823	1000000005170.432129
+   824	1000000005170.382690
+   825	1000000005170.338135
+   826	1000000005170.293945
+   827	1000000005170.250854
+   828	1000000005170.208130
+   829	1000000005170.160889
+   830	1000000005170.114014
+   831	1000000005170.069946
+   832	1000000005170.018921
+   833	1000000005169.963501
+   834	1000000005169.915039
+   835	1000000005169.852539
+   836	1000000005169.788086
+   837	1000000005169.721924
+   838	1000000005169.648926
+   839	1000000005169.582886
+   840	1000000005169.498535
+   841	1000000005169.432495
+   842	1000000005169.359619
+   843	1000000005169.297241
+   844	1000000005169.234009
+   845	1000000005169.170654
+   846	1000000005169.111694
+   847	1000000005169.061890
+   848	1000000005169.007690
+   849	1000000005168.952271
+   850	1000000005168.907349
+   851	1000000005168.859985
+   852	1000000005168.812866
+   853	1000000005168.767456
+   854	1000000005168.717651
+   855	1000000005168.672241
+   856	1000000005168.619995
+   857	1000000005168.572754
+   858	1000000005168.528564
+   859	1000000005168.476685
+   860	1000000005168.426636
+   861	1000000005168.377441
+   862	1000000005168.328979
+   863	1000000005168.281250
+   864	1000000005168.229736
+   865	1000000005168.182495
+   866	1000000005168.135010
+   867	1000000005168.091675
+   868	1000000005168.052734
+   869	1000000005168.014160
+   870	1000000005167.978516
+   871	1000000005167.936035
+   872	1000000005167.902100
+   873	1000000005167.868164
+   874	1000000005167.839966
+   875	1000000005167.797485
+   876	1000000005167.756226
+   877	1000000005167.716431
+   878	1000000005167.674316
+   879	1000000005167.633545
+   880	1000000005167.585571
+   881	1000000005167.542236
+   882	1000000005167.497070
+   883	1000000005167.452881
+   884	1000000005167.410034
+   885	1000000005167.364624
+   886	1000000005167.317139
+   887	1000000005167.271240
+   888	1000000005167.233154
+   889	1000000005167.193970
+   890	1000000005167.154785
+   891	1000000005167.122070
+   892	1000000005167.082764
+   893	1000000005167.042969
+   894	1000000005167.006714
+   895	1000000005166.970459
+   896	1000000005166.928955
+   897	1000000005166.887695
+   898	1000000005166.844360
+   899	1000000005166.804321
+   900	1000000005166.769409
+   901	1000000005166.730835
+   902	1000000005166.689575
+   903	1000000005166.648315
+   904	1000000005166.610229
+   905	1000000005166.572144
+   906	1000000005166.531006
+   907	1000000005166.488770
+   908	1000000005166.447510
+   909	1000000005166.412476
+   910	1000000005166.372681
+   911	1000000005166.330811
+   912	1000000005166.295410
+   913	1000000005166.254395
+   914	1000000005166.206299
+   915	1000000005166.159790
+   916	1000000005166.108521
+   917	1000000005166.063599
+   918	1000000005166.002441
+   919	1000000005165.954956
+   920	1000000005165.910156
+   921	1000000005165.860474
+   922	1000000005165.812744
+   923	1000000005165.766846
+   924	1000000005165.721191
+   925	1000000005165.675171
+   926	1000000005165.637695
+   927	1000000005165.599121
+   928	1000000005165.559204
+   929	1000000005165.522461
+   930	1000000005165.489990
+   931	1000000005165.456299
+   932	1000000005165.427124
+   933	1000000005165.393921
+   934	1000000005165.365845
+   935	1000000005165.334106
+   936	1000000005165.298950
+   937	1000000005165.268555
+   938	1000000005165.229736
+   939	1000000005165.192871
+   940	1000000005165.157959
+   941	1000000005165.107056
+   942	1000000005165.062134
+   943	1000000005165.022095
+   944	1000000005164.986206
+   945	1000000005164.948120
+   946	1000000005164.908325
+   947	1000000005164.863770
+   948	1000000005164.821899
+   949	1000000005164.778931
+   950	1000000005164.744141
+   951	1000000005164.705444
+   952	1000000005164.668945
+   953	1000000005164.630981
+   954	1000000005164.596924
+   955	1000000005164.565674
+   956	1000000005164.533325
+   957	1000000005164.495850
+   958	1000000005164.464355
+   959	1000000005164.433594
+   960	1000000005164.396606
+   961	1000000005164.359619
+   962	1000000005164.320679
+   963	1000000005164.285645
+   964	1000000005164.242676
+   965	1000000005164.205566
+   966	1000000005164.168579
+   967	1000000005164.139160
+   968	1000000005164.111206
+   969	1000000005164.077026
+   970	1000000005164.041016
+   971	1000000005164.001099
+   972	1000000005163.967529
+   973	1000000005163.931030
+   974	1000000005163.901855
+   975	1000000005163.871826
+   976	1000000005163.837891
+   977	1000000005163.805664
+   978	1000000005163.768066
+   979	1000000005163.739990
+   980	1000000005163.710449
+   981	1000000005163.681274
+   982	1000000005163.651489
+   983	1000000005163.614990
+   984	1000000005163.584839
+   985	1000000005163.551880
+   986	1000000005163.521484
+   987	1000000005163.493530
+   988	1000000005163.457886
+   989	1000000005163.429199
+   990	1000000005163.394409
+   991	1000000005163.354370
+   992	1000000005163.322510
+   993	1000000005163.294434
+   994	1000000005163.265869
+   995	1000000005163.232300
+   996	1000000005163.200439
+   997	1000000005163.167236
+   998	1000000005163.132324
+   999	1000000005163.096924
+  1000	1000000005163.066406
+  1001	1000000005163.040894
+  1002	1000000005163.018799
+  1003	1000000005162.994995
+  1004	1000000005162.973511
+  1005	1000000005162.948730
+  1006	1000000005162.922729
+  1007	1000000005162.894775
+  1008	1000000005162.863525
+  1009	1000000005162.840454
+  1010	1000000005162.816406
+  1011	1000000005162.793091
+  1012	1000000005162.766846
+  1013	1000000005162.742554
+  1014	1000000005162.719604
+  1015	1000000005162.691040
+  1016	1000000005162.663574
+  1017	1000000005162.641846
+  1018	1000000005162.610596
+  1019	1000000005162.579956
+  1020	1000000005162.545654
+  1021	1000000005162.516846
+  1022	1000000005162.484741
+  1023	1000000005162.449829
+  1024	1000000005162.417725
+  1025	1000000005162.388550
+  1026	1000000005162.357910
+  1027	1000000005162.324341
+  1028	1000000005162.287231
+  1029	1000000005162.252686
+  1030	1000000005162.224976
+  1031	1000000005162.194580
+  1032	1000000005162.166626
+  1033	1000000005162.139526
+  1034	1000000005162.111084
+  1035	1000000005162.083374
+  1036	1000000005162.048584
+  1037	1000000005162.017700
+  1038	1000000005161.982056
+  1039	1000000005161.951660
+  1040	1000000005161.920654
+  1041	1000000005161.894531
+  1042	1000000005161.867554
+  1043	1000000005161.839355
+  1044	1000000005161.814331
+  1045	1000000005161.788086
+  1046	1000000005161.767334
+  1047	1000000005161.740845
+  1048	1000000005161.713745
+  1049	1000000005161.684204
+  1050	1000000005161.652954
+  1051	1000000005161.617310
+  1052	1000000005161.582031
+  1053	1000000005161.547241
+  1054	1000000005161.512695
+  1055	1000000005161.484131
+  1056	1000000005161.450195
+  1057	1000000005161.425659
+  1058	1000000005161.401001
+  1059	1000000005161.372925
+  1060	1000000005161.347656
+  1061	1000000005161.318726
+  1062	1000000005161.295410
+  1063	1000000005161.272949
+  1064	1000000005161.252930
+  1065	1000000005161.231689
+  1066	1000000005161.208984
+  1067	1000000005161.188354
+  1068	1000000005161.162231
+  1069	1000000005161.138550
+  1070	1000000005161.111816
+  1071	1000000005161.087036
+  1072	1000000005161.063965
+  1073	1000000005161.036499
+  1074	1000000005161.011841
+  1075	1000000005160.984009
+  1076	1000000005160.956421
+  1077	1000000005160.935059
+  1078	1000000005160.913086
+  1079	1000000005160.889526
+  1080	1000000005160.872559
+  1081	1000000005160.850830
+  1082	1000000005160.829956
+  1083	1000000005160.812256
+  1084	1000000005160.796631
+  1085	1000000005160.779419
+  1086	1000000005160.758301
+  1087	1000000005160.741821
+  1088	1000000005160.719360
+  1089	1000000005160.698120
+  1090	1000000005160.675659
+  1091	1000000005160.650635
+  1092	1000000005160.633301
+  1093	1000000005160.618286
+  1094	1000000005160.598755
+  1095	1000000005160.579590
+  1096	1000000005160.564209
+  1097	1000000005160.545044
+  1098	1000000005160.522705
+  1099	1000000005160.500366
+  1100	1000000005160.477661
+  1101	1000000005160.458740
+  1102	1000000005160.438110
+  1103	1000000005160.418579
+  1104	1000000005160.398071
+  1105	1000000005160.374146
+  1106	1000000005160.356079
+  1107	1000000005160.335449
+  1108	1000000005160.309570
+  1109	1000000005160.288330
+  1110	1000000005160.264526
+  1111	1000000005160.246094
+  1112	1000000005160.227539
+  1113	1000000005160.208374
+  1114	1000000005160.191040
+  1115	1000000005160.174561
+  1116	1000000005160.155884
+  1117	1000000005160.138794
+  1118	1000000005160.119385
+  1119	1000000005160.096436
+  1120	1000000005160.080200
+  1121	1000000005160.063110
+  1122	1000000005160.044434
+  1123	1000000005160.029541
+  1124	1000000005160.012329
+  1125	1000000005159.998169
+  1126	1000000005159.982910
+  1127	1000000005159.965210
+  1128	1000000005159.949219
+  1129	1000000005159.935425
+  1130	1000000005159.923584
+  1131	1000000005159.910645
+  1132	1000000005159.898804
+  1133	1000000005159.882446
+  1134	1000000005159.869629
+  1135	1000000005159.854004
+  1136	1000000005159.840576
+  1137	1000000005159.824341
+  1138	1000000005159.812744
+  1139	1000000005159.799194
+  1140	1000000005159.783691
+  1141	1000000005159.768311
+  1142	1000000005159.756470
+  1143	1000000005159.744019
+  1144	1000000005159.734009
+  1145	1000000005159.719849
+  1146	1000000005159.712036
+  1147	1000000005159.698975
+  1148	1000000005159.683594
+  1149	1000000005159.671021
+  1150	1000000005159.658081
+  1151	1000000005159.648804
+  1152	1000000005159.636230
+  1153	1000000005159.624756
+  1154	1000000005159.612549
+  1155	1000000005159.597656
+  1156	1000000005159.582886
+  1157	1000000005159.568359
+  1158	1000000005159.549561
+  1159	1000000005159.535889
+  1160	1000000005159.516724
+  1161	1000000005159.501465
+  1162	1000000005159.484009
+  1163	1000000005159.470825
+  1164	1000000005159.450806
+  1165	1000000005159.434326
+  1166	1000000005159.419434
+  1167	1000000005159.406860
+  1168	1000000005159.390625
+  1169	1000000005159.378906
+  1170	1000000005159.370850
+  1171	1000000005159.358154
+  1172	1000000005159.353760
+  1173	1000000005159.340576
+  1174	1000000005159.331055
+  1175	1000000005159.321289
+  1176	1000000005159.311401
+  1177	1000000005159.301880
+  1178	1000000005159.291504
+  1179	1000000005159.280640
+  1180	1000000005159.272461
+  1181	1000000005159.261841
+  1182	1000000005159.253174
+  1183	1000000005159.243774
+  1184	1000000005159.231079
+  1185	1000000005159.221069
+  1186	1000000005159.213135
+  1187	1000000005159.203369
+  1188	1000000005159.193481
+  1189	1000000005159.183716
+  1190	1000000005159.173584
+  1191	1000000005159.166504
+  1192	1000000005159.158325
+  1193	1000000005159.148804
+  1194	1000000005159.139160
+  1195	1000000005159.133545
+  1196	1000000005159.124756
+  1197	1000000005159.114746
+  1198	1000000005159.103516
+  1199	1000000005159.092285
+  1200	1000000005159.081909
+  1201	1000000005159.071899
+  1202	1000000005159.063721
+  1203	1000000005159.056274
+  1204	1000000005159.046509
+  1205	1000000005159.040039
+  1206	1000000005159.030884
+  1207	1000000005159.024170
+  1208	1000000005159.019775
+  1209	1000000005159.012329
+  1210	1000000005159.004639
+  1211	1000000005158.997559
+  1212	1000000005158.988770
+  1213	1000000005158.982056
+  1214	1000000005158.977539
+  1215	1000000005158.971924
+  1216	1000000005158.964966
+  1217	1000000005158.959351
+  1218	1000000005158.954956
+  1219	1000000005158.949219
+  1220	1000000005158.944336
+  1221	1000000005158.939209
+  1222	1000000005158.932129
+  1223	1000000005158.929321
+  1224	1000000005158.926270
+  1225	1000000005158.926025
+  1226	1000000005158.917480
+  1227	1000000005158.914185
+  1228	1000000005158.913086
+  1229	1000000005158.907349
+  1230	1000000005158.905884
+  1231	1000000005158.897949
+  1232	1000000005158.895874
+  1233	1000000005158.895020
+  1234	1000000005158.890015
+  1235	1000000005158.882690
+  1236	1000000005158.877686
+  1237	1000000005158.873169
+  1238	1000000005158.871704
+  1239	1000000005158.869141
+  1240	1000000005158.868774
+  1241	1000000005158.867310
+  1242	1000000005158.863159
+  1243	1000000005158.861450
+  1244	1000000005158.854614
+  1245	1000000005158.848145
+  1246	1000000005158.846436
+  1247	1000000005158.844604
+  1248	1000000005158.842285
+  1249	1000000005158.840210
+  1250	1000000005158.837280
+  1251	1000000005158.837769
+  1252	1000000005158.836060
+  1253	1000000005158.836304
+  1254	1000000005158.833740
+  1255	1000000005158.830200
+  1256	1000000005158.828491
+  1257	1000000005158.827026
+  1258	1000000005158.824585
+  1259	1000000005158.820190
+  1260	1000000005158.818481
+  1261	1000000005158.816406
+  1262	1000000005158.818359
+  1263	1000000005158.816895
+  1264	1000000005158.817505
+  1265	1000000005158.816284
+  1266	1000000005158.814941
+  1267	1000000005158.814575
+  1268	1000000005158.815674
+  1269	1000000005158.813599
+  1270	1000000005158.811401
+  1271	1000000005158.810791
+  1272	1000000005158.812866
+  1273	1000000005158.811890
+  1274	1000000005158.811035
+  1275	1000000005158.811401
+  1276	1000000005158.810669
+  1277	1000000005158.809814
+  1278	1000000005158.810059
+  1279	1000000005158.808594
+  1280	1000000005158.807861
+  1281	1000000005158.808105
+  1282	1000000005158.807861
+  1283	1000000005158.806885
+  1284	1000000005158.804321
+  1285	1000000005158.803345
+  1286	1000000005158.802734
+  1287	1000000005158.802246
+  1288	1000000005158.800171
+  1289	1000000005158.798706
+  1290	1000000005158.797119
+  1291	1000000005158.797485
+  1292	1000000005158.795776
+  1293	1000000005158.794434
+  1294	1000000005158.794800
+  1295	1000000005158.795044
+  1296	1000000005158.794189
+  1297	1000000005158.792969
+  1298	1000000005158.793091
+  1299	1000000005158.791870
+  1300	1000000005158.791870
+  1301	1000000005158.793579
+  1302	1000000005158.793335
+  1303	1000000005158.793579
+  1304	1000000005158.792236
+  1305	1000000005158.790894
+  1306	1000000005158.791626
+  1307	1000000005158.792480
+  1308	1000000005158.792480
+  1309	1000000005158.792114
+  1310	1000000005158.792114
+  1311	1000000005158.791870
+  1312	1000000005158.790894
+  1313	1000000005158.788940
+  1314	1000000005158.790161
+  1315	1000000005158.790649
+  1316	1000000005158.790894
+  1317	1000000005158.792969
+  1318	1000000005158.792480
+  1319	1000000005158.792969
+  1320	1000000005158.792725
+  1321	1000000005158.791626
+  1322	1000000005158.791260
+  1323	1000000005158.792114
+  1324	1000000005158.791260
+  1325	1000000005158.791260
+  1326	1000000005158.791504
+  1327	1000000005158.792480
+  1328	1000000005158.790405
+  1329	1000000005158.790649
+  1330	1000000005158.790649
+  1331	1000000005158.790649
+  1332	1000000005158.792236
+  1333	1000000005158.792725
+  1334	1000000005158.791260
+  1335	1000000005158.791016
+  1336	1000000005158.791504
+  1337	1000000005158.790405
+  1338	1000000005158.790161
+  1339	1000000005158.789429
+  1340	1000000005158.790649
+  1341	1000000005158.791260
+  1342	1000000005158.792114
+  1343	1000000005158.792114
+  1344	1000000005158.791626
+  1345	1000000005158.790894
+  1346	1000000005158.788940
+  1347	1000000005158.789795
+  1348	1000000005158.791870
+  1349	1000000005158.790894
+  1350	1000000005158.791016
+  1351	1000000005158.792480
+  1352	1000000005158.791870
+  1353	1000000005158.790649
+  1354	1000000005158.790405
+  1355	1000000005158.789795
+  1356	1000000005158.790894
+  1357	1000000005158.791016
+  1358	1000000005158.791016
+  1359	1000000005158.791504
+  1360	1000000005158.790405
+  1361	1000000005158.792236
+  1362	1000000005158.790649
+  1363	1000000005158.791016
+  1364	1000000005158.790894
+  1365	1000000005158.791626
+  1366	1000000005158.791870
+  1367	1000000005158.790649
+  1368	1000000005158.792114
+  1369	1000000005158.791260
+  1370	1000000005158.790649
+  1371	1000000005158.792236
+  1372	1000000005158.791016
+  1373	1000000005158.789795
+  1374	1000000005158.790161
+  1375	1000000005158.791260
+  1376	1000000005158.790649
+  1377	1000000005158.791260
+  1378	1000000005158.789795
+  1379	1000000005158.790649
+  1380	1000000005158.792236
+  1381	1000000005158.791626
+  1382	1000000005158.791260
+  1383	1000000005158.789551
+  1384	1000000005158.790405
+  1385	1000000005158.789185
+  1386	1000000005158.789795
+  1387	1000000005158.790894
+  1388	1000000005158.790649
+  1389	1000000005158.789795
+  1390	1000000005158.791260
+  1391	1000000005158.789795
+  1392	1000000005158.788940
+  1393	1000000005158.790405
+  1394	1000000005158.791260
+  1395	1000000005158.791870
+  1396	1000000005158.790039
+  1397	1000000005158.789795
+  1398	1000000005158.790405
+  1399	1000000005158.791260
+  1400	1000000005158.789795
+  1401	1000000005158.789429
+  1402	1000000005158.788940
+  1403	1000000005158.789185
+  1404	1000000005158.790894
+  1405	1000000005158.790405
+  1406	1000000005158.788574
+  1407	1000000005158.788574
+  1408	1000000005158.789185
+  1409	1000000005158.788696
+  1410	1000000005158.790405
+  1411	1000000005158.790405
+  1412	1000000005158.791016
+  1413	1000000005158.790039
+  1414	1000000005158.789185
+  1415	1000000005158.789429
+  1416	1000000005158.791260
+  1417	1000000005158.791260
+  1418	1000000005158.790894
+  1419	1000000005158.790161
+  1420	1000000005158.791260
+  1421	1000000005158.792480
+  1422	1000000005158.792114
+  1423	1000000005158.790161
+  1424	1000000005158.790161
+  1425	1000000005158.790649
+  1426	1000000005158.791260
+  1427	1000000005158.791260
+  1428	1000000005158.791504
+  1429	1000000005158.791870
+  1430	1000000005158.791504
+  1431	1000000005158.791504
+  1432	1000000005158.790649
+  1433	1000000005158.790649
+  1434	1000000005158.790161
+  1435	1000000005158.791016
+  1436	1000000005158.791870
+  1437	1000000005158.791626
+  1438	1000000005158.791260
+  1439	1000000005158.789795
+  1440	1000000005158.790405
+  1441	1000000005158.791016
+  1442	1000000005158.789551
+  1443	1000000005158.790649
+  1444	1000000005158.790649
+  1445	1000000005158.790405
+  1446	1000000005158.791626
+  1447	1000000005158.790405
+  1448	1000000005158.791870
+  1449	1000000005158.789551
+  1450	1000000005158.791016
+  1451	1000000005158.791016
+  1452	1000000005158.790894
+  1453	1000000005158.790649
+  1454	1000000005158.791626
+  1455	1000000005158.791016
+  1456	1000000005158.790649
+  1457	1000000005158.790894
+  1458	1000000005158.790649
+  1459	1000000005158.790894
+  1460	1000000005158.790039
+  1461	1000000005158.790649
+  1462	1000000005158.790649
+  1463	1000000005158.790894
+  1464	1000000005158.789185
+  1465	1000000005158.788696
+  1466	1000000005158.791016
+  1467	1000000005158.791626
+  1468	1000000005158.792480
+  1469	1000000005158.790161
+  1470	1000000005158.789795
+  1471	1000000005158.788940
+  1472	1000000005158.790405
+  1473	1000000005158.790649
+  1474	1000000005158.791016
+  1475	1000000005158.791016
+  1476	1000000005158.791870
+  1477	1000000005158.792114
+  1478	1000000005158.791870
+  1479	1000000005158.791016
+  1480	1000000005158.790894
+  1481	1000000005158.791260
+  1482	1000000005158.791016
+  1483	1000000005158.790649
+  1484	1000000005158.788696
+  1485	1000000005158.790649
+  1486	1000000005158.790039
+  1487	1000000005158.790161
+  1488	1000000005158.791626
+  1489	1000000005158.791260
+  1490	1000000005158.790649
+  1491	1000000005158.790161
+  1492	1000000005158.791870
+  1493	1000000005158.791504
+  1494	1000000005158.790894
+  1495	1000000005158.790649
+  1496	1000000005158.789551
+  1497	1000000005158.788696
+  1498	1000000005158.790039
+  1499	1000000005158.791504
+  1500	1000000005158.791016
+  1501	1000000005158.790894
+  1502	1000000005158.790161
+  1503	1000000005158.790405
+  1504	1000000005158.789551
+  1505	1000000005158.789185
+  1506	1000000005158.788696
+  1507	1000000005158.790894
+  1508	1000000005158.789551
+  1509	1000000005158.790894
+  1510	1000000005158.789795
+  1511	1000000005158.789429
+  1512	1000000005158.790649
+  1513	1000000005158.790894
+  1514	1000000005158.791016
+  1515	1000000005158.791626
+  1516	1000000005158.790405
+  1517	1000000005158.791016
+  1518	1000000005158.791626
+  1519	1000000005158.791016
+  1520	1000000005158.790039
+  1521	1000000005158.790649
+  1522	1000000005158.789795
+  1523	1000000005158.791504
+  1524	1000000005158.790649
+  1525	1000000005158.791260
+  1526	1000000005158.789429
+  1527	1000000005158.790894
+  1528	1000000005158.791626
+  1529	1000000005158.791870
+  1530	1000000005158.791504
+  1531	1000000005158.790894
+  1532	1000000005158.789185
+  1533	1000000005158.790894
+  1534	1000000005158.791626
+  1535	1000000005158.791504
+  1536	1000000005158.789429
+  1537	1000000005158.788696
+  1538	1000000005158.790405
+  1539	1000000005158.791870
+  1540	1000000005158.790649
+  1541	1000000005158.791016
+  1542	1000000005158.791870
+  1543	1000000005158.790039
+  1544	1000000005158.790405
+  1545	1000000005158.790161
+  1546	1000000005158.790649
+  1547	1000000005158.790039
+  1548	1000000005158.791504
+  1549	1000000005158.790039
+  1550	1000000005158.790039
+  1551	1000000005158.790894
+  1552	1000000005158.791870
+  1553	1000000005158.791260
+  1554	1000000005158.791016
+  1555	1000000005158.790039
+  1556	1000000005158.789795
+  1557	1000000005158.791504
+  1558	1000000005158.791016
+  1559	1000000005158.791626
+  1560	1000000005158.790405
+  1561	1000000005158.792236
+  1562	1000000005158.790161
+  1563	1000000005158.789185
+  1564	1000000005158.789795
+  1565	1000000005158.789551
+  1566	1000000005158.790649
+  1567	1000000005158.790405
+  1568	1000000005158.790894
+  1569	1000000005158.790894
+  1570	1000000005158.790649
+  1571	1000000005158.789429
+  1572	1000000005158.789795
+  1573	1000000005158.789551
+  1574	1000000005158.791260
+  1575	1000000005158.791260
+  1576	1000000005158.790039
+  1577	1000000005158.789551
+  1578	1000000005158.791016
+  1579	1000000005158.793579
+  1580	1000000005158.790039
+  1581	1000000005158.788940
+  1582	1000000005158.789795
+  1583	1000000005158.789551
+  1584	1000000005158.790894
+  1585	1000000005158.790894
+  1586	1000000005158.791016
+  1587	1000000005158.791504
+  1588	1000000005158.790894
+  1589	1000000005158.791870
+  1590	1000000005158.789795
+  1591	1000000005158.791626
+  1592	1000000005158.791016
+  1593	1000000005158.790894
+  1594	1000000005158.792236
+  1595	1000000005158.791504
+  1596	1000000005158.791626
+  1597	1000000005158.790161
+  1598	1000000005158.791504
+  1599	1000000005158.791626
+  1600	1000000005158.791626
+# Solution: (fitness = 1000000005158.779541)
+#  mu = -3.0193 sigma = 1.4319 prob = 0.3312
+#  mu = 4.0204 sigma = 1.9844 prob = 0.6688
+# Solution: (fitness = 1000000005158.779541)
+#  mu = -3.0192 sigma = 1.4322 prob = 0.3311
+#  mu = 4.0224 sigma = 1.9836 prob = 0.6689
+# Solution: (fitness = 1000000005158.779541)
+#  mu = -3.0198 sigma = 1.4314 prob = 0.3310
+#  mu = 4.0215 sigma = 1.9834 prob = 0.6690
+# Solution: (fitness = 1000000005158.779541)
+#  mu = -3.0184 sigma = 1.4317 prob = 0.3313
+#  mu = 4.0214 sigma = 1.9839 prob = 0.6687
+# Solution: (fitness = 1000000005158.779541)
+#  mu = -3.0197 sigma = 1.4322 prob = 0.3312
+#  mu = 4.0216 sigma = 1.9832 prob = 0.6688
+# Solution: (fitness = 1000000005158.779663)
+#  mu = -3.0201 sigma = 1.4310 prob = 0.3312
+#  mu = 4.0214 sigma = 1.9848 prob = 0.6688
+# Solution: (fitness = 1000000005158.779663)
+#  mu = -3.0189 sigma = 1.4309 prob = 0.3312
+#  mu = 4.0212 sigma = 1.9832 prob = 0.6688
+# Solution: (fitness = 1000000005158.779785)
+#  mu = -3.0189 sigma = 1.4314 prob = 0.3308
+#  mu = 4.0220 sigma = 1.9842 prob = 0.6692
+# Solution: (fitness = 1000000005158.779785)
+#  mu = -3.0196 sigma = 1.4316 prob = 0.3311
+#  mu = 4.0202 sigma = 1.9851 prob = 0.6689
+# Solution: (fitness = 1000000005158.779785)
+#  mu = -3.0188 sigma = 1.4318 prob = 0.3314
+#  mu = 4.0210 sigma = 1.9839 prob = 0.6686
+# Solution: (fitness = 1000000005158.779785)
+#  mu = -3.0187 sigma = 1.4332 prob = 0.3313
+#  mu = 4.0212 sigma = 1.9837 prob = 0.6687
+# Solution: (fitness = 1000000005158.779785)
+#  mu = -3.0203 sigma = 1.4311 prob = 0.3312
+#  mu = 4.0210 sigma = 1.9835 prob = 0.6688
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0181 sigma = 1.4319 prob = 0.3315
+#  mu = 4.0218 sigma = 1.9837 prob = 0.6685
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0173 sigma = 1.4319 prob = 0.3312
+#  mu = 4.0223 sigma = 1.9844 prob = 0.6688
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0181 sigma = 1.4323 prob = 0.3310
+#  mu = 4.0215 sigma = 1.9850 prob = 0.6690
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0200 sigma = 1.4325 prob = 0.3311
+#  mu = 4.0213 sigma = 1.9830 prob = 0.6689
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0175 sigma = 1.4315 prob = 0.3310
+#  mu = 4.0212 sigma = 1.9839 prob = 0.6690
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0170 sigma = 1.4318 prob = 0.3311
+#  mu = 4.0219 sigma = 1.9834 prob = 0.6689
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0191 sigma = 1.4307 prob = 0.3312
+#  mu = 4.0209 sigma = 1.9830 prob = 0.6688
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0192 sigma = 1.4316 prob = 0.3308
+#  mu = 4.0220 sigma = 1.9835 prob = 0.6692
+# Solution: (fitness = 1000000005158.779907)
+#  mu = -3.0205 sigma = 1.4311 prob = 0.3312
+#  mu = 4.0211 sigma = 1.9853 prob = 0.6688
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0191 sigma = 1.4310 prob = 0.3309
+#  mu = 4.0219 sigma = 1.9851 prob = 0.6691
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0185 sigma = 1.4333 prob = 0.3311
+#  mu = 4.0211 sigma = 1.9832 prob = 0.6689
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0184 sigma = 1.4330 prob = 0.3312
+#  mu = 4.0206 sigma = 1.9830 prob = 0.6688
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0183 sigma = 1.4336 prob = 0.3311
+#  mu = 4.0214 sigma = 1.9838 prob = 0.6689
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0196 sigma = 1.4310 prob = 0.3310
+#  mu = 4.0218 sigma = 1.9854 prob = 0.6690
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0195 sigma = 1.4321 prob = 0.3311
+#  mu = 4.0206 sigma = 1.9826 prob = 0.6689
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0196 sigma = 1.4305 prob = 0.3313
+#  mu = 4.0203 sigma = 1.9840 prob = 0.6687
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0178 sigma = 1.4326 prob = 0.3313
+#  mu = 4.0207 sigma = 1.9846 prob = 0.6687
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0183 sigma = 1.4321 prob = 0.3309
+#  mu = 4.0221 sigma = 1.9845 prob = 0.6691
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0191 sigma = 1.4321 prob = 0.3312
+#  mu = 4.0233 sigma = 1.9846 prob = 0.6688
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0187 sigma = 1.4327 prob = 0.3309
+#  mu = 4.0206 sigma = 1.9846 prob = 0.6691
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0190 sigma = 1.4324 prob = 0.3309
+#  mu = 4.0232 sigma = 1.9839 prob = 0.6691
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0178 sigma = 1.4317 prob = 0.3309
+#  mu = 4.0228 sigma = 1.9843 prob = 0.6691
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0178 sigma = 1.4334 prob = 0.3312
+#  mu = 4.0224 sigma = 1.9827 prob = 0.6688
+# Solution: (fitness = 1000000005158.780029)
+#  mu = -3.0190 sigma = 1.4328 prob = 0.3312
+#  mu = 4.0217 sigma = 1.9824 prob = 0.6688
+# Solution: (fitness = 1000000005158.780151)
+#  mu = -3.0168 sigma = 1.4329 prob = 0.3314
+#  mu = 4.0230 sigma = 1.9836 prob = 0.6686
+# Solution: (fitness = 1000000005158.780151)
+#  mu = -3.0176 sigma = 1.4314 prob = 0.3310
+#  mu = 4.0207 sigma = 1.9830 prob = 0.6690
+# Solution: (fitness = 1000000005158.780151)
+#  mu = -3.0170 sigma = 1.4319 prob = 0.3310
+#  mu = 4.0216 sigma = 1.9842 prob = 0.6690
+# Solution: (fitness = 1000000005158.780151)
+#  mu = -3.0187 sigma = 1.4323 prob = 0.3314
+#  mu = 4.0201 sigma = 1.9842 prob = 0.6686
+# Solution: (fitness = 1000000005158.780151)
+#  mu = -3.0186 sigma = 1.4336 prob = 0.3312
+#  mu = 4.0232 sigma = 1.9831 prob = 0.6688
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0175 sigma = 1.4317 prob = 0.3310
+#  mu = 4.0214 sigma = 1.9826 prob = 0.6690
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0192 sigma = 1.4317 prob = 0.3312
+#  mu = 4.0240 sigma = 1.9832 prob = 0.6688
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0211 sigma = 1.4311 prob = 0.3311
+#  mu = 4.0229 sigma = 1.9844 prob = 0.6689
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0212 sigma = 1.4318 prob = 0.3311
+#  mu = 4.0225 sigma = 1.9836 prob = 0.6689
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0170 sigma = 1.4335 prob = 0.3314
+#  mu = 4.0216 sigma = 1.9833 prob = 0.6686
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0179 sigma = 1.4319 prob = 0.3309
+#  mu = 4.0199 sigma = 1.9837 prob = 0.6691
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0178 sigma = 1.4316 prob = 0.3316
+#  mu = 4.0221 sigma = 1.9835 prob = 0.6684
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0166 sigma = 1.4323 prob = 0.3313
+#  mu = 4.0227 sigma = 1.9843 prob = 0.6687
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0208 sigma = 1.4311 prob = 0.3310
+#  mu = 4.0221 sigma = 1.9854 prob = 0.6690
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0178 sigma = 1.4316 prob = 0.3313
+#  mu = 4.0232 sigma = 1.9823 prob = 0.6687
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0177 sigma = 1.4336 prob = 0.3314
+#  mu = 4.0210 sigma = 1.9831 prob = 0.6686
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0184 sigma = 1.4334 prob = 0.3313
+#  mu = 4.0236 sigma = 1.9841 prob = 0.6687
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0169 sigma = 1.4327 prob = 0.3315
+#  mu = 4.0219 sigma = 1.9838 prob = 0.6685
+# Solution: (fitness = 1000000005158.780273)
+#  mu = -3.0190 sigma = 1.4309 prob = 0.3309
+#  mu = 4.0217 sigma = 1.9827 prob = 0.6691
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0180 sigma = 1.4325 prob = 0.3313
+#  mu = 4.0230 sigma = 1.9817 prob = 0.6687
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0183 sigma = 1.4335 prob = 0.3311
+#  mu = 4.0210 sigma = 1.9825 prob = 0.6689
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0192 sigma = 1.4318 prob = 0.3315
+#  mu = 4.0236 sigma = 1.9840 prob = 0.6685
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0217 sigma = 1.4307 prob = 0.3308
+#  mu = 4.0207 sigma = 1.9840 prob = 0.6692
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0216 sigma = 1.4312 prob = 0.3313
+#  mu = 4.0223 sigma = 1.9842 prob = 0.6687
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0172 sigma = 1.4318 prob = 0.3316
+#  mu = 4.0223 sigma = 1.9831 prob = 0.6684
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0207 sigma = 1.4319 prob = 0.3308
+#  mu = 4.0225 sigma = 1.9848 prob = 0.6692
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0202 sigma = 1.4295 prob = 0.3310
+#  mu = 4.0219 sigma = 1.9845 prob = 0.6690
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0182 sigma = 1.4310 prob = 0.3309
+#  mu = 4.0229 sigma = 1.9848 prob = 0.6691
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0174 sigma = 1.4306 prob = 0.3313
+#  mu = 4.0225 sigma = 1.9833 prob = 0.6687
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0176 sigma = 1.4324 prob = 0.3313
+#  mu = 4.0198 sigma = 1.9831 prob = 0.6687
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0181 sigma = 1.4329 prob = 0.3308
+#  mu = 4.0219 sigma = 1.9830 prob = 0.6692
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0209 sigma = 1.4316 prob = 0.3313
+#  mu = 4.0197 sigma = 1.9841 prob = 0.6687
+# Solution: (fitness = 1000000005158.780396)
+#  mu = -3.0207 sigma = 1.4302 prob = 0.3312
+#  mu = 4.0194 sigma = 1.9846 prob = 0.6688
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0195 sigma = 1.4324 prob = 0.3316
+#  mu = 4.0209 sigma = 1.9835 prob = 0.6684
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0163 sigma = 1.4323 prob = 0.3312
+#  mu = 4.0213 sigma = 1.9826 prob = 0.6688
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0195 sigma = 1.4322 prob = 0.3316
+#  mu = 4.0207 sigma = 1.9830 prob = 0.6684
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0194 sigma = 1.4312 prob = 0.3313
+#  mu = 4.0233 sigma = 1.9822 prob = 0.6687
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0204 sigma = 1.4336 prob = 0.3312
+#  mu = 4.0216 sigma = 1.9843 prob = 0.6688
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0221 sigma = 1.4313 prob = 0.3311
+#  mu = 4.0200 sigma = 1.9839 prob = 0.6689
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0205 sigma = 1.4312 prob = 0.3311
+#  mu = 4.0223 sigma = 1.9857 prob = 0.6689
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0190 sigma = 1.4318 prob = 0.3307
+#  mu = 4.0230 sigma = 1.9841 prob = 0.6693
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0191 sigma = 1.4304 prob = 0.3307
+#  mu = 4.0222 sigma = 1.9837 prob = 0.6693
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0202 sigma = 1.4298 prob = 0.3309
+#  mu = 4.0216 sigma = 1.9833 prob = 0.6691
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0192 sigma = 1.4308 prob = 0.3307
+#  mu = 4.0199 sigma = 1.9838 prob = 0.6693
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0214 sigma = 1.4300 prob = 0.3312
+#  mu = 4.0197 sigma = 1.9842 prob = 0.6688
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0202 sigma = 1.4325 prob = 0.3313
+#  mu = 4.0231 sigma = 1.9823 prob = 0.6687
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0182 sigma = 1.4309 prob = 0.3307
+#  mu = 4.0206 sigma = 1.9843 prob = 0.6693
+# Solution: (fitness = 1000000005158.780518)
+#  mu = -3.0197 sigma = 1.4311 prob = 0.3314
+#  mu = 4.0200 sigma = 1.9828 prob = 0.6686
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0168 sigma = 1.4321 prob = 0.3311
+#  mu = 4.0242 sigma = 1.9834 prob = 0.6689
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0169 sigma = 1.4317 prob = 0.3312
+#  mu = 4.0209 sigma = 1.9823 prob = 0.6688
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0169 sigma = 1.4305 prob = 0.3311
+#  mu = 4.0215 sigma = 1.9833 prob = 0.6689
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0181 sigma = 1.4316 prob = 0.3307
+#  mu = 4.0220 sigma = 1.9827 prob = 0.6693
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0210 sigma = 1.4295 prob = 0.3307
+#  mu = 4.0205 sigma = 1.9849 prob = 0.6693
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0196 sigma = 1.4298 prob = 0.3311
+#  mu = 4.0228 sigma = 1.9836 prob = 0.6689
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0163 sigma = 1.4331 prob = 0.3315
+#  mu = 4.0230 sigma = 1.9837 prob = 0.6685
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0191 sigma = 1.4316 prob = 0.3308
+#  mu = 4.0223 sigma = 1.9857 prob = 0.6692
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0219 sigma = 1.4309 prob = 0.3307
+#  mu = 4.0201 sigma = 1.9844 prob = 0.6693
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0206 sigma = 1.4307 prob = 0.3315
+#  mu = 4.0205 sigma = 1.9852 prob = 0.6685
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0180 sigma = 1.4321 prob = 0.3308
+#  mu = 4.0215 sigma = 1.9852 prob = 0.6692
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0198 sigma = 1.4301 prob = 0.3308
+#  mu = 4.0210 sigma = 1.9830 prob = 0.6692
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0170 sigma = 1.4336 prob = 0.3314
+#  mu = 4.0205 sigma = 1.9833 prob = 0.6686
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0180 sigma = 1.4324 prob = 0.3314
+#  mu = 4.0196 sigma = 1.9829 prob = 0.6686
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0206 sigma = 1.4314 prob = 0.3313
+#  mu = 4.0200 sigma = 1.9827 prob = 0.6687
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0164 sigma = 1.4310 prob = 0.3312
+#  mu = 4.0218 sigma = 1.9831 prob = 0.6688
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0190 sigma = 1.4334 prob = 0.3308
+#  mu = 4.0226 sigma = 1.9833 prob = 0.6692
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0200 sigma = 1.4311 prob = 0.3308
+#  mu = 4.0186 sigma = 1.9851 prob = 0.6692
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0176 sigma = 1.4315 prob = 0.3309
+#  mu = 4.0198 sigma = 1.9847 prob = 0.6691
+# Solution: (fitness = 1000000005158.780640)
+#  mu = -3.0191 sigma = 1.4312 prob = 0.3306
+#  mu = 4.0207 sigma = 1.9839 prob = 0.6694
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0176 sigma = 1.4329 prob = 0.3314
+#  mu = 4.0244 sigma = 1.9841 prob = 0.6686
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0181 sigma = 1.4327 prob = 0.3317
+#  mu = 4.0219 sigma = 1.9830 prob = 0.6683
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0158 sigma = 1.4330 prob = 0.3315
+#  mu = 4.0233 sigma = 1.9828 prob = 0.6685
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0179 sigma = 1.4329 prob = 0.3314
+#  mu = 4.0196 sigma = 1.9837 prob = 0.6686
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0217 sigma = 1.4319 prob = 0.3314
+#  mu = 4.0213 sigma = 1.9847 prob = 0.6686
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0214 sigma = 1.4327 prob = 0.3309
+#  mu = 4.0222 sigma = 1.9842 prob = 0.6691
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0196 sigma = 1.4316 prob = 0.3305
+#  mu = 4.0201 sigma = 1.9846 prob = 0.6695
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0221 sigma = 1.4314 prob = 0.3311
+#  mu = 4.0215 sigma = 1.9854 prob = 0.6689
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0192 sigma = 1.4331 prob = 0.3312
+#  mu = 4.0205 sigma = 1.9856 prob = 0.6688
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0192 sigma = 1.4332 prob = 0.3312
+#  mu = 4.0204 sigma = 1.9855 prob = 0.6688
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0189 sigma = 1.4295 prob = 0.3310
+#  mu = 4.0225 sigma = 1.9839 prob = 0.6690
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0174 sigma = 1.4318 prob = 0.3317
+#  mu = 4.0209 sigma = 1.9834 prob = 0.6683
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0220 sigma = 1.4312 prob = 0.3310
+#  mu = 4.0191 sigma = 1.9842 prob = 0.6690
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0188 sigma = 1.4317 prob = 0.3308
+#  mu = 4.0237 sigma = 1.9835 prob = 0.6692
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0194 sigma = 1.4323 prob = 0.3316
+#  mu = 4.0217 sigma = 1.9822 prob = 0.6684
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0206 sigma = 1.4312 prob = 0.3313
+#  mu = 4.0238 sigma = 1.9842 prob = 0.6687
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0203 sigma = 1.4316 prob = 0.3315
+#  mu = 4.0202 sigma = 1.9855 prob = 0.6685
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0176 sigma = 1.4308 prob = 0.3315
+#  mu = 4.0215 sigma = 1.9847 prob = 0.6685
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0202 sigma = 1.4320 prob = 0.3312
+#  mu = 4.0237 sigma = 1.9823 prob = 0.6688
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0173 sigma = 1.4313 prob = 0.3307
+#  mu = 4.0224 sigma = 1.9839 prob = 0.6693
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0180 sigma = 1.4306 prob = 0.3310
+#  mu = 4.0235 sigma = 1.9839 prob = 0.6690
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0192 sigma = 1.4323 prob = 0.3314
+#  mu = 4.0198 sigma = 1.9825 prob = 0.6686
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0178 sigma = 1.4320 prob = 0.3310
+#  mu = 4.0225 sigma = 1.9856 prob = 0.6690
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0157 sigma = 1.4335 prob = 0.3313
+#  mu = 4.0224 sigma = 1.9825 prob = 0.6687
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0201 sigma = 1.4323 prob = 0.3308
+#  mu = 4.0199 sigma = 1.9856 prob = 0.6692
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0201 sigma = 1.4336 prob = 0.3310
+#  mu = 4.0203 sigma = 1.9834 prob = 0.6690
+# Solution: (fitness = 1000000005158.780762)
+#  mu = -3.0171 sigma = 1.4312 prob = 0.3310
+#  mu = 4.0213 sigma = 1.9853 prob = 0.6690
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0191 sigma = 1.4334 prob = 0.3308
+#  mu = 4.0229 sigma = 1.9842 prob = 0.6692
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0184 sigma = 1.4339 prob = 0.3309
+#  mu = 4.0214 sigma = 1.9846 prob = 0.6691
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0171 sigma = 1.4331 prob = 0.3309
+#  mu = 4.0231 sigma = 1.9826 prob = 0.6691
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0218 sigma = 1.4316 prob = 0.3308
+#  mu = 4.0227 sigma = 1.9843 prob = 0.6692
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0167 sigma = 1.4327 prob = 0.3309
+#  mu = 4.0203 sigma = 1.9839 prob = 0.6691
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0198 sigma = 1.4313 prob = 0.3308
+#  mu = 4.0238 sigma = 1.9843 prob = 0.6692
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0184 sigma = 1.4312 prob = 0.3308
+#  mu = 4.0218 sigma = 1.9858 prob = 0.6692
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0187 sigma = 1.4303 prob = 0.3310
+#  mu = 4.0187 sigma = 1.9839 prob = 0.6690
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0180 sigma = 1.4306 prob = 0.3308
+#  mu = 4.0227 sigma = 1.9845 prob = 0.6692
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0185 sigma = 1.4303 prob = 0.3308
+#  mu = 4.0208 sigma = 1.9828 prob = 0.6692
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0182 sigma = 1.4299 prob = 0.3314
+#  mu = 4.0222 sigma = 1.9839 prob = 0.6686
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0179 sigma = 1.4315 prob = 0.3309
+#  mu = 4.0201 sigma = 1.9824 prob = 0.6691
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0218 sigma = 1.4303 prob = 0.3307
+#  mu = 4.0216 sigma = 1.9849 prob = 0.6693
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0200 sigma = 1.4333 prob = 0.3310
+#  mu = 4.0197 sigma = 1.9833 prob = 0.6690
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0225 sigma = 1.4309 prob = 0.3310
+#  mu = 4.0193 sigma = 1.9854 prob = 0.6690
+# Solution: (fitness = 1000000005158.780884)
+#  mu = -3.0196 sigma = 1.4304 prob = 0.3314
+#  mu = 4.0216 sigma = 1.9822 prob = 0.6686
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0166 sigma = 1.4325 prob = 0.3312
+#  mu = 4.0246 sigma = 1.9837 prob = 0.6688
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0179 sigma = 1.4324 prob = 0.3314
+#  mu = 4.0211 sigma = 1.9813 prob = 0.6686
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0168 sigma = 1.4333 prob = 0.3316
+#  mu = 4.0223 sigma = 1.9844 prob = 0.6684
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0208 sigma = 1.4326 prob = 0.3313
+#  mu = 4.0203 sigma = 1.9856 prob = 0.6687
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0173 sigma = 1.4303 prob = 0.3312
+#  mu = 4.0225 sigma = 1.9849 prob = 0.6688
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0186 sigma = 1.4321 prob = 0.3312
+#  mu = 4.0242 sigma = 1.9851 prob = 0.6688
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0190 sigma = 1.4304 prob = 0.3309
+#  mu = 4.0237 sigma = 1.9834 prob = 0.6691
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0192 sigma = 1.4336 prob = 0.3314
+#  mu = 4.0244 sigma = 1.9830 prob = 0.6686
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0214 sigma = 1.4313 prob = 0.3315
+#  mu = 4.0195 sigma = 1.9844 prob = 0.6685
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0168 sigma = 1.4325 prob = 0.3313
+#  mu = 4.0225 sigma = 1.9812 prob = 0.6687
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0208 sigma = 1.4291 prob = 0.3312
+#  mu = 4.0201 sigma = 1.9856 prob = 0.6688
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0212 sigma = 1.4301 prob = 0.3310
+#  mu = 4.0232 sigma = 1.9837 prob = 0.6690
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0212 sigma = 1.4306 prob = 0.3313
+#  mu = 4.0185 sigma = 1.9840 prob = 0.6687
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0182 sigma = 1.4336 prob = 0.3310
+#  mu = 4.0195 sigma = 1.9844 prob = 0.6690
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0204 sigma = 1.4306 prob = 0.3316
+#  mu = 4.0210 sigma = 1.9843 prob = 0.6684
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0187 sigma = 1.4327 prob = 0.3315
+#  mu = 4.0194 sigma = 1.9844 prob = 0.6685
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0223 sigma = 1.4304 prob = 0.3312
+#  mu = 4.0221 sigma = 1.9847 prob = 0.6688
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0200 sigma = 1.4316 prob = 0.3317
+#  mu = 4.0205 sigma = 1.9831 prob = 0.6683
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0182 sigma = 1.4321 prob = 0.3314
+#  mu = 4.0236 sigma = 1.9853 prob = 0.6686
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0201 sigma = 1.4289 prob = 0.3309
+#  mu = 4.0199 sigma = 1.9853 prob = 0.6691
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0177 sigma = 1.4309 prob = 0.3315
+#  mu = 4.0236 sigma = 1.9830 prob = 0.6685
+# Solution: (fitness = 1000000005158.781006)
+#  mu = -3.0202 sigma = 1.4294 prob = 0.3308
+#  mu = 4.0203 sigma = 1.9862 prob = 0.6692
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0212 sigma = 1.4330 prob = 0.3313
+#  mu = 4.0218 sigma = 1.9825 prob = 0.6687
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0188 sigma = 1.4323 prob = 0.3309
+#  mu = 4.0239 sigma = 1.9819 prob = 0.6691
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0229 sigma = 1.4300 prob = 0.3309
+#  mu = 4.0207 sigma = 1.9840 prob = 0.6691
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0196 sigma = 1.4332 prob = 0.3314
+#  mu = 4.0213 sigma = 1.9816 prob = 0.6686
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0186 sigma = 1.4299 prob = 0.3307
+#  mu = 4.0204 sigma = 1.9835 prob = 0.6693
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0179 sigma = 1.4338 prob = 0.3309
+#  mu = 4.0226 sigma = 1.9821 prob = 0.6691
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0184 sigma = 1.4300 prob = 0.3312
+#  mu = 4.0196 sigma = 1.9855 prob = 0.6688
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0219 sigma = 1.4315 prob = 0.3314
+#  mu = 4.0228 sigma = 1.9832 prob = 0.6686
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0183 sigma = 1.4308 prob = 0.3306
+#  mu = 4.0217 sigma = 1.9847 prob = 0.6694
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0168 sigma = 1.4325 prob = 0.3317
+#  mu = 4.0212 sigma = 1.9825 prob = 0.6683
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0189 sigma = 1.4307 prob = 0.3316
+#  mu = 4.0202 sigma = 1.9846 prob = 0.6684
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0168 sigma = 1.4317 prob = 0.3316
+#  mu = 4.0213 sigma = 1.9848 prob = 0.6684
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0179 sigma = 1.4319 prob = 0.3306
+#  mu = 4.0225 sigma = 1.9843 prob = 0.6694
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0196 sigma = 1.4309 prob = 0.3309
+#  mu = 4.0244 sigma = 1.9837 prob = 0.6691
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0174 sigma = 1.4310 prob = 0.3317
+#  mu = 4.0227 sigma = 1.9826 prob = 0.6683
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0191 sigma = 1.4309 prob = 0.3317
+#  mu = 4.0217 sigma = 1.9834 prob = 0.6683
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0183 sigma = 1.4308 prob = 0.3317
+#  mu = 4.0218 sigma = 1.9843 prob = 0.6683
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0176 sigma = 1.4324 prob = 0.3313
+#  mu = 4.0243 sigma = 1.9848 prob = 0.6687
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0162 sigma = 1.4339 prob = 0.3311
+#  mu = 4.0242 sigma = 1.9827 prob = 0.6689
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0192 sigma = 1.4329 prob = 0.3318
+#  mu = 4.0223 sigma = 1.9839 prob = 0.6682
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0164 sigma = 1.4311 prob = 0.3310
+#  mu = 4.0203 sigma = 1.9832 prob = 0.6690
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0216 sigma = 1.4310 prob = 0.3312
+#  mu = 4.0191 sigma = 1.9831 prob = 0.6688
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0182 sigma = 1.4330 prob = 0.3311
+#  mu = 4.0250 sigma = 1.9828 prob = 0.6689
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0205 sigma = 1.4307 prob = 0.3310
+#  mu = 4.0217 sigma = 1.9866 prob = 0.6690
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0184 sigma = 1.4336 prob = 0.3315
+#  mu = 4.0245 sigma = 1.9841 prob = 0.6685
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0158 sigma = 1.4316 prob = 0.3310
+#  mu = 4.0226 sigma = 1.9840 prob = 0.6690
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0167 sigma = 1.4332 prob = 0.3308
+#  mu = 4.0213 sigma = 1.9845 prob = 0.6692
+# Solution: (fitness = 1000000005158.781128)
+#  mu = -3.0184 sigma = 1.4298 prob = 0.3309
+#  mu = 4.0213 sigma = 1.9858 prob = 0.6691
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0172 sigma = 1.4339 prob = 0.3311
+#  mu = 4.0234 sigma = 1.9816 prob = 0.6689
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0201 sigma = 1.4333 prob = 0.3312
+#  mu = 4.0237 sigma = 1.9849 prob = 0.6688
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0154 sigma = 1.4334 prob = 0.3315
+#  mu = 4.0240 sigma = 1.9826 prob = 0.6685
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0189 sigma = 1.4328 prob = 0.3318
+#  mu = 4.0226 sigma = 1.9842 prob = 0.6682
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0209 sigma = 1.4322 prob = 0.3314
+#  mu = 4.0231 sigma = 1.9852 prob = 0.6686
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0199 sigma = 1.4328 prob = 0.3312
+#  mu = 4.0217 sigma = 1.9814 prob = 0.6688
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0216 sigma = 1.4328 prob = 0.3311
+#  mu = 4.0234 sigma = 1.9838 prob = 0.6689
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0161 sigma = 1.4323 prob = 0.3310
+#  mu = 4.0201 sigma = 1.9832 prob = 0.6690
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0192 sigma = 1.4316 prob = 0.3314
+#  mu = 4.0241 sigma = 1.9852 prob = 0.6686
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0188 sigma = 1.4323 prob = 0.3313
+#  mu = 4.0205 sigma = 1.9864 prob = 0.6687
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0196 sigma = 1.4343 prob = 0.3309
+#  mu = 4.0223 sigma = 1.9838 prob = 0.6691
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0176 sigma = 1.4326 prob = 0.3313
+#  mu = 4.0203 sigma = 1.9858 prob = 0.6687
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0196 sigma = 1.4309 prob = 0.3309
+#  mu = 4.0185 sigma = 1.9830 prob = 0.6691
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0193 sigma = 1.4320 prob = 0.3316
+#  mu = 4.0190 sigma = 1.9835 prob = 0.6684
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0164 sigma = 1.4343 prob = 0.3312
+#  mu = 4.0243 sigma = 1.9826 prob = 0.6688
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0204 sigma = 1.4314 prob = 0.3316
+#  mu = 4.0217 sigma = 1.9823 prob = 0.6684
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0207 sigma = 1.4334 prob = 0.3316
+#  mu = 4.0226 sigma = 1.9841 prob = 0.6684
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0182 sigma = 1.4336 prob = 0.3315
+#  mu = 4.0198 sigma = 1.9837 prob = 0.6685
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0190 sigma = 1.4317 prob = 0.3309
+#  mu = 4.0242 sigma = 1.9851 prob = 0.6691
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0195 sigma = 1.4329 prob = 0.3308
+#  mu = 4.0194 sigma = 1.9831 prob = 0.6692
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0193 sigma = 1.4309 prob = 0.3315
+#  mu = 4.0241 sigma = 1.9837 prob = 0.6685
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0159 sigma = 1.4314 prob = 0.3312
+#  mu = 4.0212 sigma = 1.9823 prob = 0.6688
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0222 sigma = 1.4303 prob = 0.3305
+#  mu = 4.0210 sigma = 1.9850 prob = 0.6695
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0214 sigma = 1.4301 prob = 0.3311
+#  mu = 4.0230 sigma = 1.9855 prob = 0.6689
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0189 sigma = 1.4329 prob = 0.3318
+#  mu = 4.0230 sigma = 1.9840 prob = 0.6682
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0196 sigma = 1.4318 prob = 0.3309
+#  mu = 4.0233 sigma = 1.9818 prob = 0.6691
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0211 sigma = 1.4335 prob = 0.3310
+#  mu = 4.0208 sigma = 1.9834 prob = 0.6690
+# Solution: (fitness = 1000000005158.781250)
+#  mu = -3.0159 sigma = 1.4315 prob = 0.3312
+#  mu = 4.0237 sigma = 1.9828 prob = 0.6688
+# Solution: (fitness = 1000000005158.803101)
+#  mu = -3.0225 sigma = 1.4283 prob = 0.3288
+#  mu = 4.0213 sigma = 1.9832 prob = 0.6712
+# Solution: (fitness = 1000000005158.805420)
+#  mu = -3.0143 sigma = 1.4340 prob = 0.3290
+#  mu = 4.0215 sigma = 1.9853 prob = 0.6710
+# Solution: (fitness = 1000000005158.782227)
+#  mu = -3.0220 sigma = 1.4311 prob = 0.3313
+#  mu = 4.0209 sigma = 1.9817 prob = 0.6687
+# Solution: (fitness = 1000000005158.835205)
+#  mu = -3.0155 sigma = 1.4311 prob = 0.3277
+#  mu = 4.0249 sigma = 1.9856 prob = 0.6723
+# Solution: (fitness = 1000000005158.782959)
+#  mu = -3.0190 sigma = 1.4322 prob = 0.3303
+#  mu = 4.0202 sigma = 1.9835 prob = 0.6697
+# Solution: (fitness = 1000000005158.783325)
+#  mu = -3.0201 sigma = 1.4284 prob = 0.3310
+#  mu = 4.0238 sigma = 1.9831 prob = 0.6690
+# Solution: (fitness = 1000000005158.826050)
+#  mu = -3.0243 sigma = 1.4328 prob = 0.3280
+#  mu = 4.0186 sigma = 1.9826 prob = 0.6720
+# Solution: (fitness = 1000000005158.886841)
+#  mu = -3.0151 sigma = 1.4297 prob = 0.3263
+#  mu = 4.0232 sigma = 1.9822 prob = 0.6737
+# Solution: (fitness = 1000000005158.784058)
+#  mu = -3.0198 sigma = 1.4341 prob = 0.3317
+#  mu = 4.0248 sigma = 1.9805 prob = 0.6683
+# Solution: (fitness = 1000000005158.785156)
+#  mu = -3.0209 sigma = 1.4337 prob = 0.3320
+#  mu = 4.0253 sigma = 1.9833 prob = 0.6680
+# Solution: (fitness = 1000000005158.784302)
+#  mu = -3.0203 sigma = 1.4317 prob = 0.3319
+#  mu = 4.0185 sigma = 1.9860 prob = 0.6681
+# Solution: (fitness = 1000000005158.785034)
+#  mu = -3.0140 sigma = 1.4329 prob = 0.3309
+#  mu = 4.0209 sigma = 1.9859 prob = 0.6691
+# Solution: (fitness = 1000000005158.788452)
+#  mu = -3.0200 sigma = 1.4307 prob = 0.3298
+#  mu = 4.0240 sigma = 1.9836 prob = 0.6702
+# Solution: (fitness = 1000000005158.876709)
+#  mu = -3.0181 sigma = 1.4338 prob = 0.3357
+#  mu = 4.0159 sigma = 1.9854 prob = 0.6643
+# Solution: (fitness = 1000000005158.786377)
+#  mu = -3.0142 sigma = 1.4311 prob = 0.3319
+#  mu = 4.0212 sigma = 1.9807 prob = 0.6681
+# Solution: (fitness = 1000000005158.787598)
+#  mu = -3.0192 sigma = 1.4344 prob = 0.3311
+#  mu = 4.0164 sigma = 1.9815 prob = 0.6689
+# Solution: (fitness = 1000000005158.787231)
+#  mu = -3.0190 sigma = 1.4342 prob = 0.3305
+#  mu = 4.0162 sigma = 1.9851 prob = 0.6695
+# Solution: (fitness = 1000000005158.787354)
+#  mu = -3.0149 sigma = 1.4346 prob = 0.3304
+#  mu = 4.0245 sigma = 1.9813 prob = 0.6696
+# Solution: (fitness = 1000000005158.787598)
+#  mu = -3.0176 sigma = 1.4310 prob = 0.3325
+#  mu = 4.0225 sigma = 1.9812 prob = 0.6675
+# Solution: (fitness = 1000000005158.829590)
+#  mu = -3.0151 sigma = 1.4340 prob = 0.3280
+#  mu = 4.0224 sigma = 1.9862 prob = 0.6720
+# Solution: (fitness = 1000000005158.883423)
+#  mu = -3.0195 sigma = 1.4351 prob = 0.3361
+#  mu = 4.0265 sigma = 1.9845 prob = 0.6639
+# Solution: (fitness = 1000000005158.800049)
+#  mu = -3.0230 sigma = 1.4324 prob = 0.3331
+#  mu = 4.0232 sigma = 1.9852 prob = 0.6669
+# Solution: (fitness = 1000000005158.789185)
+#  mu = -3.0150 sigma = 1.4326 prob = 0.3300
+#  mu = 4.0192 sigma = 1.9860 prob = 0.6700
+# Solution: (fitness = 1000000005158.789551)
+#  mu = -3.0242 sigma = 1.4330 prob = 0.3319
+#  mu = 4.0236 sigma = 1.9807 prob = 0.6681
+# Solution: (fitness = 1000000005158.791504)
+#  mu = -3.0191 sigma = 1.4351 prob = 0.3302
+#  mu = 4.0267 sigma = 1.9806 prob = 0.6698
+# Solution: (fitness = 1000000005158.791870)
+#  mu = -3.0197 sigma = 1.4314 prob = 0.3294
+#  mu = 4.0189 sigma = 1.9852 prob = 0.6706
+# Solution: (fitness = 1000000005158.790039)
+#  mu = -3.0238 sigma = 1.4311 prob = 0.3322
+#  mu = 4.0250 sigma = 1.9848 prob = 0.6678
+# Solution: (fitness = 1000000005158.838013)
+#  mu = -3.0181 sigma = 1.4301 prob = 0.3276
+#  mu = 4.0255 sigma = 1.9833 prob = 0.6724
+# Solution: (fitness = 1000000005158.828369)
+#  mu = -3.0216 sigma = 1.4304 prob = 0.3277
+#  mu = 4.0228 sigma = 1.9849 prob = 0.6723
+# Solution: (fitness = 1000000005158.813354)
+#  mu = -3.0157 sigma = 1.4315 prob = 0.3337
+#  mu = 4.0183 sigma = 1.9865 prob = 0.6663
+# Solution: (fitness = 1000000005158.834839)
+#  mu = -3.0217 sigma = 1.4326 prob = 0.3347
+#  mu = 4.0224 sigma = 1.9848 prob = 0.6653
+# Solution: (fitness = 1000000005158.792725)
+#  mu = -3.0167 sigma = 1.4315 prob = 0.3328
+#  mu = 4.0191 sigma = 1.9820 prob = 0.6672
+# Solution: (fitness = 1000000005158.790894)
+#  mu = -3.0131 sigma = 1.4341 prob = 0.3325
+#  mu = 4.0256 sigma = 1.9848 prob = 0.6675
+# Solution: (fitness = 1000000005158.835083)
+#  mu = -3.0142 sigma = 1.4300 prob = 0.3346
+#  mu = 4.0251 sigma = 1.9852 prob = 0.6654
+# Solution: (fitness = 1000000005158.903442)
+#  mu = -3.0146 sigma = 1.4305 prob = 0.3259
+#  mu = 4.0232 sigma = 1.9825 prob = 0.6741
+# Solution: (fitness = 1000000005158.823486)
+#  mu = -3.0201 sigma = 1.4318 prob = 0.3281
+#  mu = 4.0230 sigma = 1.9812 prob = 0.6719
+# Solution: (fitness = 1000000005158.815674)
+#  mu = -3.0179 sigma = 1.4301 prob = 0.3283
+#  mu = 4.0229 sigma = 1.9840 prob = 0.6717
+# Solution: (fitness = 1000000005158.812622)
+#  mu = -3.0191 sigma = 1.4316 prob = 0.3339
+#  mu = 4.0188 sigma = 1.9819 prob = 0.6661
+# Solution: (fitness = 1000000005158.812866)
+#  mu = -3.0200 sigma = 1.4323 prob = 0.3283
+#  mu = 4.0214 sigma = 1.9864 prob = 0.6717
+# Solution: (fitness = 1000000005158.813110)
+#  mu = -3.0168 sigma = 1.4313 prob = 0.3340
+#  mu = 4.0252 sigma = 1.9804 prob = 0.6660
+# Solution: (fitness = 1000000005158.781372)
+#  mu = -3.0186 sigma = 1.4310 prob = 0.3315
+#  mu = 4.0235 sigma = 1.9852 prob = 0.6685
+# Solution: (fitness = 1000000005158.804565)
+#  mu = -3.0205 sigma = 1.4306 prob = 0.3335
+#  mu = 4.0244 sigma = 1.9810 prob = 0.6665
+# Solution: (fitness = 1000000005158.823364)
+#  mu = -3.0262 sigma = 1.4291 prob = 0.3339
+#  mu = 4.0222 sigma = 1.9854 prob = 0.6661
+# Solution: (fitness = 1000000005158.834351)
+#  mu = -3.0158 sigma = 1.4309 prob = 0.3276
+#  mu = 4.0192 sigma = 1.9856 prob = 0.6724
+# Solution: (fitness = 1000000005158.870361)
+#  mu = -3.0193 sigma = 1.4327 prob = 0.3359
+#  mu = 4.0243 sigma = 1.9820 prob = 0.6641
+# Solution: (fitness = 1000000005158.810059)
+#  mu = -3.0206 sigma = 1.4310 prob = 0.3338
+#  mu = 4.0238 sigma = 1.9832 prob = 0.6662
+# Solution: (fitness = 1000000005158.817261)
+#  mu = -3.0165 sigma = 1.4348 prob = 0.3342
+#  mu = 4.0206 sigma = 1.9841 prob = 0.6658
+# Solution: (fitness = 1000000005158.785522)
+#  mu = -3.0202 sigma = 1.4327 prob = 0.3303
+#  mu = 4.0241 sigma = 1.9861 prob = 0.6697
+# Solution: (fitness = 1000000005158.783569)
+#  mu = -3.0203 sigma = 1.4311 prob = 0.3309
+#  mu = 4.0261 sigma = 1.9845 prob = 0.6691
+# Solution: (fitness = 1000000005158.841797)
+#  mu = -3.0181 sigma = 1.4322 prob = 0.3350
+#  mu = 4.0199 sigma = 1.9800 prob = 0.6650
+# Solution: (fitness = 1000000005158.875854)
+#  mu = -3.0220 sigma = 1.4319 prob = 0.3359
+#  mu = 4.0240 sigma = 1.9820 prob = 0.6641
+# Solution: (fitness = 1000000005158.796997)
+#  mu = -3.0253 sigma = 1.4291 prob = 0.3324
+#  mu = 4.0185 sigma = 1.9814 prob = 0.6676
+# Solution: (fitness = 1000000005158.844360)
+#  mu = -3.0153 sigma = 1.4292 prob = 0.3349
+#  mu = 4.0204 sigma = 1.9830 prob = 0.6651
+# Solution: (fitness = 1000000005158.875122)
+#  mu = -3.0225 sigma = 1.4344 prob = 0.3359
+#  mu = 4.0261 sigma = 1.9803 prob = 0.6641
+# Solution: (fitness = 1000000005158.790894)
+#  mu = -3.0203 sigma = 1.4313 prob = 0.3295
+#  mu = 4.0193 sigma = 1.9838 prob = 0.6705
+# Solution: (fitness = 1000000005158.804321)
+#  mu = -3.0225 sigma = 1.4334 prob = 0.3293
+#  mu = 4.0277 sigma = 1.9864 prob = 0.6707
+# Solution: (fitness = 1000000005158.854736)
+#  mu = -3.0202 sigma = 1.4350 prob = 0.3353
+#  mu = 4.0181 sigma = 1.9816 prob = 0.6647
+# Solution: (fitness = 1000000005158.861450)
+#  mu = -3.0245 sigma = 1.4336 prob = 0.3353
+#  mu = 4.0211 sigma = 1.9849 prob = 0.6647
+# Solution: (fitness = 1000000005158.862061)
+#  mu = -3.0242 sigma = 1.4328 prob = 0.3353
+#  mu = 4.0190 sigma = 1.9854 prob = 0.6647
+# Solution: (fitness = 1000000005158.828979)
+#  mu = -3.0143 sigma = 1.4331 prob = 0.3280
+#  mu = 4.0204 sigma = 1.9829 prob = 0.6720
+# Solution: (fitness = 1000000005158.816895)
+#  mu = -3.0208 sigma = 1.4328 prob = 0.3284
+#  mu = 4.0260 sigma = 1.9825 prob = 0.6716
+# Solution: (fitness = 1000000005158.799805)
+#  mu = -3.0152 sigma = 1.4312 prob = 0.3333
+#  mu = 4.0210 sigma = 1.9836 prob = 0.6667
+# Solution: (fitness = 1000000005158.798096)
+#  mu = -3.0190 sigma = 1.4330 prob = 0.3333
+#  mu = 4.0261 sigma = 1.9820 prob = 0.6667
+# Solution: (fitness = 1000000005158.869385)
+#  mu = -3.0208 sigma = 1.4301 prob = 0.3266
+#  mu = 4.0239 sigma = 1.9829 prob = 0.6734
+# Solution: (fitness = 1000000005158.870605)
+#  mu = -3.0179 sigma = 1.4306 prob = 0.3358
+#  mu = 4.0244 sigma = 1.9827 prob = 0.6642
+# Solution: (fitness = 1000000005158.800537)
+#  mu = -3.0146 sigma = 1.4348 prob = 0.3334
+#  mu = 4.0268 sigma = 1.9832 prob = 0.6666
+# Solution: (fitness = 1000000005158.873169)
+#  mu = -3.0158 sigma = 1.4300 prob = 0.3266
+#  mu = 4.0189 sigma = 1.9821 prob = 0.6734
+# Solution: (fitness = 1000000005158.808472)
+#  mu = -3.0223 sigma = 1.4277 prob = 0.3333
+#  mu = 4.0238 sigma = 1.9858 prob = 0.6667
+# Solution: (fitness = 1000000005158.875977)
+#  mu = -3.0172 sigma = 1.4314 prob = 0.3357
+#  mu = 4.0152 sigma = 1.9836 prob = 0.6643
+# Solution: (fitness = 1000000005158.858765)
+#  mu = -3.0208 sigma = 1.4337 prob = 0.3268
+#  mu = 4.0191 sigma = 1.9844 prob = 0.6732
+# Solution: (fitness = 1000000005158.880493)
+#  mu = -3.0138 sigma = 1.4317 prob = 0.3359
+#  mu = 4.0172 sigma = 1.9822 prob = 0.6641
+# Solution: (fitness = 1000000005158.813354)
+#  mu = -3.0177 sigma = 1.4315 prob = 0.3284
+#  mu = 4.0179 sigma = 1.9830 prob = 0.6716
+# Solution: (fitness = 1000000005158.870483)
+#  mu = -3.0174 sigma = 1.4340 prob = 0.3266
+#  mu = 4.0189 sigma = 1.9838 prob = 0.6734
+# Solution: (fitness = 1000000005158.897583)
+#  mu = -3.0173 sigma = 1.4333 prob = 0.3261
+#  mu = 4.0268 sigma = 1.9830 prob = 0.6739
+# Solution: (fitness = 1000000005158.910889)
+#  mu = -3.0174 sigma = 1.4297 prob = 0.3259
+#  mu = 4.0278 sigma = 1.9825 prob = 0.6741

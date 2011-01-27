@@ -32,7 +32,7 @@ struct solution {
 
   /* These are the functions that will modify the solution. */
   int    (*mutate)(struct solution *par1, struct solution *par2, 
-		   struct solution *dest, struct devol_controller *cont);
+		   struct solution *dest);
   double (*fitness)(struct solution *solution);
   int    (*init)(struct solution *solution);
   int    (*destroy)(struct solution *solution);
@@ -47,6 +47,9 @@ struct solution {
     double             dp_fp;   /* A double precision floating point. */
   } private;
 
+  /* The solution's controller. */
+  struct devol_controller *cont;
+
 };
 
 typedef struct solution solution_t;
@@ -60,7 +63,7 @@ struct devol_params {
   /* Pass in the call back functions that will be propagated to each individual
    * solution. */
   int    (*mutate)(solution_t *par1, solution_t *par2, 
-		   solution_t *dest, struct devol_controller *cont);
+		   solution_t *dest);
   double (*fitness)(solution_t *solution);
   int    (*init)(solution_t *solution);
   int    (*destroy)(solution_t *solution);

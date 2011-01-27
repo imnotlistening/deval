@@ -166,6 +166,8 @@ void *_devol_thread_main(void *data){
   /* This label is used to effectively restart a thread's calculation process.
    */
  run_iteration:
+
+  INFO("(ID=%d) Starting iteration.\n", controller->tid);
   
   ftime(&tmp_time);
   t_start = (tmp_time.time * 1000) + tmp_time.millitm;
@@ -181,24 +183,26 @@ void *_devol_thread_main(void *data){
    *  3) Create new solutions by breeding good solutions randomly.
    *  4) Replace the worst solutions with the newly created solutions.
    */
+  INFO("(ID=%d) Computing fitnesses.\n", controller->tid);
   _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
 				   controller->start, controller->stop);
-  
   /*
    * This could potentially give rise to superlinear speedups. This is because
    * sort algorithms scale super-linearly with problem size. I.e the run time
    * for qsort is O(N * log(N)). Thus as N gets larger, the sequential program
    * starts to hurt more than k subsections of an N sized problem.
    */
+  INFO("(ID=%d) Sorting.\n", controller->tid);
   qsort(&(controller->gene_pool->solutions[controller->start]), 
 	controller->stop - controller->start,
 	sizeof(solution_t), _compare_solutions);
-  
+
   /* This is kinda complex... basically we have to randomly choose some of the
    * the better solutions to breed. This is affected by the param 
    * reproduction_rate. The higher the reproduction rate, the more solutions
    * we make per generation. 
    */
+  INFO("(ID=%d) Breeding.\n", controller->tid);
   for ( i = 0; i < solution_count; i++){
 
     /* Generate a new solution from the two randomly selected in the
@@ -224,11 +228,12 @@ void *_devol_thread_main(void *data){
 	  s2_ind, s2->fitness_val);
 
     /* And make the new solution. */
-    s1->mutate(s1, s2, &(new_solutions[i]), controller);
     new_solutions[i].mutate = s1->mutate;
     new_solutions[i].fitness = s1->fitness;
     new_solutions[i].init = s1->init;
     new_solutions[i].destroy = s1->destroy;
+    new_solutions[i].cont = controller;
+    s1->mutate(s1, s2, &(new_solutions[i]));
 
     /* Now choose a solution to die and be replaced. We will use solution_count
      * to get a window of solutions to be replaced. */
@@ -246,6 +251,10 @@ void *_devol_thread_main(void *data){
     *die = new_solutions[i];
 
   }
+  INFO("(ID=%d) Computing new fitnesses.\n", controller->tid);
+  _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
+				   controller->start, controller->stop);
+  INFO("(ID=%d) Done generation.\n", controller->tid);
 
   /* Make sure the thread_pool is ready to start the thread return... */
   while ( ! controller->pool->term_ready );

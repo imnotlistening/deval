@@ -44,7 +44,7 @@ struct devol_controller {
   struct gene_pool *gene_pool;
 
 
-  /* Pad this struct out so that it is exactly 256 bytes achine. */
+  /* Pad this struct out so that it is exactly 256 bytes. */
 #ifdef __x86_64__
   char __padding[180]; /* I can't imagine cache lines > 256 bytes. */
 #else

@@ -14,7 +14,7 @@
 
 /* Prototypes for the call backs. */
 int    mutate(struct solution *par1, struct solution *par2, 
-	      struct solution *dest, struct devol_controller *cont);
+	      struct solution *dest);
 double fitness(struct solution *solution);
 int    init(struct solution *solution);
 int    destroy(struct solution *solution);
@@ -99,7 +99,7 @@ int main(int argc, char **argv){
  * erand4_r() function without storing state for each solution.
  */
 int mutate(struct solution *par1, struct solution *par2, 
-	   struct solution *dest, struct devol_controller *cont){
+	   struct solution *dest){
 
   double tmp;
   double base;
@@ -112,7 +112,7 @@ int mutate(struct solution *par1, struct solution *par2,
     base = par2->private.dp_fp;
 
   /* And vary it by a little bit. */
-  erand48_r(cont->rstate, &(cont->rdata), &tmp);
+  erand48_r(par1->cont->rstate, &(par1->cont->rdata), &tmp);
   variation = (tmp * variance) - (variance/2);
 
   /* Initialize and set the destination solution. */

@@ -49,7 +49,7 @@
  * Prototypes for functions we need.
  */
 int     mutate(solution_t *par1, solution_t *par2, 
-	       solution_t *dest, struct devol_controller *cont);
+	       solution_t *dest);
 double  fitness(solution_t *solution);
 int     init(solution_t *solution);
 int     destroy(solution_t *solution);
@@ -186,7 +186,7 @@ int main(int argc, char **argv){
     case 'b': /* breed fitness */
       algo_params.breed_fitness = strtod(optarg, &not_ok);
       if ( *not_ok )
-	die("Unable to parse reproduction rate.\n");
+	die("Unable to parse breed fitness.\n");
       break;
     case 'm': /* maximum iterations */
       max_iter = (int) strtol(optarg, &not_ok, 0);
@@ -309,7 +309,7 @@ int run(){
  * Very simple. Just modify the X value by a small amount.
  */
 int mutate(solution_t *par1, solution_t *par2, 
-	   solution_t *dest, struct devol_controller *cont){
+	   solution_t *dest){
 
   double tmp;
   double base;
@@ -322,7 +322,7 @@ int mutate(solution_t *par1, solution_t *par2,
     base = par2->private.dp_fp;
 
   /* And vary it by a little bit. */
-  erand48_r(cont->rstate, &(cont->rdata), &tmp);
+  erand48_r(par1->cont->rstate, &(par1->cont->rdata), &tmp);
   variation = (tmp * variance) - (variance/2);
 
   /* Initialize and set the destination solution. */

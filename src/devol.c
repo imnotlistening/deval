@@ -13,6 +13,8 @@
 
 #include <sys/timeb.h>
 
+unsigned int solution_id = 0;
+
 /*
  * This function is important. It initializes everything. First it initializes
  * the thread pool, this is pretty simple, just a call the the thread_pool
@@ -21,7 +23,7 @@
 int  gene_pool_create(struct gene_pool *pool, int solutions, int threads, 
 		      struct devol_params params){
 
-  int i;
+  int i, j;
   int err;
   time_t t_start;
   time_t t_stop;
@@ -52,6 +54,13 @@ int  gene_pool_create(struct gene_pool *pool, int solutions, int threads,
     pool->solutions[i].fitness = params.fitness;
     pool->solutions[i].init = params.init;
     pool->solutions[i].destroy = params.destroy;
+
+    /* Figure out which controller this solution belongs to. */
+    for ( j = 0; j < threads; j++){
+      if ( i >= pool->workers.controllers[j].start &&
+	   i <  pool->workers.controllers[j].stop )
+	pool->solutions[i].cont = &(pool->workers.controllers[j]);
+    }
 
     params.init(&(pool->solutions[i]));
 
@@ -109,24 +118,6 @@ int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
     return DEVOL_ERR;
   }
 
-  ftime(&tmp_time);
-  t_start = (tmp_time.time * 1000) + tmp_time.millitm;
-  INFO("Generating %d initial solutions... ", solutions);
-  for ( i = 0; i < solutions; i++){
-
-    pool->solutions[i].mutate = params.mutate;
-    pool->solutions[i].fitness = params.fitness;
-    pool->solutions[i].init = params.init;
-    pool->solutions[i].destroy = params.destroy;
-
-    params.init(&(pool->solutions[i]));
-
-  }
-  INFO("Done\n");
-  ftime(&tmp_time);
-  t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
-  INFO("Time to allocate initial solutions: %ld ms\n", t_stop - t_start);
-
   /* Now we must initialize the gene_pool controller. */
   pool->controller.tid = 0;
   pool->controller.start = 0;
@@ -137,6 +128,25 @@ int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
   pool->controller.rstate[1] = params.rstate[1];
   pool->controller.rstate[2] = params.rstate[2];
   memset(&(pool->controller.rdata), 0, sizeof(struct drand48_data)); 
+
+  ftime(&tmp_time);
+  t_start = (tmp_time.time * 1000) + tmp_time.millitm;
+  INFO("Generating %d initial solutions... ", solutions);
+  for ( i = 0; i < solutions; i++){
+
+    pool->solutions[i].mutate = params.mutate;
+    pool->solutions[i].fitness = params.fitness;
+    pool->solutions[i].init = params.init;
+    pool->solutions[i].destroy = params.destroy;
+    pool->solutions[i].cont = &pool->controller;
+
+    params.init(&(pool->solutions[i]));
+
+  }
+  INFO("Done\n");
+  ftime(&tmp_time);
+  t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
+  INFO("Time to allocate initial solutions: %ld ms\n", t_stop - t_start);
 
   pool->flags = GPOOL_SEQ;
 
@@ -169,16 +179,13 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
    *  3) Create new solutions by breeding good solutions randomly.
    *  4) Replace the worst solutions with the newly created solutions.
    */
-  printf("_seq_ Calculating fitnesses.\n");
   _gene_pool_calculate_fitnesses_p(pool, 0, pool->solution_count);
 
   /* Sort the solutions. */
-  printf("_seq_ Sorting solutions.\n");
   qsort(pool->solutions, pool->solution_count, 
 	sizeof(solution_t), _compare_solutions);
 
   /* Make some new solutions. */
-  printf("_seq_ Making new solutions.\n");
   for ( i = 0; i < pool->new_count; i++){
 
     /* Generate the two parent solution indexes. */
@@ -189,18 +196,17 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
       s2_ind = (int)(tmp * pool->breeder_window);
     } while (s1_ind == s2_ind);
 
-    printf("_seq_   p1=%d p2=%d\n", s1_ind, s2_ind);
-
     /* Get the parent solution addresses. */
     s1 = (solution_t *)&(pool->solutions[s1_ind]);
     s2 = (solution_t *)&(pool->solutions[s2_ind]);
 
     /* And make a new solution. */
-    s1->mutate(s1, s2, &(pool->new_solutions[i]), &(pool->controller));
+    s1->mutate(s1, s2, &(pool->new_solutions[i]));
     pool->new_solutions[i].mutate = s1->mutate;
     pool->new_solutions[i].fitness = s1->fitness;
     pool->new_solutions[i].init = s1->init;
     pool->new_solutions[i].destroy = s1->destroy;
+    pool->new_solutions[i].cont = &pool->controller;
 
     /* Now that we have a solution, find another solution to kill and 
        replace. */
@@ -208,7 +214,6 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
     die_ind = 1 + ((int)(tmp * pool->new_count));
     die_ind = pool->solution_count - die_ind;
     die = (solution_t *)&(pool->solutions[die_ind]);
-    printf("_seq_ Killing: %d (fitness=%lf)\n", die_ind, die->fitness_val);
     die->destroy(die);
 
     *die = pool->new_solutions[i];
