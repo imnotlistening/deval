@@ -116,10 +116,18 @@ struct devol_params algo_params = {
   .init    = init,
   .destroy = destroy,
 
-  /* and some default random state. */
+  /* And some default random state. */
   .rstate = {7, 20, 1969},
 
 };
+
+/*
+ * Memory allocation for the solutions. Lockless, fast, etc. Requires two
+ * allocators since each allocator is only capableof allocating fixed sized
+ * chunks.
+ */
+struct bucket_table mix_sols;
+struct bucket_table mix_params;
 
 /*
  * The list of normals and the list of data.
@@ -249,8 +257,20 @@ int run(){
   //int i;
   int iter = 0;
   int err;
+  int blocks;
   struct gene_pool pool;
 
+  /* Initialize the solution's memory allocator. */
+  blocks = algo_params.reproduction_rate * pop_size;
+  blocks *= 2; /* Just for good measure. */
+  blocks += pop_size; /* The steady state solutions. */
+  blocks /= threads;  /* Since we split each bucket by thread. */
+  printf("# Initializing mixture allocation buckets.\n");
+  init_bucket_allocator(&mix_sols, threads, sizeof(struct mixture_solution),
+			blocks);
+  printf("# Initializing param allocation buckets.\n");
+  init_bucket_allocator(&mix_params, threads, sizeof(double) * 6 * norms_len,
+			blocks);
   /* Initialize the gene pool. */
   err = gene_pool_create(&pool, pop_size, threads, algo_params);
   if ( err )

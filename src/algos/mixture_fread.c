@@ -24,7 +24,7 @@ struct normal *read_mixture_file(char *file, int *norms){
   int norms_length = 0;
   int norms_max = 0;
   FILE *nfile;
-  struct normal *normals = NULL, *tmp = NULL;
+  struct normal *normals = NULL;// *tmp = NULL;
   
   nfile = fopen(file, "r");
   if ( ! nfile ){
@@ -39,20 +39,20 @@ struct normal *read_mixture_file(char *file, int *norms){
     if ( norms_length >= norms_max ){
 
       /* Get the new memory. */
-      tmp = (struct normal *)malloc(sizeof(struct normal) * NORM_INC);
-      if ( ! tmp ){
-	fprintf(stderr, "Out of memory.\n");
-	if ( normals ) free(normals);
-	return NULL;
-      }
+      if ( ! normals ){
+	norms_max = NORM_INC;
+	normals = (struct normal *)malloc(sizeof(struct normal) * norms_max);
+	if ( ! normals ){
+	  fprintf(stderr, "Out of memory.\n");
+	  return NULL;
+	}
+      } else {
+	
+	/* Reallocate the array. */
+	norms_max += NORM_INC;
+	normals = realloc(normals, norms_max);
 
-      /* Copy old mem into the new mem. */
-      if ( normals ){
-	memcpy(tmp, normals, sizeof(struct normal) * norms_length);
-	free(normals);
       }
-      normals = tmp;
-      norms_max += NORM_INC;
 
     }
 

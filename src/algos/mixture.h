@@ -5,6 +5,9 @@
 #ifndef _MIXTURE_H
 #define _MIXTURE_H
 
+#include <stdint.h>
+#include <stddef.h>
+
 /*
  * A struct for describing each normal distribution expected in the mixture.
  */
@@ -33,7 +36,7 @@ struct mixture_solution {
   double *prob;  /* Probability for the given distribution. */
   int len;       /* How many distributions we have. */
 
-  /* Store this once we have caluckated the result so we dont have to do
+  /* Store this once we have calculated the result so we dont have to do
    * it again. */
   int solved;
   double mle;
@@ -64,10 +67,37 @@ struct padded_rstate {
 #define FITNESS_CEILING (1.0e12)
 
 /*
+ * A special memory allocator. Lockless and threadable but highly specialized.
+ */
+struct bucket {
+
+  void     *base_addr;
+  uint32_t *alloc_table;
+  size_t    elems;
+
+};
+
+struct bucket_table {
+
+  int bucket_count;
+  size_t block_size;
+
+  struct bucket *buckets;
+  
+  /* The real base of memory. We will allocate all bucket's memory once. */
+  void *base;
+
+  /* All the allocation tables. */
+  uint32_t *alloc_tables;
+
+};
+
+/*
  * Functions to use.
  */
 struct normal *read_mixture_file(char *file, int *norms);
 double        *read_data_file(char *file, int *samples);
-
+int            init_bucket_allocator(struct bucket_table *tbl, int buckets,
+				     size_t block_size, size_t elems);
 
 #endif
