@@ -1,0 +1,68 @@
+
+1) DEvAl
+
+  - Deval is an optimization algorithm.
+  - Some other optimization algorithms are:
+    -> Simulated Annealing
+    -> Newton Raphson's
+    -> Genetic algorithms
+
+  - Example of an optimzation problem:
+    -> Solve for roots and square roots
+    -> One could use a closed form algorithm:
+      - Newtons, etc.
+      But that would be boring.
+
+  - Enter the evolutionary algorithm (to solve sqrt(5)).
+    -> Procedure:
+
+    1) Generate a list of possible square roots.
+    2) Determine the fitness of each possible solution.
+       i.e: how good is the solution? Give an answer numerically
+    3) Sort the solutions accorinding to their fitness.
+    4) Breed a new generation of solutions by randomly breeding some of the
+       better solutions.
+    5) Replace bad solutions with the newly bred solutions; rinse, repeat.
+
+2) Metrics for evolutionary algorithms.
+
+  - Generations per second
+    -> Naturally arises from the problem: how many generations can we do in a
+       second (or conversely, how many seconds per generation).
+    -> Brute force approach. Though it measures how many computations we are
+       doing in a given time frame, it does not really measure how efective
+       those computations are.
+  - Convergence
+    -> Can be thought of in a few different ways.
+      . Average fitness of the population: how long does it take before the
+        avg fitness of the population is no longer getting significantly better
+	per generation?
+      . This requires a way to define "significantly better". This will vary
+        from problem to problem.
+      . Overall best solution: Once you find at least one solution that is
+        good enough, you have converged.
+      . Requires a definition for "good enough", again like the avaerage
+      	population, this will vary from problem to problem.
+    -> We will use average population because it better shows the performance
+       of the algorithm. One could get very lucky with the initial guesses and
+       find a perfect solution early on, but this is not something to rely on.
+
+3) How does this relate to solving the quare root of 5?
+  
+  - The square root of 5 is the number that, when multiplied by itself equals
+    5. Derr. This leads to the following equation:
+
+    X^2 = 5
+
+  - This can be rewritten as -X^2 + 5 = 0
+  - This form of the equation is much more simple to solve: it is a simple root
+    finding problem. One could of course use a method like Newton's algorithm
+    but that type of algorithm would not scale to many dimensional problems.
+  - Fitness function:
+    
+      abs(-(x*x) + 5)
+
+  - When plotted this shows two dips to 0 (for +/- sqrt(5)). The evolutionary
+    algorithm can find these dips in the solution space.
+
+
