@@ -66,6 +66,8 @@ struct padded_rstate {
  */
 #define FITNESS_CEILING (1.0e12)
 
+struct bucket_table;
+
 /*
  * A special memory allocator. Lockless and threadable but highly specialized.
  */
@@ -80,6 +82,9 @@ struct bucket {
   /* How many elems we have over all/allocated out. */
   size_t    elems;
   size_t    allocated;
+
+  /* A pointer back to the table that manages this bucket. */
+  struct bucket_table *tbl;
 
 };
 
@@ -106,5 +111,6 @@ struct normal *read_mixture_file(char *file, int *norms);
 double        *read_data_file(char *file, int *samples);
 int            init_bucket_allocator(struct bucket_table *tbl, int buckets,
 				     size_t block_size, size_t elems);
+void          *balloc(struct bucket_table *tbl, int bucket);
 
 #endif

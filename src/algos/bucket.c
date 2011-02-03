@@ -16,8 +16,10 @@
 #include <stdlib.h>
 
 /* Definitions for local functions. */
-void _twiddle_block_bit(struct bucket *bkt, int offset);
-int  _read_block_bit(struct bucket *bkt, unsigned int offset);
+void _twiddle_block_bit(struct bucket *bkt, unsigned int offset);
+
+/* A useful macro to read a bit from a position in 32 bits. */
+#define READ_BIT(BLOCK, OFFSET)	((BLOCK & (1<<OFFSET)) >> OFFSET)
 
 /*
  * Initialize a bucket allocator with the given parameters. Allocate out all
@@ -97,19 +99,47 @@ void _twiddle_block_bit(struct bucket *bkt, unsigned int offset){
 }
 
 /*
- * Read back the value of a single bit from the block allocation table.
+ * The knitty gritty of the allocation.
  */
-int _read_block_bit(struct bucket *bkt, unsigned int offset){
+void *_balloc(struct bucket *bkt){
 
-  unsigned int block;
-  unsigned int bit;
-  uint32_t *tbl;
+  int idx = 0;
+  int bit_offset = 0;
+  void *addr;
 
-  block = offset / 32;
-  bit = offset % 32;
-  tbl = &(bkt->alloc_table[block]);
-  
-  
+  /* Search for the first non-0xFFFFFFFF uint32_t in the allocation table. This
+   * is where our first available block should be. */
+  while ( bkt->alloc_table[idx] == 0xFFFFFFF ) idx++;
+
+  /* Now find the first non-zero bit. */
+  while ( bit_offset < 32 ){
+    if ( ! READ_BIT(bkt->alloc_table[idx], bit_offset) )
+      break;
+    bit_offset++;
+  }
+
+  /* Now we have a bit offset and a table index. Caluclate whether this bit
+   * is even in the bucket at all. */
+  if ( bit_offset + (idx * 32) >= bkt->elems )
+    return NULL;
+
+  /* Now compute the actual address in memory of the found block, twiddle its
+   * bit, and finally return the address of the block. */
+  addr = bkt->base_addr + ((bit_offset + (idx * 32)) * bkt->tbl->block_size);
+  _twiddle_block_bit(bkt, bit_offset + (idx * 32));
+
+  return addr;
+
+}
+
+void *balloc(struct bucket_table *tbl, int bucket){
+
+  /* First make sure we have a valid bucket. */
+  if ( bucket < 0 || bucket >= tbl->bucket_count )
+    return NULL;
+
+  /* Pass of the work to our subordinate... */
+  return _balloc(&tbl->buckets[bucket]);
 
 }
 

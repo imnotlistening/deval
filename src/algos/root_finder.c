@@ -351,29 +351,6 @@ double fitness(solution_t *solution){
 
 }
 
-int mutate(solution_t *par1, solution_t *par2, 
-	   solution_t *dest){
-
-  double tmp;
-  double base;
-  double variation;
-
-  /* Pick the better solution of the two and then vary it by a little bit. */
-  if ( par1->fitness_val >= par2->fitness_val )
-    base = par1->private.dp_fp;
-  else
-    base = par2->private.dp_fp;
-
-  /* And vary it by a little bit. */
-  erand48_r(par1->cont->rstate, &(par1->cont->rdata), &tmp);
-  variation = (tmp * variance) - (variance/2);
-
-  /* Initialize and set the destination solution. */
-  dest->private.dp_fp = base + variation;  
-
-  return 0;
-
-}
 /*
  * Generate a solution randomly on the interval [x_min,x_max].
  */
