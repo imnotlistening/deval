@@ -71,9 +71,15 @@ struct padded_rstate {
  */
 struct bucket {
 
+  /* Starting address of our bucket. */
   void     *base_addr;
+
+  /* A list of bits representing which blocks have been allocated. */
   uint32_t *alloc_table;
+
+  /* How many elems we have over all/allocated out. */
   size_t    elems;
+  size_t    allocated;
 
 };
 
@@ -91,6 +97,7 @@ struct bucket_table {
   uint32_t *alloc_tables;
 
 };
+
 
 /*
  * Functions to use.

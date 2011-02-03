@@ -15,6 +15,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+/* Definitions for local functions. */
+void _twiddle_block_bit(struct bucket *bkt, int offset);
+int  _read_block_bit(struct bucket *bkt, unsigned int offset);
+
 /*
  * Initialize a bucket allocator with the given parameters. Allocate out all
  * the underlying memory, etc, etc.
@@ -72,8 +76,42 @@ int init_bucket_allocator(struct bucket_table *tbl, int buckets,
 
 }
 
+/*
+ * Flip a bit in the passed bkt allocation table.
+ */
+void _twiddle_block_bit(struct bucket *bkt, unsigned int offset){
 
+  unsigned int block;
+  unsigned int bit;
+  uint32_t position;
+  uint32_t *tbl;
 
+  block = offset / 32; /* Gets us which uint32_t we will find our bit in. */
+  bit = offset % 32; /* The bit position on the uint32_t. */
+  position = (1<<bit); /* A 1 in the position of our bit. */
+  tbl = &(bkt->alloc_table[block]);
+
+  /* And the twiddle. */
+  *tbl = ((*tbl & ~position) | position) & ~(*tbl & position);
+
+}
+
+/*
+ * Read back the value of a single bit from the block allocation table.
+ */
+int _read_block_bit(struct bucket *bkt, unsigned int offset){
+
+  unsigned int block;
+  unsigned int bit;
+  uint32_t *tbl;
+
+  block = offset / 32;
+  bit = offset % 32;
+  tbl = &(bkt->alloc_table[block]);
+  
+  
+
+}
 
 /*
  * Because I feel like it here is some poetry:
