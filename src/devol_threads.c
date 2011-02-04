@@ -139,7 +139,7 @@ void *_devol_thread_main(void *data){
   int s1_ind, s2_ind;
   int die_index;
   time_t t_start;
-  time_t t_stop;
+  time_t t_delta;
   struct timeb tmp_time;
   
   struct devol_controller *controller = (struct devol_controller *)data;
@@ -167,8 +167,6 @@ void *_devol_thread_main(void *data){
    */
  run_iteration:
 
-  INFO("(ID=%d) Starting iteration.\n", controller->tid);
-  
   ftime(&tmp_time);
   t_start = (tmp_time.time * 1000) + tmp_time.millitm;
 
@@ -183,26 +181,31 @@ void *_devol_thread_main(void *data){
    *  3) Create new solutions by breeding good solutions randomly.
    *  4) Replace the worst solutions with the newly created solutions.
    */
-  INFO("(ID=%d) Computing fitnesses.\n", controller->tid);
   _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
 				   controller->start, controller->stop);
+  ftime(&tmp_time);
+  t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
+  INFO("(ID=%d) Computed fitnesses (delta_t=%d).\n", 
+       controller->tid, t_delta - t_start);
+
   /*
    * This could potentially give rise to superlinear speedups. This is because
    * sort algorithms scale super-linearly with problem size. I.e the run time
    * for qsort is O(N * log(N)). Thus as N gets larger, the sequential program
    * starts to hurt more than k subsections of an N sized problem.
    */
-  INFO("(ID=%d) Sorting.\n", controller->tid);
   qsort(&(controller->gene_pool->solutions[controller->start]), 
 	controller->stop - controller->start,
 	sizeof(solution_t), _compare_solutions);
+  ftime(&tmp_time);
+  t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
+  INFO("(ID=%d) Sorted (delta_t=%d).\n", controller->tid, t_delta - t_start);
 
   /* This is kinda complex... basically we have to randomly choose some of the
    * the better solutions to breed. This is affected by the param 
    * reproduction_rate. The higher the reproduction rate, the more solutions
    * we make per generation. 
    */
-  INFO("(ID=%d) Breeding.\n", controller->tid);
   for ( i = 0; i < solution_count; i++){
 
     /* Generate a new solution from the two randomly selected in the
@@ -235,14 +238,11 @@ void *_devol_thread_main(void *data){
     new_solutions[i].cont = controller;
     s1->mutate(s1, s2, &(new_solutions[i]));
 
-    /* Now choose a solution to die and be replaced. We will use solution_count
-     * to get a window of solutions to be replaced. */
-    erand48_r(controller->rstate, &(controller->rdata), &tmp);
-    die_index = (int)(tmp * solution_count);
-    die_index++; /* Add 1 to make sure this isn't 0. */
-    die_index = controller->stop - die_index;
-    if ( die_index < 1 )
-      die_index = 1;
+    /* Now choose a solution to die and be replaced. We will start killing
+     * solutions starting with the bad. We will wrap around if necessary; i.e:
+     * more solutions are bred than we have room for. */
+    die_index = controller->stop - (i % breeder_window) - 1;
+
     DEBUG("  Killing %d\n", die_index);
     die = (solution_t *) &(controller->gene_pool->solutions[die_index]);
     die->destroy(die);
@@ -251,18 +251,19 @@ void *_devol_thread_main(void *data){
     *die = new_solutions[i];
 
   }
-  INFO("(ID=%d) Computing new fitnesses.\n", controller->tid);
+  ftime(&tmp_time);
+  t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
+  INFO("(ID=%d) Breeded (delta_t=%d).\n", controller->tid, t_delta - t_start);
+
   _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
 				   controller->start, controller->stop);
-  INFO("(ID=%d) Done generation.\n", controller->tid);
+  ftime(&tmp_time);
+  t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
+  INFO("(ID=%d) Done generation (delta_t=%d).\n", 
+       controller->tid, t_delta - t_start);
 
   /* Make sure the thread_pool is ready to start the thread return... */
   while ( ! controller->pool->term_ready );
-
-  ftime(&tmp_time);
-  t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
-  DEBUG("(ID=%d) Chunk execution time: %ld ms\n", 
-       controller->tid, t_stop - t_start);
 
   /* Annouce that we are done, and wait until we are released to start again.
    * When we get the sync_lock we assume we are ready to go again. */
@@ -305,7 +306,7 @@ int gene_pool_iterate(struct gene_pool *gene_pool){
   while ( waiting ){
      
     done = 0;
-    usleep(50); /* Wait half a millisecond... */
+    usleep(5); /* Wait half a millisecond... */
       
     for ( i = 0; i < gene_pool->workers.thread_count; i++){
       if ( gene_pool->workers.controllers[i].state != DEVOL_TSTATE_WORKING ){
@@ -328,7 +329,7 @@ int gene_pool_iterate(struct gene_pool *gene_pool){
   while ( waiting ){
 
     done = 0;
-    usleep(50); /* Check if the threads are done sometimes. */
+    usleep(5); /* Check if the threads are done sometimes. */
       
     for ( i = 0; i < gene_pool->workers.thread_count; i++){
       if ( gene_pool->workers.controllers[i].state != DEVOL_TSTATE_FINISHED ){

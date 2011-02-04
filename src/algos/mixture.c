@@ -44,6 +44,7 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <string.h>
+#include <sys/timeb.h>
 
 /*
  * Prototypes for functions we need.
@@ -149,6 +150,10 @@ int main(int argc, char **argv){
   int *rng_seed;
   int elems;
 
+  time_t t_start;
+  time_t t_stop;
+  struct timeb tmp_time;
+
   /* Parse the args. */
   while ( (arg = getopt_long(argc, argv, args, mix_opts, NULL)) != -1 ){
 
@@ -230,6 +235,11 @@ int main(int argc, char **argv){
   printf("#   Data file:            %s\n", data_file);
   printf("#   Normal distributions: %s\n", norms_file);
 
+  /* Here is the real start of essential algorithm, everything else is just
+   * printf()s and arg validation which is meh. */
+  ftime(&tmp_time);
+  t_start = (tmp_time.time * 1000) + tmp_time.millitm;
+
   /* Read in the normals. */
   norms = read_mixture_file(norms_file, &norms_len);
   printf("# Read %d normal distributions.\n", norms_len);
@@ -248,13 +258,19 @@ int main(int argc, char **argv){
   /* Now prepare to run the algorithm. */
   run();
 
+  /* And the end of the algorithm run time... */
+  ftime(&tmp_time);
+  t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
+
+  printf("run time: %ld ms\n", t_stop - t_start);
+
   return 0;
 
 }
 
 int run(){
 
-  //int i;
+  int i;
   int iter = 0;
   int err;
   int blocks;
@@ -262,41 +278,43 @@ int run(){
 
   /* Initialize the solution's memory allocator. */
   blocks = algo_params.reproduction_rate * pop_size;
-  blocks *= 2; /* Just for good measure. */
+  blocks *= 2;        /* Just for good measure. */
   blocks += pop_size; /* The steady state solutions. */
   blocks /= threads;  /* Since we split each bucket by thread. */
   printf("# Initializing mixture allocation buckets.\n");
   init_bucket_allocator(&mix_sols, threads, sizeof(struct mixture_solution),
 			blocks);
+  /*_display_buckets(&mix_sols, 0);*/
   printf("# Initializing param allocation buckets.\n");
-  init_bucket_allocator(&mix_params, threads, sizeof(double) * 6 * norms_len,
+  init_bucket_allocator(&mix_params, threads, sizeof(double) * 3 * norms_len,
 			blocks);
+  /*_display_buckets(&mix_params, 0);*/
+
   /* Initialize the gene pool. */
   err = gene_pool_create(&pool, pop_size, threads, algo_params);
   if ( err )
     die("Unable to initialize the gene pool :(.\n");
 
-  /*
-  for ( i = 0; i < pop_size; i++){
-    print_solution(&pool.solutions[i]);
-  }
-  */
-  printf("# Gene pool made, solutions inited, running...\n");
+  if ( verbose )
+    for ( i = 0; i < pop_size; i++)
+      print_solution(&pool.solutions[i]);
 
+  printf("# Gene pool made, solutions inited, running...\n");
+  
   /* Run the algorithm. */
   while ( iter++ < max_iter ){
+
     gene_pool_iterate(&pool);
     
     /* Print the average fitness of the solution pool. */
-    printf("%6d\t%lf\n", iter, gene_pool_avg_fitness(&pool));
+    if ( converge )
+      printf("%6d\t%lf\n", iter, gene_pool_avg_fitness(&pool));
 
   }
 
-  /*
-  for ( i = 0; i < pop_size; i++){
-    print_solution(&pool.solutions[i]);
-  }
-  */
+  if ( verbose )
+    for ( i = 0; i < pop_size; i++)
+      print_solution(&pool.solutions[i]);
 
   /* We are done... */
   return 0;
@@ -510,12 +528,12 @@ int init(solution_t *solution){
   struct mixture_solution *msol;
   struct devol_controller *cont = solution->cont;
 
-  msol = (struct mixture_solution *)malloc(sizeof(struct mixture_solution));
+  msol = (struct mixture_solution *)balloc(&mix_sols, cont->tid);
   if ( ! msol )
     die("init solution: out of memory.\n");
 
   /* All the sigma, mu, and prob allocations in 1 operation. */
-  msol->mu = (double *)malloc(sizeof(double) * norms_len * 3);
+  msol->mu = (double *)balloc(&mix_params, cont->tid);
   msol->sigma = msol->mu + norms_len;
   msol->prob = msol->mu + (2 * norms_len);
   msol->solved = 0;
@@ -553,10 +571,10 @@ int destroy(solution_t *solution){
 
   /* Since mu and sigma were made in one allocation, they must be destroyed in
    * one free(). */
-  free(sol->mu);
+  bfree(&mix_params, solution->cont->tid, sol->mu);
 
   /* And free the solution itself. */
-  free(sol);
+  bfree(&mix_sols, solution->cont->tid, sol);
 
   return 0;
 

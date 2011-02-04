@@ -66,13 +66,16 @@ int init_bucket_allocator(struct bucket_table *tbl, int buckets,
     tbl->buckets[i].base_addr = tbl->base + (i * block_size * elems);
     tbl->buckets[i].alloc_table = tbl->alloc_tables + (i * alloc_tbl_len);
     tbl->buckets[i].elems = elems;
+    tbl->buckets[i].tbl = tbl;
 
+    /*
     printf("# table %2d: elems=%lu base=%p alloc_table=%p (len=%d)\n",
 	   i, tbl->buckets[i].elems,
 	   tbl->buckets[i].base_addr, tbl->buckets[i].alloc_table,
 	   alloc_tbl_len);
-
+    */
   }
+  tbl->elems_per_bkt = elems;
 
   return 0;
 
@@ -109,7 +112,7 @@ void *_balloc(struct bucket *bkt){
 
   /* Search for the first non-0xFFFFFFFF uint32_t in the allocation table. This
    * is where our first available block should be. */
-  while ( bkt->alloc_table[idx] == 0xFFFFFFF ) idx++;
+  while ( bkt->alloc_table[idx] == 0xFFFFFFFF ) idx++;
 
   /* Now find the first non-zero bit. */
   while ( bit_offset < 32 ){
@@ -140,6 +143,91 @@ void *balloc(struct bucket_table *tbl, int bucket){
 
   /* Pass of the work to our subordinate... */
   return _balloc(&tbl->buckets[bucket]);
+
+}
+
+void _do_bfree(struct bucket *bkt, void *ptr){
+
+  int block;
+  unsigned long int base, addr;
+  unsigned long int offset;
+
+  /* Given the ptr, we must figure out what block it points to. Then make sure
+   * that block is set to free. If the ptr doesn't point to anything just
+   * silently fail. */
+  
+  base = (unsigned long int) bkt->base_addr;
+  addr = (unsigned long int) ptr;
+  offset = addr - base;
+  
+  if ( offset % bkt->tbl->block_size != 0 )
+    return;
+
+  /* This is the bit index into the allocation table. */
+  block = offset / bkt->tbl->block_size;
+  
+  /* If that bit is set, then twiddle it, otherwise just return. */
+  if ( READ_BIT(bkt->alloc_table[block / 32], block % 32) )
+    _twiddle_block_bit(bkt, block);
+}
+
+void bfree(struct bucket_table *tbl, int bucket, void *ptr){
+
+  /* Pass this call on to the corrent bucket. */
+  _do_bfree(&tbl->buckets[bucket], ptr);
+
+}
+
+/*
+ * Print out the allocation table for a given bucket.
+ */
+void _do_display_bucket(struct bucket *bkt){
+
+  printf("#  Allocation table:");
+
+  int bit = 0;
+
+  while ( bit < bkt->elems ){
+
+    if ( bit % 32 == 0 ) /* New line time. */
+      printf("\n#   %6d", bit);
+
+    if ( bit % 8 == 0 ) /* Space for readability */
+      printf(" ");
+
+    /* Now finally, print the bit. */
+    printf("%c", READ_BIT(bkt->alloc_table[bit / 32], bit % 32) ? '1' : '0');
+
+    bit++;
+
+  }
+  printf("\n");
+
+}
+
+/*
+ * Print out some info related to the buckets.
+ */
+void _display_buckets(struct bucket_table *tbl, int print_alloc_tables){
+
+  int i;
+
+  /* Some basic info table wide. */
+  printf("# Bucket table info:\n");
+  printf("#  Buckets: %d\n", tbl->bucket_count);
+  printf("#  Block size: %u\n", (unsigned int)tbl->block_size);
+  printf("#  Blocks per bucket: %d\n", tbl->elems_per_bkt);
+  printf("#  Bucket table address: %p\n", tbl->buckets);
+  printf("#  Allocation table address: %p\n", tbl->alloc_tables);
+
+  if ( ! print_alloc_tables )
+    return;
+
+  /* Now list info for each bucket. */
+  for ( i = 0; i < tbl->bucket_count; i++ ){
+    printf("# Bucket %d:\n", i);
+    _do_display_bucket(&tbl->buckets[i]);
+  }
 
 }
 

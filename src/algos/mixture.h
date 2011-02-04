@@ -81,7 +81,6 @@ struct bucket {
 
   /* How many elems we have over all/allocated out. */
   size_t    elems;
-  size_t    allocated;
 
   /* A pointer back to the table that manages this bucket. */
   struct bucket_table *tbl;
@@ -95,6 +94,9 @@ struct bucket_table {
 
   struct bucket *buckets;
   
+  /* Elements per bucket. */
+  int elems_per_bkt;
+
   /* The real base of memory. We will allocate all bucket's memory once. */
   void *base;
 
@@ -112,5 +114,8 @@ double        *read_data_file(char *file, int *samples);
 int            init_bucket_allocator(struct bucket_table *tbl, int buckets,
 				     size_t block_size, size_t elems);
 void          *balloc(struct bucket_table *tbl, int bucket);
+void           bfree(struct bucket_table *tbl, int bucket, void *ptr);
+void          _display_buckets(struct bucket_table *tbl, 
+			       int print_alloc_tables);
 
 #endif

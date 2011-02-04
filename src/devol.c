@@ -31,6 +31,10 @@ int  gene_pool_create(struct gene_pool *pool, int solutions, int threads,
 
   /* I lied in the above comment, actually copy in our params first. */
   pool->params = params;
+  if ( pool->params.breed_fitness > .5 ){
+    printf("# Warning: breed fitness > .5. Setting to .5\n");
+    pool->params.breed_fitness = .5;
+  }
 
   /* Init the thread pool. */
   err = thread_pool_init(&(pool->workers), pool, threads, solutions);
@@ -92,6 +96,10 @@ int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
   struct timeb tmp_time;
 
   pool->params = params;
+  if ( pool->params.breed_fitness > .5 ){
+    printf("# Warning: breed fitness > .5. Setting to .5\n");
+    pool->params.breed_fitness = .5;
+  }
 
   /* Instead of init'ing the thread pool, just memset it to 0. */
   memset(&(pool->workers), 0, sizeof(struct thread_pool));
