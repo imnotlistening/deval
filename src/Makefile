@@ -8,7 +8,7 @@ include ../config.mak
 CC        = gcc
 LD        = ld
 CFLAGS    = -Wall -ggdb # -m32
-CPPFLAGS  = #-D_INFO #-D_DEBUG # Uncomment for internal debug statements.
+CPPFLAGS  = #-D_INFO -D_DEBUG # Uncomment for internal debug statements.
 CPPFLAGS += -I../include
 LDFLAGS   = -shared -soname libdeval.so # -melf_i386 
 LIBS      = -lm -lpthread

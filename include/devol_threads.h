@@ -14,8 +14,8 @@ struct thread_pool;
 /*
  * Since this struct will be getting a *lot* of concurrent access (possibly),
  * it must be aligned and/or padded out to a multiple of cacheline sizes. For
- * now I will assume the largest cache lines in existence are 256 bytes and
- * that smaller cache lines will be factors of 256 (128, 64, etc).
+ * now I will assume the largest cache lines in existence are 128 bytes and
+ * that smaller cache lines will be factors of 128 (64, 32, etc).
  */
 struct devol_controller {
 
@@ -34,11 +34,7 @@ struct devol_controller {
 
   /* State information for the erand48_r function. */
   unsigned short rstate[3];
-#ifdef __sun__
-  unsigned short rdata[7];
-#else
-  struct drand48_data rdata;
-#endif
+  rdata_t        rdata;
 
   /* A pointer back to the thread_pool struct so we can lock against the
    * sync_lock. */
@@ -51,6 +47,8 @@ struct devol_controller {
   /* Pad this struct out so that it is exactly 128 bytes. */
 #ifdef __x86_64__
   char __padding[52]; /* I can't imagine cache lines > 128 bytes. */
+#elif __sun__
+  char __padding[64]; /* I really hate sun os. */
 #else
   char __padding[68];
 #endif

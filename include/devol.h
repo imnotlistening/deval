@@ -5,7 +5,7 @@
 
 #ifndef _DEVOL_H
 
-#include <devol_threads.h>
+#include <stdlib.h>
 
 /* Function return codes. */
 #define DEVOL_ERR  -1
@@ -23,6 +23,16 @@
 # else
 #  define INFO(...)
 # endif
+
+/* Deal with SunOS. Gah. */
+#ifdef __sun__
+typedef unsigned short[7] rdata_t;
+#else
+typedef struct drand48_data rdata_t;
+#endif
+
+/* Now we can include the thread stuff. */
+#include <devol_threads.h>
 
 /*
  * A struct for a solution. This holds all of an individuals solution data.
@@ -141,6 +151,7 @@ double gene_pool_avg_fitness(struct gene_pool *pool);
 void   gene_pool_display_fitnesses(struct gene_pool *pool);
 void   gene_pool_disperse(struct gene_pool *pool);
 int    _compare_solutions(const void *a, const void *b);
+void   devol_rand48(unsigned short rstate[3], rdata_t *rdata, double *d);
 
 /* Functions to be used by the parallel sections of the code. */
 void   _gene_pool_calculate_fitnesses_p(struct gene_pool *pool, 

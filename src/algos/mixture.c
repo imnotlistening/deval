@@ -395,8 +395,8 @@ int mutate(solution_t *par1, solution_t *par2, solution_t *dest){
   for ( i = 0; i < norms_len; i++){
 
     /* Get the initial randoms. */
-    erand48_r(cntr->rstate, &cntr->rdata, &d_mu);
-    erand48_r(cntr->rstate, &cntr->rdata, &d_sigma);
+    devol_rand48(cntr->rstate, &cntr->rdata, &d_mu);
+    devol_rand48(cntr->rstate, &cntr->rdata, &d_sigma);
 
     /* Now fit them into the variance window. */
     d_mu = (d_mu * norms[i].mu_var) - (norms[i].mu_var/2);
@@ -410,7 +410,7 @@ int mutate(solution_t *par1, solution_t *par2, solution_t *dest){
 
   /* We do one probability modification per iteration for simplicity's sake. */
   if ( norms_len > 1 ){
-    erand48_r(cntr->rstate, &cntr->rdata, &d_prob);  
+    devol_rand48(cntr->rstate, &cntr->rdata, &d_prob);  
     jrand48_r(cntr->rstate, &cntr->rdata, &p_plus);
     d_prob = (d_prob * PROB_VAR) - (PROB_VAR/2);
     p_plus = labs(p_plus);
@@ -541,11 +541,11 @@ int init(solution_t *solution){
   msol->len = norms_len;
   for ( i = 0; i < norms_len; i++){
     /* Generate a random number on the mu interval. */
-    erand48_r(cont->rstate, &cont->rdata, &tmp);
+    devol_rand48(cont->rstate, &cont->rdata, &tmp);
     mu = (tmp * (norms[i].mu_max - norms[i].mu_min)) + norms[i].mu_min;
 
     /* Generate a random number on the sigma interval. */
-    erand48_r(cont->rstate, &cont->rdata, &tmp);
+    devol_rand48(cont->rstate, &cont->rdata, &tmp);
     sigma = 
       (tmp * (norms[i].sigma_max - norms[i].sigma_min)) + norms[i].sigma_min;
     

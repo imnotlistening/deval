@@ -67,3 +67,13 @@ int _compare_solutions(const void *a, const void *b){
   return 0;
 
 }
+
+void devol_rand48(unsigned short rstate[3], rdata_t *rdata, double *d){
+
+#ifdef __linux__
+  erand48_r(rstate, rdata, d);
+#else
+  *d = erand48(rstate);
+#endif
+
+}

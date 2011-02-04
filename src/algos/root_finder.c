@@ -322,7 +322,7 @@ int mutate(solution_t *par1, solution_t *par2,
     base = par2->private.dp_fp;
 
   /* And vary it by a little bit. */
-  erand48_r(par1->cont->rstate, &(par1->cont->rdata), &tmp);
+  devol_rand48(par1->cont->rstate, &(par1->cont->rdata), &tmp);
   variation = (tmp * variance) - (variance/2);
 
   /* Initialize and set the destination solution. */

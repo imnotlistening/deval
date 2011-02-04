@@ -43,19 +43,6 @@ struct mixture_solution {
 
 };
 
-/*
- * Padded random state for the init() function. Pad to 64 bytes.
- */
-struct padded_rstate {
-
-  /* 48 bits = 6 bytes. */
-  unsigned short rstate[3];
-
-  /* 64 - 6 = 58 bytes. */
-  char __padding[58];
-
-};
-
 /* Statically define the probability variance. Add this to the arguement list
  * later on. */
 #define PROB_VAR (.01)

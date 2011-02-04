@@ -186,7 +186,7 @@ void *_devol_thread_main(void *data){
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
   INFO("(ID=%d) Computed fitnesses (delta_t=%d).\n", 
-       controller->tid, t_delta - t_start);
+       controller->tid, (int)(t_delta - t_start));
 
   /*
    * This could potentially give rise to superlinear speedups. This is because
@@ -199,7 +199,8 @@ void *_devol_thread_main(void *data){
 	sizeof(solution_t), _compare_solutions);
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
-  INFO("(ID=%d) Sorted (delta_t=%d).\n", controller->tid, t_delta - t_start);
+  INFO("(ID=%d) Sorted (delta_t=%d).\n", controller->tid, 
+       (int) (t_delta - t_start));
 
   /* This is kinda complex... basically we have to randomly choose some of the
    * the better solutions to breed. This is affected by the param 
@@ -210,10 +211,10 @@ void *_devol_thread_main(void *data){
 
     /* Generate a new solution from the two randomly selected in the
      * breeder_window. */
-    erand48_r(controller->rstate, &(controller->rdata), &tmp);
+    devol_rand48(controller->rstate, &(controller->rdata), &tmp);
     s1_ind = (int)(tmp * breeder_window);
     do {
-      erand48_r(controller->rstate, &(controller->rdata), &tmp);
+      devol_rand48(controller->rstate, &(controller->rdata), &tmp);
       s2_ind = (int)(tmp * breeder_window);
     } while (s1_ind == s2_ind);
 
@@ -253,14 +254,15 @@ void *_devol_thread_main(void *data){
   }
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
-  INFO("(ID=%d) Breeded (delta_t=%d).\n", controller->tid, t_delta - t_start);
+  INFO("(ID=%d) Breeded (delta_t=%d).\n", controller->tid, 
+       (int) (t_delta - t_start));
 
   _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
 				   controller->start, controller->stop);
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
   INFO("(ID=%d) Done generation (delta_t=%d).\n", 
-       controller->tid, t_delta - t_start);
+       controller->tid, (int) (t_delta - t_start));
 
   /* Make sure the thread_pool is ready to start the thread return... */
   while ( ! controller->pool->term_ready );
