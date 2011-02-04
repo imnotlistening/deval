@@ -34,7 +34,11 @@ struct devol_controller {
 
   /* State information for the erand48_r function. */
   unsigned short rstate[3];
+#ifdef __sun__
+  unsigned short rdata[7];
+#else
   struct drand48_data rdata;
+#endif
 
   /* A pointer back to the thread_pool struct so we can lock against the
    * sync_lock. */

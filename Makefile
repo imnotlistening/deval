@@ -3,9 +3,11 @@
 # have run buildprep.sh before this is run. 
 #
 
+SHELL=/bin/bash 
+
 # Main target.
 all:
-	if [ ! -e config.mak ]; then \
+	@if [ ! -e config.mak ]; then \
 	echo "Run buildprep.sh before running 'make'."; \
 	exit 1; \
 	fi
