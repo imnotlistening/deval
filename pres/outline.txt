@@ -65,4 +65,112 @@
   - When plotted this shows two dips to 0 (for +/- sqrt(5)). The evolutionary
     algorithm can find these dips in the solution space.
 
+4) Fitness functions REDUX!
 
+  - A fitness function is a means by which the evolutionary algorithm construct
+    can unambiguously compare two solutions.
+  - Let fitness be defined as:
+
+      fitness = F(s)
+
+    Where F() is the fitness function and s is a given solution.
+  - One can compare solutions by evaluating
+  
+      F(s1) >? F(s2)
+
+  - Based on the result, the solutions can be sorted. Once the soltuions are
+    sorted, a survival of the fittest paradigm can be applied: that is to say
+    the more fit a given solution, the more likely it is to pass onto the next
+    generation.
+  - This is the ultimate goal of evolution in any form (in real life, or in a
+    simulation): pass fit individuals into the future and let the bad solutions
+    die off.
+
+5) Mutation
+
+  - Mutation of solutions is absolutely key to convergence rates. How
+    effectively one mutates solutions will directly correspond to how fast
+    the solutions converge on optimas.
+  - Ideally one wants to have the broadest search of the solution space
+    possible with the fastest convergence possible.
+  - The premise is this: given a solution we assume that somewhere near by (in
+    the solution space) there is an even better solution. Thus the goal of
+    mutation is to find that better solution.
+  - The rate of convergence is tied to how fast the solutions mutate.
+  - Mutation variance:
+
+    -> In the case of the root finding algorithm, mutation is simple: move up
+       or down the X axis by a little bit. The little bit, lets call that
+       delta, is how much we mutate the solution.
+    -> How is delta calculated?
+    
+         delta ~ U(s - v/2, s + v/2)
+
+       That is to say delta is sampled from a uniform random distribution with
+       range v centered at s.
+
+    -> This means we can move in either the positive or negative direction on
+       the X axis and we move in changing amounts, maybe large, maybe small.
+    -> This gives us both the ability to converge fast when the solutions are
+       relatively far away from the optima, but once close to the optima allow
+       for a more fine grained seach. This is of course not a given for every
+       generation, only a statistical likelihood.
+
+  - So all in all big variance means fast convergence, but once a solution is
+    found having a large variance hurts finding a truely good solution.
+  - One possible solution is defining the solution variation rate based on the
+    variance in the population. That is to say the more clustered the
+    population, the smaller the variance. 
+    
+      -> This requires the ability to pick out multiple clusters.
+      -> Also can lead to convergence on local optima
+
+6) Local Optimas
+
+  - A local optima is a trough in the solution space that is not going to be a
+    truely good solution.
+  - The alogorthm can get trapped in these local optimas and report them as a
+    global optima.
+  - Strategies exist to avoid these local optima:
+
+    -> Simply make a big population size. This is not fool proof however.
+    -> A better solution: genetic cross over.
+    -> Cross over occurs during mutation in which the child is made up of 
+       segments of its parents genes.
+    -> This allows a child to jmp around the solutions space more.
+    -> The jumping stops the alogorithm to "jump" out of local optimas
+    -> interestingly enough it also increases convergence rate: the more the
+       solution space is explored, the more likely good solutions are to be
+       found.
+
+7) Putting it all together: solving mixture problems.
+
+  - A mixture of normal distributions.
+  - Maximum likelihood estimates.
+  - Basic maximum likelihood estimate of single normal distribution.
+  - Extend this to N distributions.
+  - Defining a fitness function that gets closer to zero the larger the MLE is.
+  - Defining a mutation operator.
+    -> Perturbation of the distribution parameters
+    -> Genetic cross over of the parents to produce the child.
+
+8) Parallel algorithm characteristics.
+
+  - Generations per second scale up.
+  - Memory performance: malloc(). Lockless vs locked memory allocator.
+  - How to solve the malloc() problem.
+  - Implementation details for the bucket memory allocator.
+
+  - As the number of threads increase, the gene pool size for each thread
+    decreases.
+    -> This is good/bad. The good first: it makes the sort operation faster.
+    -> But we loose information -->
+    -> This slows convergence since less of the solution space is searched.
+  - Gene dispersal mechanisms:
+    -> Much like a parrot being blown to the Galapagos islands, one must 
+       manually move genetic material from pool to pool.
+  - Gene dispersal attempts to spread (possibly) good genes through the gene 
+    pools.
+  - How well does this work?
+
+9) Questions?
