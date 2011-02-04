@@ -135,7 +135,11 @@ int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
   pool->controller.rstate[0] = params.rstate[0];
   pool->controller.rstate[1] = params.rstate[1];
   pool->controller.rstate[2] = params.rstate[2];
+#ifdef __sun__
+  memset(&(pool->controller.rdata), 0, sizeof(pool->controller.rdata));
+#else
   memset(&(pool->controller.rdata), 0, sizeof(struct drand48_data)); 
+#endif
 
   ftime(&tmp_time);
   t_start = (tmp_time.time * 1000) + tmp_time.millitm;
