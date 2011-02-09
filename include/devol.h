@@ -154,6 +154,8 @@ void   gene_pool_display_fitnesses(struct gene_pool *pool);
 void   gene_pool_disperse(struct gene_pool *pool);
 int    _compare_solutions(const void *a, const void *b);
 void   devol_rand48(unsigned short rstate[3], rdata_t *rdata, double *d);
+void   devol_nrand48(unsigned short rstate[3], rdata_t *rdata, long int *d);
+void   devol_jrand48(unsigned short rstate[3], rdata_t *rdata, long int *d);
 
 /* Functions to be used by the parallel sections of the code. */
 void   _gene_pool_calculate_fitnesses_p(struct gene_pool *pool, 

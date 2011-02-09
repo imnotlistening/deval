@@ -367,7 +367,7 @@ int cross_over(solution_t *par1, solution_t *par2, solution_t *dest){
   /* Pick a random number less than the number of distributions we are using.
    * Then take params from parent 1 until we hit the crossover point; then
    * take params from the other parent. */
-  nrand48_r(cont->rstate, &cont->rdata, &cpoint);
+  devol_nrand48(cont->rstate, &cont->rdata, &cpoint);
   cpoint %= norms_len;
 
   /* OK, we have a crossover point. Now make the child. */
@@ -421,13 +421,13 @@ int mutate(solution_t *par1, solution_t *par2, solution_t *dest){
   /* We do one probability modification per iteration for simplicity's sake. */
   if ( norms_len > 1 ){
     devol_rand48(cntr->rstate, &cntr->rdata, &d_prob);  
-    jrand48_r(cntr->rstate, &cntr->rdata, &p_plus);
+    devol_jrand48(cntr->rstate, &cntr->rdata, &p_plus);
     d_prob = (d_prob * PROB_VAR) - (PROB_VAR/2);
     p_plus = labs(p_plus);
     p_plus %= norms_len;
     
     do {
-      jrand48_r(cntr->rstate, &cntr->rdata, &p_minus);
+      devol_jrand48(cntr->rstate, &cntr->rdata, &p_minus);
       p_minus = labs(p_minus);
       p_minus %= norms_len;
     } while ( p_minus == p_plus );

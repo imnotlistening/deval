@@ -77,3 +77,23 @@ void devol_rand48(unsigned short rstate[3], rdata_t *rdata, double *d){
 #endif
 
 }
+
+void devol_nrand48(unsigned short rstate[3], rdata_t *rdata, long int *d){
+
+#ifdef __linux__
+  nrand48_r(rstate, rdata, d);
+#else
+  *d = nrand48(rstate);
+#endif
+
+}
+
+void devol_jrand48(unsigned short rstate[3], rdata_t *rdata, long int *d){
+
+#ifdef __linux__
+  jrand48_r(rstate, rdata, d);
+#else
+  *d = jrand48(rstate);
+#endif
+
+}
