@@ -113,6 +113,7 @@ struct devol_params algo_params = {
   .fitness = fitness,
   .init    = init,
   .destroy = destroy,
+  .swap    = NULL,   /* This function is optional. */
 
 };
 

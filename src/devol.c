@@ -239,19 +239,37 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
 /*
  * Randomly disperse some of the solutions around. This forces different
  * parts of the population to breed together. This is where we try and make up
- * for the fact that the algrithm, when run in parallel, really is only using
+ * for the fact that the algorithm, when run in parallel, really is only using
  * much much smaller populations, which hurts convergence.
  */
 void gene_pool_disperse(struct gene_pool *pool){
 
   int disperse;
+  int s1, s2;
+
+  /* Don't do dispersal if no swap() function is defined. */
+  if ( pool->params.swap == NULL)
+    return;
 
   disperse = (int)(pool->params.gene_dispersal_factor * pool->solution_count);
 
-  while ( disperse > 0 ){
+  //printf("# Doing gene dispersal: %d swaps\n", disperse);
+
+  while ( disperse-- > 0 ){
 
     /* Pick two solutions and swap them. */
-    
+    s1 = nrand48(pool->controller.rstate) % pool->solution_count;
+    do {
+      s2 = nrand48(pool->controller.rstate) % pool->solution_count;
+    } while (s1 == s2);
+    //printf("#> s1=%d s2=%d\n", s1, s2);
+
+    /* And do the swap... Call the solutions swap function. This allows us 
+     * to do a deep copy without having to worry about the algorithm specifics.
+     * Unfortunately this is slower (by a lot potentially) than a shallow
+     * copy. But if a shallow copy is all thats needed, the implementing
+     * function can do that so w/e. */
+    pool->params.swap(&pool->solutions[s1], &pool->solutions[s2]);
 
   }
 

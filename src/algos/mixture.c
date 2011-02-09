@@ -10,6 +10,7 @@
  *                                      of the distributions.
  *   pop-size      <integer>            The population size.
  *   rep-rate      <double>             The reproduction rate of the pop.
+ *   dispersal     <integer>            The amount of gene dispersal.
  *   breed-fitness <double>             Percent of the population that is
  *                                      allowed to breed.
  *   max-iter      <integer>            Maximum iterations.
@@ -54,6 +55,7 @@ int     mutate(solution_t *par1, solution_t *par2,
 double  fitness(solution_t *solution);
 int     init(solution_t *solution);
 int     destroy(solution_t *solution);
+void    swap(solution_t *left, solution_t *right);
 int    *parse_integer_array(char *list, int *count);
 void    die(char *msg);
 int     run();
@@ -83,6 +85,7 @@ struct option mix_opts[] = {
   {"norms", 1, NULL, 'n'},
   {"pop-size", 1, NULL, 'p'},
   {"rep-rate", 1, NULL, 'r'},
+  {"dispersal", 1, NULL, 'D'},
   {"threads", 1, NULL, 't'},
   {"breed-fitness", 1, NULL, 'b'},
   {"max-iter", 1, NULL, 'm'},
@@ -116,6 +119,7 @@ struct devol_params algo_params = {
   .fitness = fitness,
   .init    = init,
   .destroy = destroy,
+  .swap    = swap,
 
   /* And some default random state. */
   .rstate = {7, 20, 1969},
@@ -175,6 +179,11 @@ int main(int argc, char **argv){
       if ( *not_ok )
 	die("Unable to parse reproduction rate.\n");
       break;
+    case 'D': /* gene dispersal */
+      algo_params.gene_dispersal_factor = strtod(optarg, &not_ok);
+      if ( *not_ok )
+	die("Unable to parse reproduction rate.\n");
+      break;
     case 't':
       threads = (int) strtol(optarg, &not_ok, 0);
       if ( *not_ok )
@@ -229,6 +238,7 @@ int main(int argc, char **argv){
   printf("#   Population size:      %d\n", pop_size);
   printf("#   Thread count:         %d\n", threads);
   printf("#   Maximum iterations:   %d\n", max_iter);
+  printf("#   Gene dispersal:       %lf\n", algo_params.gene_dispersal_factor);
   printf("#   Reproduction rate:    %lf\n", algo_params.reproduction_rate);
   printf("#   Breed fitness:        %lf\n", algo_params.breed_fitness);
   printf("#   Check for converge:   %s\n", converge ? "yes" : "no");
@@ -577,6 +587,42 @@ int destroy(solution_t *solution){
   bfree(&mix_sols, solution->cont->tid, sol);
 
   return 0;
+
+}
+
+/*
+ * Deep swap of two solutions. Necessary because the memory allocator I wrote
+ * is really, really, finicky. Gah this is computationally expensive :(. Thats
+ * a downside to the shitty memory allocator I wrote I guess. Maybe I should
+ * that allocator able to do frees w/o knowing the bucket a memory block is
+ * from.
+ */
+void swap(solution_t *left, solution_t *right){
+
+  int t_solved;
+  double tmp;
+  double t_theta[norms_len * 3];
+  struct mixture_solution *l_sol = left->private.ptr;
+  struct mixture_solution *r_sol = right->private.ptr;
+
+  /* Copy the actual values of the parameters; leave the original addresses of
+   * each of the mixture structs alone so we dont break the memory allocator.
+   */
+  memcpy(t_theta,   l_sol->mu, sizeof(double) * norms_len * 3);
+  memcpy(l_sol->mu, r_sol->mu, sizeof(double) * norms_len * 3);
+  memcpy(r_sol->mu, t_theta,   sizeof(double) * norms_len * 3);
+
+  /* Now that the parameters themselves are copied, we should probably copy
+   * some of the other fields as well. */
+  tmp                = left->fitness_val;
+  left->fitness_val  = right->fitness_val;
+  right->fitness_val = tmp;
+  tmp                = l_sol->mle;
+  l_sol->mle         = r_sol->mle;
+  r_sol->mle         = tmp;
+  t_solved           = l_sol->solved;
+  l_sol->solved      = r_sol->solved;
+  r_sol->solved      = t_solved;
 
 }
 

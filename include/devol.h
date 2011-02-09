@@ -46,6 +46,7 @@ struct solution {
   double (*fitness)(struct solution *solution);
   int    (*init)(struct solution *solution);
   int    (*destroy)(struct solution *solution);
+  void   (*swap)(struct solution *left, struct solution *right);
 
   /* The calculated fitness value. */
   double fitness_val;
@@ -77,6 +78,7 @@ struct devol_params {
   double (*fitness)(solution_t *solution);
   int    (*init)(solution_t *solution);
   int    (*destroy)(solution_t *solution);
+  void   (*swap)(solution_t *left, solution_t *right);
 
   /* How much gene dispersal do we want? 0 is no dispersal. */
   double gene_dispersal_factor;

@@ -26,6 +26,7 @@ struct devol_params params = {
   .fitness = fitness,
   .init = init,
   .destroy = destroy,
+  .swap = NULL,
 
   .gene_dispersal_factor = 0.0,
   .reproduction_rate = .6,
