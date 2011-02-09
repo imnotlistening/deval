@@ -24,10 +24,11 @@ all: $(OBJECTS) $(PROGS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LIBS) 
 
 mixture: mixture.c mixture_fread.o
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< mixture_fread.o bucket.o $(LIBS)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ mixture.c mixture_fread.o bucket.o \
+	$(LIBS)
 
 bucket_test: bucket_test.c bucket.o
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LIBS) bucket.o
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ bucket_test.c $(LIBS) bucket.o
 
 clean:
 	rm -f $(OBJECTS) $(PROGS)

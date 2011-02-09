@@ -26,7 +26,7 @@
 
 /* Deal with SunOS. Gah. */
 #ifdef __sun__
-typedef unsigned short[7] rdata_t;
+typedef unsigned short rdata_t[7];
 #else
 typedef struct drand48_data rdata_t;
 #endif

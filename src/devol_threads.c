@@ -80,7 +80,7 @@ int thread_pool_init(struct thread_pool *pool,
     pool->controllers[i].rstate[0] = gene_pool->params.rstate[0] + i;
     pool->controllers[i].rstate[1] = gene_pool->params.rstate[1] + i+1;
     pool->controllers[i].rstate[2] = gene_pool->params.rstate[2] + i+2;
-    memset(&(pool->controllers[i].rdata), 0, sizeof(struct drand48_data));
+    memset(&(pool->controllers[i].rdata), 0, sizeof(rdata_t));
     err = pthread_create( &(pool->threads[i]), NULL, _devol_thread_main, 
 			  &(pool->controllers[i]));
   }
