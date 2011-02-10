@@ -27,11 +27,7 @@ all: libdeval $(TESTS) examples
 #
 libdeval: $(OBJECTS)
 	$(LD) $(LDFLAGS) -o libdeval.so.$(REVISION) $(OBJECTS) $(LIBS)
-	if [ `uname -s` != "SunOS" ]; then \
-	ldconfig -v -n . ; \
-	else  \
 	ln -s -f libdeval.so.$(REVISION) libdeval.so ; \
-	fi
 
 #
 # This is used for the rest of the C code.
