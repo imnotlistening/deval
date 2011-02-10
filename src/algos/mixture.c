@@ -486,7 +486,6 @@ double _do_mle_point_estimate(struct mixture_solution *s, double x){
   }
 
   /* Return the sum; which is now the MLE for the passed data point. */
-  //printf("# %lf -> %lf (exp=%lf scale=%lf\n", x, sum, exponent, scale);
   return sum;
 
 }
