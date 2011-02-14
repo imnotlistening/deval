@@ -20,6 +20,7 @@
  *   converge      N/A                  If specified terminate the algorithm
  *                                      when the average population fitness is
  *                                      less than variance.
+ *   sequential    N/A                  Run the algorithm in sequential mode.
  *   verbose       N/A                  Will be verbose.
  *   help          N/A                  Display a help message.
  *
@@ -68,6 +69,7 @@ int converge = 0;
 int verbose  = 0;
 int defaults = 0;
 int help     = 0;
+int seq      = 0;
 
 int pop_size = 100;
 int max_iter = 100;
@@ -91,6 +93,7 @@ struct option mix_opts[] = {
   {"max-iter", 1, NULL, 'm'},
   {"seed", 1, NULL, 's'},
   {"converge", 0, &converge, 'C'},
+  {"sequential", 0, &seq, 'S'},
   {"verbose", 0, &verbose, 'v'},
   {"help", 0, &help, 'h'},
   {NULL, 0, NULL, 0},
@@ -128,7 +131,7 @@ struct devol_params algo_params = {
 
 /*
  * Memory allocation for the solutions. Lockless, fast, etc. Requires two
- * allocators since each allocator is only capableof allocating fixed sized
+ * allocators since each allocator is only capable of allocating fixed sized
  * chunks.
  */
 struct bucket_table mix_sols;
@@ -153,6 +156,7 @@ int main(int argc, char **argv){
 
   int *rng_seed;
   int elems;
+  int blocks;
 
   time_t t_start;
   time_t t_stop;
@@ -214,6 +218,9 @@ int main(int argc, char **argv){
     case 'C': /* We should check for convergence. */
       converge = 1;
       break;
+    case 'S': /* Run algorithm in pure sequential mode. */
+      seq = 1;
+      break;
     case 'v': /* We should be verbose. */
       verbose = 1;
       break;
@@ -236,7 +243,7 @@ int main(int argc, char **argv){
   
   printf("# Algorithm parameters:\n");
   printf("#   Population size:      %d\n", pop_size);
-  printf("#   Thread count:         %d\n", threads);
+  printf("#   Thread count:         %d\n", seq ? 1 : threads);
   printf("#   Maximum iterations:   %d\n", max_iter);
   printf("#   Gene dispersal:       %lf\n", algo_params.gene_dispersal_factor);
   printf("#   Reproduction rate:    %lf\n", algo_params.reproduction_rate);
@@ -265,7 +272,21 @@ int main(int argc, char **argv){
   samples = read_data_file(data_file, &sample_count);
   printf("# Read %d data samples.\n", sample_count);
 
-  /* Now prepare to run the algorithm. */
+  /* Initialize the solution's memory allocator. */
+  blocks = algo_params.reproduction_rate * pop_size;
+  blocks *= 2;        /* Just for good measure. */
+  blocks += pop_size; /* The steady state solutions. */
+  blocks /= threads;  /* Since we split each bucket by thread. */
+  printf("# Initializing mixture allocation buckets.\n");
+  init_bucket_allocator(&mix_sols, threads, sizeof(struct mixture_solution),
+			blocks);
+  /*_display_buckets(&mix_sols, 0);*/
+  printf("# Initializing param allocation buckets.\n");
+  init_bucket_allocator(&mix_params, threads, sizeof(double) * 3 * norms_len,
+			blocks);
+  /*_display_buckets(&mix_params, 0);*/
+
+  /* Now run the algorithm. */
   run();
 
   /* And the end of the algorithm run time... */
@@ -283,25 +304,14 @@ int run(){
   int i;
   int iter = 0;
   int err;
-  int blocks;
   struct gene_pool pool;
 
-  /* Initialize the solution's memory allocator. */
-  blocks = algo_params.reproduction_rate * pop_size;
-  blocks *= 2;        /* Just for good measure. */
-  blocks += pop_size; /* The steady state solutions. */
-  blocks /= threads;  /* Since we split each bucket by thread. */
-  printf("# Initializing mixture allocation buckets.\n");
-  init_bucket_allocator(&mix_sols, threads, sizeof(struct mixture_solution),
-			blocks);
-  /*_display_buckets(&mix_sols, 0);*/
-  printf("# Initializing param allocation buckets.\n");
-  init_bucket_allocator(&mix_params, threads, sizeof(double) * 3 * norms_len,
-			blocks);
-  /*_display_buckets(&mix_params, 0);*/
-
   /* Initialize the gene pool. */
-  err = gene_pool_create(&pool, pop_size, threads, algo_params);
+  if ( seq )
+    err = gene_pool_create_seq(&pool, pop_size, algo_params);
+  else
+    err = gene_pool_create(&pool, pop_size, threads, algo_params);
+
   if ( err )
     die("Unable to initialize the gene pool :(.\n");
 
@@ -314,12 +324,20 @@ int run(){
   /* Run the algorithm. */
   while ( iter++ < max_iter ){
 
-    gene_pool_iterate(&pool);
+    if ( seq )
+      gene_pool_iterate_seq(&pool);
+    else
+      gene_pool_iterate(&pool);
     
     /* Print the average fitness of the solution pool. */
     if ( converge )
       printf("%6d\t%lf\n", iter, gene_pool_avg_fitness(&pool));
 
+    /* If I could come up with a reliable way of measuring a convergence
+     * criteria then I would. My current ideas are to keep a running average
+     * of the gene pools mean fitness derivative. If that derivative hits some
+     * value then accept convergence. But I don't really have time any more. 
+     */
   }
 
   if ( verbose )
@@ -343,7 +361,7 @@ int cross_over(solution_t *par1, solution_t *par2, solution_t *dest){
   ds = dest->private.ptr;
 
   /*
-   * Here lies the code that allows us to not use cross over just to see the
+   * Here lieth the code that allows us to not use cross over just to see the
    * difference in average solution fitness over time with or with out cross
    * over.
    */
@@ -398,8 +416,6 @@ int mutate(solution_t *par1, solution_t *par2, solution_t *dest){
   init(dest);
   ms = dest->private.ptr;
   cross_over(par1, par2, dest);
-  //printf("# Crossover:\n");
-  //print_solution(dest);
 
   /* Do the random perturbations here. */
   for ( i = 0; i < norms_len; i++){

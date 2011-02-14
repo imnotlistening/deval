@@ -16,6 +16,7 @@ OBJECTS   = mixture_fread.o bucket.o
 PROGS     = root_finder mixture bucket_test
 
 all: $(OBJECTS) $(PROGS)
+	cp $(PROGS) ../../bin
 
 .c.o:
 	$(CC) -fPIC $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
