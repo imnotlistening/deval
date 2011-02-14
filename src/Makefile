@@ -10,7 +10,7 @@ include ../config.mak
 CC        = gcc
 LD        = gcc # Transaltes to the SunOS linker for us.
 CFLAGS    = -Wall -ggdb # -m32
-CPPFLAGS  = #-D_INFO -D_DEBUG # Uncomment for internal debug statements.
+CPPFLAGS  = -D_INFO #-D_DEBUG # Uncomment for internal debug statements.
 CPPFLAGS += -I../include
 LDFLAGS   = -shared # -melf_i386 
 LIBS      = -lm -lpthread
@@ -28,6 +28,7 @@ all: libdeval $(TESTS) examples
 libdeval: $(OBJECTS)
 	$(LD) $(LDFLAGS) -o libdeval.so.$(REVISION) $(OBJECTS) $(LIBS)
 	ln -s -f libdeval.so.$(REVISION) libdeval.so ; \
+	cp libdeval.* ../bin
 
 #
 # This is used for the rest of the C code.

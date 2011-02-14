@@ -138,10 +138,13 @@ void *_devol_thread_main(void *data){
   solution_t *s1, *s2, *die;
   int s1_ind, s2_ind;
   int die_index;
+
+#ifdef _TIMING
   time_t t_start;
   time_t t_delta;
   struct timeb tmp_time;
-  
+#endif
+
   struct devol_controller *controller = (struct devol_controller *)data;
 
   INFO("Thread (ID=%d) starting up.\n", controller->tid);
@@ -157,7 +160,9 @@ void *_devol_thread_main(void *data){
 
   /* Allocate out space for new solutions. */
   new_solutions = (solution_t *)malloc(sizeof(solution_t) * solution_count);
-  
+  INFO("(ID=%d) Solution count: %d\n", controller->tid, solution_count);
+  INFO("(ID=%d) Breeding window: %d\n", controller->tid, breeder_window);
+
   /* This lock forces the thread to wait until the calling algorithm is ready
    * for the thread to start up. */
   pthread_mutex_lock(&(controller->pool->sync_lock));
@@ -167,8 +172,10 @@ void *_devol_thread_main(void *data){
    */
  run_iteration:
 
+#ifdef _TIMING
   ftime(&tmp_time);
   t_start = (tmp_time.time * 1000) + tmp_time.millitm;
+#endif
 
   controller->state = DEVOL_TSTATE_WORKING;
 
@@ -183,10 +190,12 @@ void *_devol_thread_main(void *data){
    */
   _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
 				   controller->start, controller->stop);
+#ifdef _TIMING
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
   INFO("(ID=%d) Computed fitnesses (delta_t=%d).\n", 
        controller->tid, (int)(t_delta - t_start));
+#endif
 
   /*
    * This could potentially give rise to superlinear speedups. This is because
@@ -197,16 +206,19 @@ void *_devol_thread_main(void *data){
   qsort(&(controller->gene_pool->solutions[controller->start]), 
 	controller->stop - controller->start,
 	sizeof(solution_t), _compare_solutions);
+#ifdef _TIMING
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
   INFO("(ID=%d) Sorted (delta_t=%d).\n", controller->tid, 
        (int) (t_delta - t_start));
+#endif
 
   /* This is kinda complex... basically we have to randomly choose some of the
    * the better solutions to breed. This is affected by the param 
    * reproduction_rate. The higher the reproduction rate, the more solutions
    * we make per generation. 
    */
+  INFO("%d new solutions...\n", solution_count);
   for ( i = 0; i < solution_count; i++){
 
     /* Generate a new solution from the two randomly selected in the
@@ -252,17 +264,21 @@ void *_devol_thread_main(void *data){
     *die = new_solutions[i];
 
   }
+#ifdef _TIMING
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
   INFO("(ID=%d) Breeded (delta_t=%d).\n", controller->tid, 
        (int) (t_delta - t_start));
+#endif
 
   _gene_pool_calculate_fitnesses_p(controller->gene_pool, 
 				   controller->start, controller->stop);
+#ifdef _TIMING
   ftime(&tmp_time);
   t_delta = (tmp_time.time * 1000) + tmp_time.millitm;
   INFO("(ID=%d) Done generation (delta_t=%d).\n", 
        controller->tid, (int) (t_delta - t_start));
+#endif
 
   /* Make sure the thread_pool is ready to start the thread return... */
   while ( ! controller->pool->term_ready );

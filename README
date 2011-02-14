@@ -1,0 +1,63 @@
+DEvAl README
+------------
+
+1) Building.
+
+    If you are reading this then you probably have the code. In order to build
+said code, you should be able to do the following (in trunk/):
+
+    ./buildprep
+    make
+
+This will build all of the code and place the binaries (both the executables
+and libdeval.so*) in trunk/bin/. Assuming no build errors (this code was tested
+on SunOS 5 and Fedora Linux, but it should build for any Linux distro; other 
+UNIX OSes may work as long as they support the GNU *rand48_r() fuctions) you 
+should be ready to run some code.
+
+2) Running.
+
+    In trunk/bin/ `root_finder' and `mixture' both implement an evolutionary
+algorithm via the libdeval.so library. `root_finder' does as one would expect:
+it finds roots of polynomials (or it finds minimas if there are no roots).
+`mixture' is more complex. This program maximizes MLE estimates for data 
+following multinomial normal distributions.
+    There are two other programs for generating distributions of data. `norm.m'
+and `norm_mixture.m' can be used to generate data with either 1 or 2 normals.
+If more normals are desired then the results from `norm.m' can be concatentated
+together. These two commands require octave to be installed in /usr/bin. These
+commands should work with matlab as well, though; just change the #! to point
+to matlab's binary instead. Some example commands:
+
+    $ cd deval/trunk/bin
+    $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
+    $ ./norm_mixture 5 2 -5 2 .5 10000 >mix.txt # Generate a 2 norm mixture.
+    # Make a norm file for the mixture program. For details on how to do that
+    # see the comment at the top of that file. Lets say the norms file is
+    # called norms.txt
+    $ ./mixture --norms norms.txt --data mix.txt
+
+Some sample output:
+
+# Algorithm parameters:
+#   Population size:      100
+#   Thread count:         1
+#   Maximum iterations:   100
+#   Gene dispersal:       0.000000
+#   Reproduction rate:    0.250000
+#   Breed fitness:        0.250000
+#   Check for converge:   no
+#   Data file:            mix.txt
+#   Normal distributions: norms.txt
+# Read 2 normal distributions.
+#   norm1: mean=[-10.0000,10.0000] stddev=[0.5000,5.0000] var=[ 0.0100 0.0050 ]
+#   norm2: mean=[-10.0000,10.0000] stddev=[0.5000,5.0000] var=[ 0.0100 0.0050 ]
+# Read 10000 data samples.
+# Initializing mixture allocation buckets.
+# Initializing param allocation buckets.
+# Gene pool made, solutions inited, running...
+run time: 4935 ms
+
+    The `root_finder' works much the same way only you don't need to make any
+extra files. Just specify the parameters for a polynomial. The parameters are
+all described in the comments in the trunk/src/algos/root_finder.c file.

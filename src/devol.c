@@ -143,7 +143,7 @@ int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
 
   ftime(&tmp_time);
   t_start = (tmp_time.time * 1000) + tmp_time.millitm;
-  INFO("Generating %d initial solutions... ", solutions);
+  INFO("# Generating %d initial solutions... ", solutions);
   for ( i = 0; i < solutions; i++){
 
     pool->solutions[i].mutate = params.mutate;
@@ -158,7 +158,7 @@ int  gene_pool_create_seq(struct gene_pool *pool, int solutions,
   INFO("Done\n");
   ftime(&tmp_time);
   t_stop = (tmp_time.time * 1000) + tmp_time.millitm;
-  INFO("Time to allocate initial solutions: %ld ms\n", t_stop - t_start);
+  INFO("# Time to allocate initial solutions: %ld ms\n", t_stop - t_start);
 
   pool->flags = GPOOL_SEQ;
 
@@ -198,13 +198,14 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
 	sizeof(solution_t), _compare_solutions);
 
   /* Make some new solutions. */
+  INFO("%d new solutions...\n", pool->new_count);
   for ( i = 0; i < pool->new_count; i++){
 
     /* Generate the two parent solution indexes. */
-    tmp = erand48(pool->controller.rstate);
+    devol_rand48(pool->controller.rstate, &(pool->controller.rdata), &tmp);
     s1_ind = (int)(tmp * pool->breeder_window);
     do {
-      tmp = erand48(pool->controller.rstate);
+      devol_rand48(pool->controller.rstate, &(pool->controller.rdata), &tmp);
       s2_ind = (int)(tmp * pool->breeder_window);
     } while (s1_ind == s2_ind);
 
@@ -213,24 +214,25 @@ int gene_pool_iterate_seq(struct gene_pool *pool){
     s2 = (solution_t *)&(pool->solutions[s2_ind]);
 
     /* And make a new solution. */
-    s1->mutate(s1, s2, &(pool->new_solutions[i]));
     pool->new_solutions[i].mutate = s1->mutate;
     pool->new_solutions[i].fitness = s1->fitness;
     pool->new_solutions[i].init = s1->init;
     pool->new_solutions[i].destroy = s1->destroy;
     pool->new_solutions[i].cont = &pool->controller;
+    s1->mutate(s1, s2, &(pool->new_solutions[i]));
 
     /* Now that we have a solution, find another solution to kill and 
-       replace. */
-    tmp = erand48(pool->controller.rstate);
-    die_ind = 1 + ((int)(tmp * pool->new_count));
-    die_ind = pool->solution_count - die_ind;
+     * replace. */
+    die_ind = pool->solution_count - (i % pool->breeder_window) - 1;
     die = (solution_t *)&(pool->solutions[die_ind]);
     die->destroy(die);
 
     *die = pool->new_solutions[i];
 
   }
+
+  /* Compute the fitnesses of new solutions. */
+  _gene_pool_calculate_fitnesses_p(pool, 0, pool->solution_count);
 
   return DEVOL_OK;
 
